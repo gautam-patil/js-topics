@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title>Quotation Entry</title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                <h1 class="text-center title-2">Quotation Entry</h1>
+                <br>
+                <h3 class="text-center title-2"><%= enquiry[0].shopName %></h3>
+                <form action="/create-quotation" method="POST" enctype="multipart/form-data">
+                  <div class="row">
+                    <div class="col-md-6">
+                          <hr>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Quotation Image:- </label>
+                              <input type="file" name="quotation" class="form-control">
+                            </div>
+                            <input type="hidden" name="partyId" value="<%= enquiry[0]._id %>">
+                            <hr>
+                            </div>
+                  </div>
+                  <button type="submit" class="btn btn-lg btn-info btn-block submitData"> <span id="payment-button-amount">Submit</span> </button>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

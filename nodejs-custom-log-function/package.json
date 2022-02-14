@@ -1,0 +1,15 @@
+{
+  "name": "nodeproject-redis",
+  "version": "1.0.0",
+  "description": "Nodejs Project on Redis",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Gautam Patil",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^14.3.2",
+    "express": "^4.17.2"
+  }
+}

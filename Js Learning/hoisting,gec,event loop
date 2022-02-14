@@ -1,0 +1,23 @@
+	21/01/2022
+
+Hoisting-:
+Hoisting is JavaScript's default behavior of moving all declarations to the top of the current scope (to the top of the current script or the current function).
+
+Event Loop-:
+The event loop is a constantly running process that monitors both the callback queue and the call stack.
+the JavaScript event loop, a constantly running process that coordinates the tasks between the call stack and callback queue to achieve concurrency.
+Manages the callbacks.
+
+Flex-:
+
+1. flex-direction
+2. flex-wrap
+3. flex-flow
+4. justify-content
+5. align-content
+6. flex-order
+7. flex-grow
+
+Execution Context-:
+It Decide the segment of the code. Alot memory to variables. When code execution completes the whole js gec is deleted.
+

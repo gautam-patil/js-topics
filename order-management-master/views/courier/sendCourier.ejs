@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>Send Courier</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Confirm Courier table</h3>
+                  <form id="searchEnquiryForm">
+                      <div class="row mb-0">
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search....:</label>
+                                  <input type="text" class="form-control" placeholder="Enter Shop Name/MobileNo." name="searchTerm">
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                              <button class="btn btn-primary btn-sm submitClassFormData" type="submit" name="search">Search</button>
+                          </div>
+                      </div>    
+                  </form> 
+
+                <div class="table-data__tool">
+                  <div class="table-responsive table--no-card m-b-40">
+                    <table class="table table-borderless table-striped table-earning" id="dataTable">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>Sale Party</th>
+                          <th>Request Date</th>
+                          <th>Request By User</th>
+                          <th>Item Detail</th>
+                          <th>Request Comment</th>
+                          <th>Confirm By</th>
+                          <th>Confirm Date</th>
+                          <th>Confirm Comment</th>
+                          <th>Send</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- END DATA TABLE -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="confirmCourierModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" style="text-align: center;">Send Courier</h1>
+              <br>
+              <hr>
+              <h4 id="partyName" style="text-align: center;"></h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="courierConfirmData">
+                <div class="form-group">
+                  <label>Courier Name</label>
+                  <input type="text" class="form-control" name="courierName" placeholder="Enter Courier Name">
+                </div>
+                <div class="form-group">
+                  <label>Doc. No.</label>
+                  <input type="text" class="form-control" name="docNo" placeholder="Enter Doc. No.">
+                </div>
+                <div class="form-group">
+                  <label>Select Weight or Quantity</label>
+                  <select class="form-control" name="unit">
+                    <option value="Weight">Weight</option>
+                    <option value="Quantity">Quantity</option>
+                    
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Enter Weight in KG or Quantity</label>
+                  <input type="number" class="form-control" name="weightQuantity" placeholder="Enter Weight in KG or Quantity">
+                </div>
+                <div class="form-group">
+                  <label>Enter Amount</label>
+                  <input type="number" class="form-control" name="amount" placeholder="Enter Amount">
+                </div>
+                <div class="form-group">
+                  <label>Comment</label>
+                  <input type="text" class="form-control" name="sendComment" placeholder="Enter Comment">
+                </div>
+                <br />  
+                 <!-- <input type="text" name="enquiryId" id="courierId"> -->
+                <input type="hidden" name="courierId" id="courierId" /> 
+                <!-- <p id="courierId"></p> -->
+                <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    function requestedCourierData(){
+
+    $.ajax({  
+        url:'/all-send-courier',  
+        method:'get',  
+        dataType:'json', 
+        success:function(response){ 
+             if(response.msg=='success'){   
+
+              response.sendCourier.forEach((data, index) =>{
+                allSendCourier(data, index);
+              });
+              $('tbody').html(courierData);
+            }
+          }
+        })
+    }
+
+    requestedCourierData();
+
+    var courierData = "";
+    var fl = 0
+
+    function allSendCourier(data, index) {
+
+
+     // var followupDate = data.followups[0].followupDate;
+     // var comment = data.followups[0].comment;
+     // var nextFollowupDate = data.followups[0].nextFollowupDate;
+
+
+     courierData += '<tr class="tr-shadow">';
+     courierData += '<td>'+(index + 1)+'</td>';
+     courierData += '<td>'+data.saleParty[0].shopName+'</td>';
+     courierData += '<td>'+data.requestDate+'</td>';
+     courierData += '<td>'+data.user[0].name+'</td>';
+     courierData += '<td>'+data.itemDetail+'</td>';
+     courierData += '<td>'+data.requestComment+'</td>';
+     courierData += '<td>'+data.confirmUser[0].name+'</td>';
+     courierData += '<td>'+data.confirmDate+'</td>';
+     courierData += '<td>'+data.confirmComment+'</td>';
+     courierData += '<td><div class="table-data-feature"><button type="button" class="item confirmCourier" data-id="'+data._id+'" data-partyname="'+data.saleParty[0].shopName+'" data-toggle="tooltip" data-placement="top" title="Confirm Courier"><i class="zmdi zmdi-check-circle"></i></button></div></td>'
+     courierData += '</tr>';
+
+    } 
+
+     $(document).on('click', '.confirmCourier', function(){  
+        var courierId = $(this).data("id");  
+        var partyName = $(this).data("partyname");
+        $('#confirmCourierModel').modal('show');
+        $('#partyName').html(partyName);
+        $('#courierId').val(courierId);
+
+      });
+
+      //Submit Followup Data
+      $('#courierConfirmData').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/create-send-courier',  
+          method:'POST',  
+          data:$('#courierConfirmData').serialize(),
+          success:function(followupResponse){  
+            if(followupResponse.msg=='success'){
+              alert('Courier Data Updated');   
+              $('#courierConfirmData')[0].reset();  
+              $('#confirmCourierModel').modal('hide'); 
+              courierData = "";
+              requestedCourierData();                  
+            }
+          }
+        });
+      });
+    
+
+      var modelData = "";
+
+      // if ('<%= role%> == 1') {}
+        
+
+
+
+
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

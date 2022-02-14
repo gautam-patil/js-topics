@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>Request Courier</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Enquiry table</h3>
+                  <form id="searchEnquiryForm">
+                      <div class="row mb-0">
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search....:</label>
+                                  <input type="text" class="form-control" placeholder="Enter Shop Name/MobileNo." name="searchTerm">
+                               </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Enquiry Status</label>
+                                  <select name="enquiryStatus" id="enquiryStatus" class="form-control">
+                                    <option value="">Select Enquiry Status</option>
+                                    <option value="Lead">Lead</option>
+                                    <option value="Enquiry">Enquiry</option>
+                                    <option value="New Dealer">New Dealer</option>
+                                    <option value="Confirm Dealer">Confirm Dealer</option>
+                                    <option value="Not Confirm">Not Confirm</option>
+                                  </select>
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                              <button class="btn btn-primary btn-sm submitClassFormData" type="submit" name="search">Search</button>
+                          </div>
+                      </div>    
+                  </form> 
+
+                <div class="table-data__tool">
+                  <div class="table-responsive table--no-card m-b-40">
+                    <table class="table table-borderless table-striped table-earning" id="dataTable">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>Shop Name</th>
+                          <th>State</th>
+                          <th>City</th>
+                          <th>Mobile</th>
+                          <th>Mkt. By</th>
+                          <th>Enquiry Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- END DATA TABLE -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+
+    var selectOption = '<option value=""> Search for MKT Person</option>';
+
+    function marketingPerson(data, index) {
+      selectOption += '<option value="' + data._id + '">' + data.name + '</option>'
+    }
+
+    var modelData = "";
+    $.ajax({
+      url: '/all-user',
+      method: 'get',
+      dataType: 'json',
+      success: function(response) {
+        if(response.msg == 'success') {
+          response.user.forEach((data, index) => {
+            marketingPerson(data, index);
+          });
+          $('#marketingPerson').html(selectOption);
+          $('#mpMarketingPerson').html(selectOption);
+        }
+      }
+    })
+
+    var enquiryData = "";
+    var fl = 0;
+
+    function allEnquiry(data, index) {
+
+
+      var marketingPerson = data.marketingPersonName[0].name;
+
+     // var followupDate = data.followups[0].followupDate;
+     // var comment = data.followups[0].comment;
+     // var nextFollowupDate = data.followups[0].nextFollowupDate;
+
+
+     enquiryData += '<tr class="tr-shadow">';
+     enquiryData += '<td>'+(index + 1)+'</td>';
+     enquiryData += '<td><a href="/request-courier-page/'+data._id+'" >'+data.shopName+'</a></td>';
+     enquiryData += '<td>'+data.state+'</td>';
+     enquiryData += '<td>'+data.city+'</td>';
+     enquiryData += '<td>'+data.mobile+'</td>';
+     enquiryData += '<td><butoon class="updateMarketingPerson" data-id="'+data._id+'" data-shopname="'+data.shopName+'">'+marketingPerson+'</button></td>';
+     enquiryData += '<td><butoon class="updateEnquiryStatus" data-id="'+data._id+'" data-shopname="'+data.shopName+'" data-enquirystatus="'+data.enquiryStatus+'">'+data.enquiryStatus+'</button></td>';
+
+     enquiryData += '</tr>';
+    } 
+      //Search Enquiry Data
+      $('#searchEnquiryForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/search-enquiry',  
+          method:'POST',
+          data:$('#searchEnquiryForm').serialize(),
+          success:function(response){  
+            if(response.msg=='success'){
+
+              enquiryData = "";
+              response.enquiry.forEach((data, index) =>{
+                allEnquiry(data, index);
+              });
+              $('tbody').html(enquiryData);
+
+            }
+          }
+        });
+      });
+
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

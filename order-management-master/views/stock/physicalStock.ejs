@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>Physical Stock</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Physical Stock</h3>
+
+                <div class="table-data__tool">
+                    <div class="table-data__tool-left">
+                        <form class="form-header" id="searchForm">
+                            <select class="au-input au-input--sl form-control" id="itemGroup" name="itemGroupId" style="margin-right: 10px;" required>
+                            </select>
+                            <input type="date" class="au-input au-input--sl form-control" name="date" required>
+                            <button class="au-btn--submit" type="submit">
+                                <i class="zmdi zmdi-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="table-data__tool-right">
+                        <a href="/add-physical-stock">
+                            <button class="au-btn-primary">
+                                Add Physical Stock
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <br>
+                  
+                  <div class="table-data__tool">
+                    <div class="table-responsive table--no-card m-b-40">
+                      <table class="table table-borderless table-striped table-earning" id="dataTable">
+                        <thead>
+                          <tr>
+                            <th>S.No.</th>
+                            <th>Item Name</th>
+                            <th>Qty</th>
+                            <th>User</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- END DATA TABLE -->
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    //Excel export
+    $("#exporttable").click(function(e){
+      e.preventDefault();
+      ResultsToTable();
+    });
+
+    function ResultsToTable(){    
+        $("#dataTable").table2excel({
+            exclude: ".noExl",
+            name: "Results"
+        });
+    }
+
+    var selectOption = '<option value=""> Search by Item Group</option>';
+
+    function itemGroup(data, index) {
+      selectOption += '<option value="' + data._id + '">' + data.itemGroupName + '</option>'
+    }
+
+    var modelData = "";
+    $.ajax({
+      url: '/all-item-group',
+      method: 'get',
+      dataType: 'json',
+      success: function(response) {
+        if(response.msg == 'success') {
+          response.itemGroup.forEach((data, index) => {
+            itemGroup(data, index);
+          });
+          $('#itemGroup').html(selectOption);
+        }
+      }
+    })
+
+    var itemData = "";
+    let totalItem = 0;
+
+    function allItemName(data, index) {
+
+     itemData += '<tr class="tr-shadow">';
+     itemData += '<td>'+(index + 1)+'</td>'
+     itemData += '<td>'+data.item[0].itemName+'</td>';
+     itemData += '<td>'+data.quantity+'</td>';
+     itemData += '<td>'+data.user[0].name+'</td>';
+     itemData += '</tr>'
+    } 
+    
+      //Search Item Stock Data
+      $('#searchForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/search-physical-stock',  
+          method:'POST',
+          data:$('#searchForm').serialize(),
+          success:function(response){  
+            if(response.msg=='success'){
+
+              itemData = "";
+
+              if (response.physicalStock.length == 0) {
+
+                itemData = '<tr class="tr-shadow"><td colspan="4">Data Not Found</td></tr>'
+              }else{
+
+                response.physicalStock.forEach((data, index) =>{
+                  allItemName(data, index);
+                });
+              }
+                $('tbody').html(itemData);
+
+            }
+          }
+        });
+      });
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

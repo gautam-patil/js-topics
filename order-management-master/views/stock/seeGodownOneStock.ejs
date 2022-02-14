@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>See Godown-1 Stock</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Current Stock</h3>
+
+                <div class="table-data__tool">
+                    <div class="table-data__tool-left">
+                        <form class="form-header" id="searchForm">
+                            <select class="au-input au-input--sl form-control" id="itemGroup" name="itemGroupId" style="margin-right: 10px;">
+                            </select>
+                            <button class="au-btn--submit" type="submit">
+                                <i class="zmdi zmdi-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="table-data__tool">
+                  <div class="table-responsive table--no-card m-b-40">
+                    <table class="table table-borderless table-striped table-earning" id="dataTable">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>Item Name</th>
+                          <th>In Stock</th>
+                          <th>Receive Qty</th>
+                          <th>Transfer Qty</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- END DATA TABLE -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    //Excel export
+    $("#exporttable").click(function(e){
+      e.preventDefault();
+      ResultsToTable();
+    });
+
+    function ResultsToTable(){    
+        $("#dataTable").table2excel({
+            exclude: ".noExl",
+            name: "Results"
+        });
+    }
+
+    var selectOption = '<option value=""> Search by Item Group</option>';
+
+    function itemGroup(data, index) {
+      selectOption += '<option value="' + data._id + '">' + data.itemGroupName + '</option>'
+    }
+
+    var modelData = "";
+    $.ajax({
+      url: '/all-item-group',
+      method: 'get',
+      dataType: 'json',
+      success: function(response) {
+        if(response.msg == 'success') {
+          response.itemGroup.forEach((data, index) => {
+            itemGroup(data, index);
+          });
+          $('#itemGroup').html(selectOption);
+        }
+      }
+    })
+
+    var itemData = "";
+    var fl = 0;
+    let stockLength = 0;
+    let purchaseQty = 0;
+    let receiveQty = 0;
+    let bookQty = 0;
+    let pendingQty = 0;
+    let confirmQty = 0;
+    let fabricateQty = 0;
+    let fabricateDoneQty = 0;
+    let usedQty = 0;
+    let remaingQty = 0;
+    let finalRemaingQty = 0;
+    let godownTransferQty = 0;
+    let godownReceiveQty = 0;
+
+    function allItemName(data, index) {
+
+     itemData += '<tr class="tr-shadow">';
+     itemData += '<td>'+(index + 1)+'</td>'
+     itemData += '<td>'+data.itemName+'</td>';
+
+     if (data.stock[0]) {
+
+      stockLength = data.stock.length;
+      for (var i = 0; i < stockLength; i++) {
+
+        //Purchase
+        if (data.stock[i].godownNo == 1) {
+
+          if (data.stock[i].role == 1) {
+            
+            purchaseQty += data.stock[i].quantity;
+            
+          }
+
+          //Receive
+          if (data.stock[i].role == 2) {
+
+            receiveQty += data.stock[i].receiveQuantity;
+          }
+
+          //Book
+          if (data.stock[i].role == 3) {
+            bookQty += data.stock[i].quantity;
+          }
+
+          //Pending
+          if (data.stock[i].role == 4) {
+            pendingQty += data.stock[i].quantity;
+          }
+
+          //Confirm
+          if (data.stock[i].role == 5) {
+            confirmQty += data.stock[i].quantity;
+          }
+
+          //Fabricate
+          if (data.stock[i].fabricateRole == 1) {
+            fabricateQty += data.stock[i].quantity;
+          }
+
+          //Fabricate Done
+          if (data.stock[i].fabricateRole == 2) {
+            fabricateDoneQty += data.stock[i].quantity;
+          }
+
+          //Used Qty
+          if (data.stock[i].role == 6) {
+            usedQty += data.stock[i].quantity;
+          }
+
+        }
+
+        if (data.stock[i].byGodownNo == 1) {
+
+          godownTransferQty += data.stock[i].quantity;
+
+        }
+
+        if (data.stock[i].toGodownNo == 1) {
+
+          godownReceiveQty += data.stock[i].quantity;
+
+        }
+
+      }
+
+      remaingQty = (receiveQty + fabricateDoneQty + godownReceiveQty) - (confirmQty + usedQty + godownTransferQty);
+     }
+
+     finalRemaingQty = remaingQty + data.opening;
+
+     itemData += '<td>'+finalRemaingQty+'</td>';
+     itemData += '<td>'+godownReceiveQty+'</td>';
+     itemData += '<td>'+godownTransferQty+'</td>';
+     itemData += '</tr>';
+
+      stockLength = 0;
+      purchaseQty = 0;
+      receiveQty = 0;
+      bookQty = 0;
+      pendingQty = 0;
+      confirmQty = 0;
+      fabricateQty = 0;
+      fabricateDoneQty = 0;
+      usedQty = 0;
+      remaingQty = 0;
+      finalRemaingQty = 0;
+      godownTransferQty = 0;
+      godownReceiveQty = 0;
+    } 
+    
+      //Search Item Stock Data
+      $('#searchForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/all-item-name',  
+          method:'POST',
+          data:$('#searchForm').serialize(),
+          success:function(response){  
+            if(response.msg=='success'){
+
+              itemData = "";
+              response.itemName.forEach((data, index) =>{
+                allItemName(data, index);
+              });
+              $('tbody').html(itemData);
+
+            }
+          }
+        });
+      });
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

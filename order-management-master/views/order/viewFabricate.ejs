@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title>View Fabricate</title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-header">
+                          View Fabricate Detail
+
+                        </div>
+                        <div class="card-body">
+                          <div class="card-title">
+                            <h3 class="text-center title-2">View fabricate</h3> 
+                            <div class="table-data-feature">
+                            <button class="item" id="updateOrder" data-toggle="tooltip" data-placement="top" title="Update Order"><i class="zmdi zmdi-edit"></i></button>
+                            <div id="deleteOrderDiv">
+                              
+                              
+                            </div>
+                          </div>
+                          </div>
+                          <hr>
+                            <div class="row">
+                              <div class="col-lg-6">
+                                
+                                                       
+                              <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Order No</td>
+                                        <td><%= fabricate[0].order[0].orderNo %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Id</td>
+                                        <td><%= fabricate[0].user[0].name %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Comment</td>
+                                        <td><%= fabricate[0].comment %></td>
+                                    </tr>
+                                    <tr>
+
+                                      <td>
+                                        <button class="btn btn-primary" id="addItem">Add Item</button>
+                                      </td>
+                                    </tr>
+                                </tbody>
+                              </table>
+                              </div>
+                              
+                            </div>
+                            <br>
+                            <hr>
+                          </div>
+                        </div>
+                            <div class="card">
+                              <div class="card-header">View Used Detail</div>
+                              <div class="card-body">
+                                <div class="card-title">
+                                  <h3 class="text-center title-2">Used Item Details</h3> 
+                                </div>
+                            <br>
+                            <div class="table-data__tool">
+                              <div class="table-responsive m-b-40">
+                                <table class="table table-borderless table-data3">
+                                  <thead>
+                                    <th>S.No.</th>
+                                    <th>Item Name</th>
+                                    <th>Size</th>
+                                    <th>Total Sq.Ft.</th>
+                                    <th>Quantity</th>
+                                    <th>Rate</th>
+                                    <th>Amount</th>
+                                  </thead>
+                              <tbody class="usedItemTable">
+                              </tbody>
+                              <tbody>
+                                <tr style=" border-top: 2px dashed #000;">
+                                  <td colspan="6" style="text-align: left; font-size: 15px;"><b>Total Amount</b></td>
+                                  <td id="usedItemTotalAmount"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="6" style="text-align: left; font-size: 15px;"><b>Round Off</b></td>
+                                  <td><%= fabricate[0].roundOff %></td>
+                                </tr>
+                                <tr style="border-top: 2px solid #000; border-bottom: 2px solid #000;">
+                                  <td colspan="6" style="text-align: left; font-size: 15px;"><b>Final Total Amount</b></td>
+                                  <td id="usedFinalTotalAmount"></td>
+                                </tr>
+                              </tbody>
+                                </table>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="card">
+                              <div class="card-header">View Fabricate Detail</div>
+                              <div class="card-body">
+                                <div class="card-title">
+                                  <h3 class="text-center title-2">Fabricate Item Details</h3> 
+                                </div>
+                            <br>
+                            <div class="table-data__tool">
+                              <div class="table-responsive m-b-40">
+                                <table class="table table-borderless table-data3">
+                                  <thead>
+                                    <th>S.No.</th>
+                                    <th>Item Name</th>
+                                    <th>Size</th>
+                                    <th>Total Sq.Ft.</th>
+                                    <th>Quantity</th>
+                                    <th>Rate</th>
+                                    <th>Amount</th>
+                                  </thead>
+                              <tbody class="manfItemTable">
+                              </tbody>
+                              <tbody>
+                                <tr style=" border-top: 2px dashed #000;">
+                                  <td colspan="6" style="text-align: left; font-size: 15px;"><b>Total Amount</b></td>
+                                  <td id="manfItemTotalAmount"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="6" style="text-align: left; font-size: 15px;"><b>Round Off</b></td>
+                                  <td><%= fabricate[0].fabRoundOff %></td>
+                                </tr>
+                                <tr style="border-top: 2px solid #000; border-bottom: 2px solid #000;">
+                                  <td colspan="6" style="text-align: left; font-size: 15px;"><b>Final Total Amount</b></td>
+                                  <td id="manfFinalTotalAmount"></td>
+                                </tr>
+                              </tbody>
+                                </table>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+
+      <!-- Update Item  fabrication yes-->
+      <div id="updateItemModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title utItemName" style="text-align: center;"></h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="itemData">
+                <div class="form-group">
+                  <label>Size</label>
+                  <input type="text" class="form-control utSize" name="size">
+                </div>
+                <div class="form-group">
+                  <label>Total SqFt.</label>
+                  <input type="number" class="form-control utTotalSqft" step=".01" name="totalSqft">
+                </div>
+                <div class="form-group">
+                  <label>Quantity</label>
+                  <input type="number" class="form-control utQuantity" step=".01" name="quantity">
+                </div>
+                <div class="form-group">
+                  <label>Rate</label>
+                  <input type="number" class="form-control utRate" step=".01" name="rate">
+                </div>
+                <br />  
+                 <!-- <input type="text" name="enquiryId" id="utItemId"> -->
+                <input type="hidden" name="stockItemId" class="utItemId" /> 
+                <!-- <p id="utItemId"></p> -->
+                <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+       <!-- Add Item -->
+      <div id="addItemModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" style="text-align: center;">Add Item</h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="addItemForm">
+                <div class="form-group">
+                  <label>Item Group</label>
+                  <select class="form-control" id="itemGroup" name="itemGroupId">
+                    
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Item Name</label>
+                  <select class="form-control" id="itemName" name="itemId">
+                    
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Size</label>
+                  <input type="text" class="form-control" name="size" placeholder="Enter Size">
+                </div>
+                <div class="form-group">
+                  <label>Total Sq.Ft.</label>
+                  <input type="number" class="form-control" name="totalSqft" step=".01" placeholder="Enter Total Sq.Ft.">
+                </div>
+                <div class="form-group">
+                  <label>Quantity</label>
+                  <input type="number" class="form-control" placeholder="Enter Quantity" step=".01" name="quantity">
+                </div>
+                <div class="form-group">
+                  <label>Rate</label>
+                  <input type="number" class="form-control" step=".01" placeholder="Enter Rate" name="rate">
+                </div>
+                <input type="hidden" value="<%= fabricate[0]._id %>" name="foreginId">
+                
+
+                <input type="hidden" value="3" name="godownNo">
+                <br />  
+
+                <!-- <p id="utItemId"></p> -->
+                <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Con
+      <!- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+
+             var selectItemGroup = '<option>Select Item Group</option>';
+
+      function itemGroup(data, index) {
+
+        selectItemGroup += '<option value="' + data._id + '">' + data.itemGroupName + '</option>'
+      }
+
+      itemGroupList();
+
+      
+
+      function itemGroupList() {
+        var modelData = "";
+        $.ajax({
+          url: '/all-item-group',
+          method: 'get',
+          dataType: 'json',
+          success: function(response) {
+            console.log(response);
+            if(response.msg == 'success') {
+              selectItemGroup = "'<option>Select Item Group</option>'";
+              response.itemGroup.forEach((data, index) => {
+                itemGroup(data, index);
+              });
+              $('#itemGroup').html(selectItemGroup);
+            }
+          }
+        })
+      }
+
+      //Item Name
+      var selectItemName = "";
+
+      function itemName(data, index) {
+
+        selectItemName += '<option value="' + data._id + '">' + data.itemName + '</option>'
+      }
+
+      $(document).on('change', '#itemGroup', function(){
+
+        console.log('clickkk');
+        var itemGroupId = $(this).val();
+        $.ajax({
+          url:'/all-item-name/'+itemGroupId,
+          method:'get',
+          dataType: 'json',
+          success:function(response)
+          {
+            selectItemName = "";
+            response.itemName.forEach((data, index) => {
+              itemName(data, index);
+            });
+            $('#itemName').html(selectItemName);
+          }
+        })
+      });
+
+
+          var itemNo = 0;
+          var itemDetail = "";
+
+          var usedFabStockData = "";
+          var manfFabStockData = "";
+          var usedAmount = 0;
+          var usedItemTotalAmount =0;
+          var manfAmount = 0;
+          var manfItemTotalAmount =0;
+          var usedCount = 0;
+          var manfCount = 0;
+
+          function pendingOrder(data, index) {
+
+            if (data.role == 6) {
+
+               usedFabStockData += '<tr class="tr-shadow">';
+
+                usedFabStockData += '<td><div class="table-data-feature">'+(usedCount + 1)+ '<button type="button" class="item updateItem" data-id="'+data._id+'" data-itemname="'+data.item[0].itemName+'" data-size="'+data.size+'" data-totalsqft="'+data.totalSqft+'" data-quantity="'+data.quantity+'" data-rate="'+data.rate+'" data-toggle="tooltip" data-placement="top" title="Update Quantity"><i class="zmdi zmdi-edit"></i></button><button type="button" class="item deleteItem" data-id="'+data._id+'" data-toggle="tooltip" data-placement="top" title="Delete Stock"><i class="zmdi zmdi-delete"></i></button></div></td>';
+
+               usedFabStockData += '<td>'+data.item[0].itemName+'</td>';
+
+               if (data.size) {
+
+                usedFabStockData += '<td>'+data.size+'</td>';
+               }else{
+                
+                usedFabStockData += '<td>---</td>';
+               }
+               
+               if (data.totalSqft) {
+
+                usedFabStockData += '<td>'+data.totalSqft+'</td>';
+               }else{
+                
+                usedFabStockData += '<td>---</td>';
+               }
+
+              usedFabStockData += '<td>'+data.quantity+'</td>';
+              usedFabStockData += '<td>'+data.rate+'</td>';
+
+              usedAmount = data.totalSqft * data.rate;
+              usedItemTotalAmount += usedAmount
+
+              usedFabStockData += '<td>'+(usedAmount).toFixed(2)+'</td>'
+               usedFabStockData += '</tr>';
+
+               usedAmount = 0;
+
+               usedCount++;
+            } else {
+
+              manfFabStockData += '<tr class="tr-shadow">';
+
+                manfFabStockData += '<td><div class="table-data-feature">'+(manfCount + 1)+ '<button type="button" class="item updateItem" data-id="'+data._id+'" data-itemname="'+data.item[0].itemName+'" data-size="'+data.size+'" data-totalsqft="'+data.totalSqft+'" data-quantity="'+data.quantity+'" data-rate="'+data.rate+'" data-toggle="tooltip" data-placement="top" title="Update Quantity"><i class="zmdi zmdi-edit"></i></button><button type="button" class="item deleteItem" data-id="'+data._id+'" data-toggle="tooltip" data-placement="top" title="Delete Stock"><i class="zmdi zmdi-delete"></i></button></div></td>';
+
+               manfFabStockData += '<td>'+data.item[0].itemName+'</td>';
+
+               if (data.size) {
+
+                manfFabStockData += '<td>'+data.size+'</td>';
+               }else{
+                
+                manfFabStockData += '<td>---</td>';
+               }
+               
+               if (data.totalSqft) {
+
+                manfFabStockData += '<td>'+data.totalSqft+'</td>';
+               }else{
+                
+                manfFabStockData += '<td>---</td>';
+               }
+
+              manfFabStockData += '<td>'+data.quantity+'</td>';
+              manfFabStockData += '<td>'+data.rate+'</td>';
+
+              manfAmount = data.totalSqft * data.rate;
+              manfItemTotalAmount += manfAmount
+
+              manfFabStockData += '<td>'+(manfAmount).toFixed(2)+'</td>'
+               manfFabStockData += '</tr>';
+
+               manfAmount = 0;
+
+               manfCount++;
+            }
+
+
+          } 
+
+          //Confirm Booking
+
+
+          //Model for Edit Item farication yes
+          $(document).on('click', '.updateItem', function(){  
+            var utItemId = $(this).data("id");  
+            var utItemName = $(this).data("itemname");
+            var utSize = $(this).data("size");
+            var utTotalSqft = $(this).data("totalsqft");
+            console.log('size= '+utSize);
+            console.log('totalSqft= '+utTotalSqft);
+            var utQuantity = $(this).data("quantity");
+            var utRate = $(this).data("rate");
+            $('#updateItemModel').modal('show');
+            $('.utItemName').html(utItemName);
+            $('.utSize').val(utSize);
+            $('.utTotalSqft').val(utTotalSqft);
+            $('.utQuantity').val(utQuantity);
+            $('.utRate').val(utRate);
+            $('.utItemId').val(utItemId);
+
+          });
+
+          //Submit Edit Item farication yes
+          $('#itemData').on("submit", function(event){
+            event.preventDefault();
+            $.ajax({
+              url:'/update-stock-data',  
+              method:'POST',  
+              data:$('#itemData').serialize(),
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+
+                  $('#itemData')[0].reset();  
+                  $('#updateItemModel').modal('hide'); 
+                  usedFabStockData = "";
+                  purchaseItem();                  
+                }
+              }
+            });
+          });
+
+          $(document).on('click', '.deleteItem', function(){  
+
+            var dItemId = $(this).data("id");  
+            
+            event.preventDefault();
+            $.ajax({
+              url:'/delete-stock-data',  
+              method:'POST',
+              data:{stockId:dItemId},
+              success:function(response){  
+                if(response.msg=='success'){
+
+                  usedFabStockData = "";
+                  purchaseItem();                  
+                }
+              }
+            });
+
+            dItemId = "";
+
+          });
+
+          $(document).on('click', '#deleteOrder', function(){  
+
+            var orderId = $(this).data("id");  
+            
+            event.preventDefault();
+            $.ajax({
+              url:'/delete-order-data',  
+              method:'POST',
+              data:{orderId:orderId},
+              success:function(response){  
+                if(response.msg=='success'){
+
+                  window.location.href = "/mis-order-report";                  
+                }
+              }
+            });
+
+            dItemId = "";
+
+          });
+
+
+
+          //Add Receive Item
+          $(document).on('click', '#addItem', function(){  
+
+            $('#addItemModel').modal('show');
+
+          });
+
+          //Submit Item Data
+          $('#addItemForm').on("submit", function(event){
+            event.preventDefault();
+            $.ajax({
+              url:'/add-stock-data',  
+              method:'POST',  
+              data:$('#addItemForm').serialize(),
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+                  alert('Item Added');   
+                  $('#addItemForm')[0].reset();  
+                  $('#addItemModel').modal('hide'); 
+                  amount = 0;
+                  itemTotalAmount =0;
+                  usedFabStockData = "";
+                  totalAmount = 0;
+                  gstAmount = 0;
+                  finalTotalAmount = 0;
+                  purchaseItem();                  
+                }
+              }
+            });
+          });
+
+
+
+
+          purchaseItem();
+
+          var totalAmount = 0;
+          var finalTotalAmount = 0;
+
+          //Display Item Name
+          function purchaseItem() {
+            $.ajax({
+              url: '/fetch-fabricate-stock/<%= fabricate[0]._id %>',
+              method: 'get',
+              dataType: 'json',
+              success: function(response) {
+                
+                if(response.msg == 'success') {
+
+                  console.log(response.fabricateStock.length);
+
+                  if (response.fabricateStock.length == 0) {
+
+                    $('#deleteOrderDiv').html('<button class="item" id="deleteOrder" data-toggle="tooltip" data-placement="top" data-id="<%= fabricate[0]._id %>" title="Delete Order"><i class="zmdi zmdi-delete"></i></button>');
+                  } 
+
+                  response.fabricateStock.forEach((data, index) => {
+                    pendingOrder(data, index);
+                  });
+                  $('.usedItemTable').html(usedFabStockData);
+                  $('.manfItemTable').html(manfFabStockData);
+
+                  //Used
+                  usedFinalTotalAmount = usedItemTotalAmount - parseFloat('<%= fabricate[0].roundOff %>')
+
+                  $('#usedItemTotalAmount').html((usedItemTotalAmount).toFixed(2));
+                  $('#usedFinalTotalAmount').html((usedFinalTotalAmount).toFixed(2));
+
+                  //Manf
+                  manfFinalTotalAmount = manfItemTotalAmount - parseFloat('<%= fabricate[0].fabRoundOff %>')
+
+                  $('#manfItemTotalAmount').html((manfItemTotalAmount).toFixed(2));
+                  $('#manfFinalTotalAmount').html((manfFinalTotalAmount).toFixed(2));
+
+                  usedItemTotalAmount = 0;
+                  usedFinalTotalAmount = 0;
+                  manfItemTotalAmount = 0;
+                  manfFinalTotalAmount = 0;
+
+                }
+              }
+            })
+          }
+
+           //Confirm Receive Purchase
+          $(document).on('click', '#updateOrder', function(){  
+
+                $('#updateOrderModel').modal('show');
+            
+            });
+
+          $('#updateOrderForm').on("submit", function(event){
+            event.preventDefault();
+            $.ajax({
+              url:'/update-order/<%= fabricate[0]._id %>',  
+              method:'POST',  
+              data:$('#updateOrderForm').serialize(),
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+
+                  alert('Order Update');
+                }
+              }
+            });
+          });
+
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

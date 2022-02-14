@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>See Enquiry</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Enquiry table</h3>
+                  <form id="searchEnquiryForm">
+                      <div class="row mb-0">
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search....:</label>
+                                  <input type="text" class="form-control" placeholder="Enter Shop Name/MobileNo." name="searchTerm">
+                               </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Enquiry Date :</label>
+                                  <input type="date" class="form-control" name="enquiryDate">
+                               </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Enquiry Status</label>
+                                  <select name="enquiryStatus" id="enquiryStatus" class="form-control">
+                                    <option value="">Select Enquiry Status</option>
+                                    <option value="New Lead">New Lead</option>
+                                    <option value="Lead">Lead</option>
+                                    <option value="Enquiry">Enquiry</option>
+                                    <option value="New Dealer">New Dealer</option>
+                                    <option value="Confirm Dealer">Confirm Dealer</option>
+                                    <option value="Not Confirm">Not Confirm</option>
+                                  </select>
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search State</label>
+                                  <input type="text" class="form-control" placeholder="Enter State" name="state">
+                               </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search City</label>
+                                  <input type="text" class="form-control" placeholder="Enter City" name="city">
+                               </div>
+                          </div>
+
+                          <% if ( username.seeMktEnquiryRole  == 0 ){ %>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Mkt. Person</label>
+                                  <select name="marketingPerson" id="marketingPerson" class="form-control">
+
+                                  </select>
+                               </div>
+                          </div>
+
+                          <% } %>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Shop Type</label>
+                                  <select name="shopType" id="shopType" class="form-control">
+                                    <option value="">Select Shop Type</option>
+                                    <option value="Existing Dealer">Existing Dealer</option>
+                                    <option value="Enquiry for Dealer">Enquiry for Dealer</option>
+                                    <option value="Faricator">Faricator</option>
+                                    <option value="Wholeseller">Wholeseller</option>
+                                    <option value="Customer">Customer</option>
+                                    <option value="Builder">Builder</option>
+                                    <option value="Architecture">Architecture</option>
+                                    <option value="Contractor">Contractor</option>
+                                  </select>
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Select Shop Category :</label>
+                                  <select name="category" id="category" class="form-control">
+                                    <option value="">Select Shop Category</option>
+                                    <option value="VIP">VIP</option>
+                                    <option value="D+++">D+++</option>
+                                    <option value="D++">D++</option>
+                                    <option value="D+">D+</option>
+                                    <option value="D">D</option>
+                                    <option value="D-">D-</option>
+                                  </select>
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Followup Date :</label>
+                                  <input type="date" class="form-control" name="followupDate">
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Next Followup Date :</label>
+                                  <input type="date" class="form-control" name="nextFollowupDate">
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                              <button class="btn btn-primary btn-sm submitClassFormData" type="submit" name="search">Search</button>
+                          </div>
+                      </div>    
+                  </form> 
+                  <div class="row mb-0">
+                      <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                          <button class="btn btn-success btn-sm" id="exporttable">Export</button>
+                      </div>
+                  </div>
+
+                <div class="table-data__tool">
+                  <div class="table-responsive m-b-40">
+                    <table class="table table-borderless table-data3" id="dataTable">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>Action</th>
+                          <th>Shop Name</th>
+                          <th>State</th>
+                          <th>City</th>
+                          <th>Mobile</th>
+                          <% if ( username.seeMktEnquiryRole  == 0 ){ %>
+                          <th>Mkt. By</th>
+                          <% }%>
+                          <th>Enq. Status</th>
+                          <th>Category</th>
+                          <th>follow Date</th>
+                          <th>Followup</th>
+                          <th>Next Follow Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- END DATA TABLE -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- Update Followup Model -->
+    <div id="addFollowupModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title" id="fdShopName" style="text-align: center;"></h1>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form id="followupData">
+              <div class="form-group">
+                <label>Comment</label>
+                <input type="text" class="form-control" name="comment">
+              </div>
+              <div class="form-group">
+                <label>Next Followup Date</label>
+                <input type="date" class="form-control" name="nextFollowupDate">
+              </div>
+              <br />  
+               <!-- <input type="text" name="enquiryId" id="fdEnquiryId"> -->
+              <input type="hidden" name="enquiryId" id="fdEnquiryId" /> 
+              <!-- <p id="fdEnquiryId"></p> -->
+              <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+            </form>
+          </div>
+          <div class="modal-footer">    
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Update Enquiry Status -->  
+<div id="updateEnquiryStatus" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h1 class="modal-title" id="esShopName" style="text-align: center;"></h1>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="updateEnquiryStatusForm">
+          <div class="form-group">
+            <label>Enquiry Status :</label>
+            <select class="form-control" name="enquiryStatus" id="esEnquiryStatus">
+              <option value="New Lead">New Lead</option>
+              <option value="Lead">Lead</option>
+              <option value="Enquiry">Enquiry</option>
+              <option value="New Dealer">New Dealer</option>
+              <option value="Confirm Dealer">Confirm Dealer</option>
+              <option value="Not Confirm">Not Confirm</option>
+            </select>
+          </div>
+          <input type="hidden" name="enquiryId" id="esEnquiryId">
+         <!-- <p id="fdEnquiryId"></p> -->
+         <input type="submit" id="insert1" value="Insert" class="btn btn-success" />  
+        </form>
+    </div>
+      <div class="modal-footer">    
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Update Enquiry Category -->  
+<div id="updateCategory" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h1 class="modal-title" id="ecShopName" style="text-align: center;"></h1>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="updateCategoryForm">
+          <div class="form-group">
+            <label>Enquiry Status :</label>
+            <select class="form-control" name="category" id="ecCategory">
+              <option value="VIP">VIP</option>
+              <option value="D+++">D+++</option>
+              <option value="D++">D++</option>
+              <option value="D+">D+</option>
+              <option value="D">D</option>
+              <option value="D-">D-</option>
+            </select>
+          </div>
+          <input type="hidden" name="enquiryId" id="ecEnquiryId">
+         <!-- <p id="fdEnquiryId"></p> -->
+         <input type="submit" id="insert1" value="Insert" class="btn btn-success" />  
+        </form>
+    </div>
+      <div class="modal-footer">    
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Update Marketing Person -->  
+<div id="updateMarketingPerson" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h1 class="modal-title" id="mpShopName" style="text-align: center;"></h1>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="updateMarketingPersonForm">
+          <div class="form-group">
+            <label>Select Marketing Person:</label>
+            <select class="form-control" name="marketingPerson" id="mpMarketingPerson">
+            </select>
+          </div>
+          <input type="text" name="enquiryId" id="mpEnquiryId">
+         <!-- <p id="fdEnquiryId"></p> -->
+         <input type="submit" id="insert1" value="Insert" class="btn btn-success" />  
+        </form>
+    </div>
+      <div class="modal-footer">    
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Intereseted Item -->
+<div id="addInterestedItem" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="iiShopName" style="text-align: center;"></h1>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="addInterestedItemForm">
+          <div class="form-check">
+            <h3>Interested Item</h3>
+            <br>
+                              <div class="checkbox">
+                                  <label for="checkbox1" class="form-check-label ">
+                                    <div id="ii1">
+                                      
+                                      <input type="checkbox" id="checkbox1" name="interestedItem1" value="1" class="form-check-input" checked>PVC Sheets 4mm - 5mm 
+                                    </div>
+                                  </label>
+                              </div>
+                              <div class="checkbox">
+                                  <label for="checkbox1" class="form-check-label ">
+                                    <div id="ii2">
+                                      <input type="checkbox" id="checkbox1" name="interestedItem2" value="1" class="form-check-input">PVS Sheets 6mm to 18mm
+                                    </div>
+                                  </label>
+                              </div>
+                              <div class="checkbox">
+                                  <label for="checkbox1" class="form-check-label ">
+                                    <div id="ii3">
+                                      <input type="checkbox" id="checkbox1" name="interestedItem3" value="1" class="form-check-input">PVC Doors
+                                    </div>
+                                  </label>
+                              </div>
+                              <div class="checkbox">
+                                  <label for="checkbox1" class="form-check-label ">
+                                    <div id="ii4">
+                                      <input type="checkbox" id="checkbox1" name="interestedItem4" value="1" class="form-check-input">WPC Doors & Choukhats
+                                    </div>
+                                  </label>
+                              </div>
+                              <div class="checkbox">
+                                  <label for="checkbox1" class="form-check-label ">
+                                    <div id="ii5">
+                                      <input type="checkbox" id="checkbox1" name="interestedItem5" value="1" class="form-check-input">Hollow Items
+                                    </div>
+                                  </label>
+                              </div>
+                              <div class="checkbox">
+                                  <label for="checkbox1" class="form-check-label ">
+                                    <div id="ii6">
+                                      <input type="checkbox" id="checkbox1" name="interestedItem6" value="1" class="form-check-input">Hollow Doors
+                                    </div>
+                                  </label>
+                              </div>
+                              <div class="checkbox">
+                                  <label for="checkbox1" class="form-check-label ">
+                                    <div id="ii7">
+                                      <input type="checkbox" id="checkbox1" name="interestedItem7" value="1" class="form-check-input">Kitchen
+                                    </div>
+                                  </label>
+                              </div>
+                              <div class="checkbox">
+                                  <label for="checkbox1" class="form-check-label ">
+                                    <div id="ii8">
+                                      <input type="checkbox" id="checkbox1" name="interestedItem8" value="1" class="form-check-input">Wash Unit
+                                    </div>
+                                  </label>
+                              </div>
+                              <br>
+                          </div>
+          <input type="hidden" name="enquiryId" id="iiEnquiryId">
+         <!-- <p id="fdEnquiryId"></p> -->
+         <input type="submit" id="insert1" value="Insert" class="btn btn-success" />  
+        </form>
+    </div>
+      <div class="modal-footer">    
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    //Excel export
+    $("#exporttable").click(function(e){
+      e.preventDefault();
+      ResultsToTable();
+    });
+
+    function ResultsToTable(){    
+        $("#dataTable").table2excel({
+            exclude: ".noExl",
+            name: "Results"
+        });
+    }
+
+    var selectOption = '<option value=""> Search for MKT Person</option>';
+
+    function marketingPerson(data, index) {
+      selectOption += '<option value="' + data._id + '">' + data.name + '</option>'
+    }
+
+    var modelData = "";
+    $.ajax({
+      url: '/all-user',
+      method: 'get',
+      dataType: 'json',
+      success: function(response) {
+        if(response.msg == 'success') {
+          response.user.forEach((data, index) => {
+            marketingPerson(data, index);
+          });
+          $('#marketingPerson').html(selectOption);
+          $('#mpMarketingPerson').html(selectOption);
+        }
+      }
+    })
+
+    var enquiryData = "";
+    var fl = 0;
+
+    function allEnquiry(data, index) {
+
+
+      if (data.followup[0]) {
+
+        fl = data.followup.length;
+
+        var followupDate = data.followup[fl-1].followupDate;                    
+        var comment = data.followup[fl-1].comment;
+        var nextFollowupDate = data.followup[fl-1].nextFollowupDate;
+      } else {
+        var followupDate = "--------";
+        var comment = "--------";
+        var nextFollowupDate = "--------";
+      }
+      var marketingPerson = data.marketingPersonName[0].name;
+
+     // var followupDate = data.followups[0].followupDate;
+     // var comment = data.followups[0].comment;
+     // var nextFollowupDate = data.followups[0].nextFollowupDate;
+
+
+     enquiryData += '<tr class="tr-shadow">';
+     enquiryData += '<td>'+(index + 1)+'</td>';
+
+     
+      enquiryData += '<td><div class="table-data-feature"><a href="/view-enquiry-ledger/'+data._id+'" target="_blank"><button class="item" data-toggle="tooltip" data-placement="top" title="See Ledger"><i class="fas fa-book"></i></button></a><a href="/view-enquiry-page/'+data._id+'" target="_blank"><button class="item" data-toggle="tooltip" data-placement="top" title="See Enquiry"><i class="zmdi zmdi-eye"></i></button></a><a href="/edit-enquiry-page/'+data._id+'" target="_blank"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit Enquiry"><i class="zmdi zmdi-edit"></i></button></a><button class="item addInterestedItem" data-id="'+data._id+'" data-shopname="'+data.shopName+'" data-ii1="'+data.interestedItem1+'" data-ii2="'+data.interestedItem2+'" data-ii3="'+data.interestedItem3+'" data-ii4="'+data.interestedItem4+'" data-ii5="'+data.interestedItem5+'" data-ii6="'+data.interestedItem6+'" data-ii7="'+data.interestedItem7+'" data-ii8="'+data.interestedItem8+'" data-toggle="tooltip" data-placement="top" title="Add InterestedItem"><i class="zmdi zmdi-archive"></i></button><button class="item addFollowup" data-id="'+data._id+'" data-shopname="'+data.shopName+'" data-toggle="tooltip" data-placement="top" title="Add Followup"><i class="zmdi zmdi-collection-plus"></i></button><button class="item updateEnquiryStatus" data-id="'+data._id+'" data-shopname="'+data.shopName+'" data-enquirystatus="'+data.enquiryStatus+'" data-toggle="tooltip" data-placement="top" title="Update Lead"><i class="zmdi zmdi-comment-edit"></i></button><a href="/quotation-entry/'+data._id+'" target="_blank"><button class="item" data-toggle="tooltip" data-placement="top" title="Add Quotation"><i class="zmdi zmdi-hourglass-alt"></i></button></a></div></td>'
+     
+     
+     enquiryData += '<td><a href="/view-enquiry-page/'+data._id+'" target="_blank">'+data.shopName+'</a></td>';
+     enquiryData += '<td>'+data.state+'</td>';
+     enquiryData += '<td>'+data.city+'</td>';
+     enquiryData += '<td>'+data.mobile+'</td>';
+     enquiryData += '<td><butoon class="updateMarketingPerson" data-id="'+data._id+'" data-shopname="'+data.shopName+'">'+marketingPerson+'</button></td>';
+     enquiryData += '<td><butoon class="updateEnquiryStatus" data-id="'+data._id+'" data-shopname="'+data.shopName+'" data-enquirystatus="'+data.enquiryStatus+'">'+data.enquiryStatus+'</button></td>';
+
+     enquiryData += '<td><butoon class="updateCategory" data-id="'+data._id+'" data-shopname="'+data.shopName+'" data-category="'+data.category+'">'+data.category+'</button></td>';
+
+     enquiryData += '<td><butoon class="addFollowup" data-id="'+data._id+'" data-shopname="'+data.shopName+'">'+followupDate+'</button></td>';
+     enquiryData += '<td>'+comment+'</td>';
+     enquiryData += '<td><butoon class="updateNextFollowDate" data-id="'+data._id+'" data-nextfollowdate="'+nextFollowupDate+'" >'+nextFollowupDate+'</button></td>';
+     enquiryData += '</tr>';
+
+    } 
+    
+
+      var modelData = "";
+
+      // if ('<%= role%> == 1') {}
+        $.ajax({  
+        url:'/see-enquiry',  
+        method:'get',  
+        dataType:'json', 
+        success:function(response){ 
+             if(response.msg=='success'){   
+
+              response.enquiry.forEach((data, index) =>{
+                allEnquiry(data, index);
+              });
+              $('tbody').html(enquiryData);
+            }
+          }
+        })
+
+      //Model for Followup Data
+      $(document).on('click', '.addFollowup', function(){  
+        var fdEnquiryId = $(this).data("id");  
+        var fdShopName = $(this).data("shopname");
+        $('#addFollowupModal').modal('show');
+        $('#fdShopName').html(fdShopName);
+        $('#fdEnquiryId').val(fdEnquiryId);
+
+      });
+
+      //Submit Followup Data
+      $('#followupData').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/update-followup',  
+          method:'POST',  
+          data:$('#followupData').serialize(),
+          success:function(followupResponse){  
+            if(followupResponse.msg=='success'){
+              alert('Followup Updated');   
+              $('#followupData')[0].reset();  
+              $('#addFollowupModal').modal('hide');                   
+            }
+          }
+        });
+      });
+
+      //Search Enquiry Data
+      $('#searchEnquiryForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/search-enquiry',  
+          method:'POST',
+          data:$('#searchEnquiryForm').serialize(),
+          success:function(response){  
+            if(response.msg=='success'){
+
+              enquiryData = "";
+              response.enquiry.forEach((data, index) =>{
+                allEnquiry(data, index);
+              });
+              $('tbody').html(enquiryData);
+
+            }
+          }
+        });
+      });
+
+      //Model For Update Enquiry Status
+      $(document).on('click', '.updateEnquiryStatus', function(){  
+        var esEnquiryId = $(this).data("id");  
+        var esShopName = $(this).data("shopname");
+        var esEnquiryStatus = $(this).data("enquirystatus");
+        $('#updateEnquiryStatus').modal('show');
+        $('#esShopName').html(esShopName);
+        $('#esEnquiryStatus').val(esEnquiryStatus);
+        $('#esEnquiryId').val(esEnquiryId);
+
+
+      });
+        //Edit Enuiry Status Data
+        $('#updateEnquiryStatusForm').on("submit", function(event){
+          event.preventDefault();
+          $.ajax({
+            url:'/update-enquiry',  
+            method:'POST',  
+            data:$('#updateEnquiryStatusForm').serialize(),
+            success:function(statusResponse){  
+              if(statusResponse.msg=='success'){
+                alert('Status Updated');   
+                $('#updateEnquiryStatusForm')[0].reset();  
+                $('#updateEnquiryStatus').modal('hide'); 
+                esEnquiryId = "";  
+                esShopName = "";
+                esEnquiryStatus = "";                  
+              }
+            }
+          });
+        });
+
+        //Model For Update Interested Item
+      $(document).on('click', '.addInterestedItem', function(){  
+        var iiEnquiryId = $(this).data("id");  
+        var iiShopName = $(this).data("shopname");
+        var ii1 = $(this).data("ii1");
+        var ii2 = $(this).data("ii2");
+        var ii3 = $(this).data("ii3");
+        var ii4 = $(this).data("ii4");
+        var ii5 = $(this).data("ii5");
+        var ii6 = $(this).data("ii6");
+        var ii7 = $(this).data("ii7");
+        var ii8 = $(this).data("ii8");
+        $('#addInterestedItem').modal('show');
+
+        $('#iiShopName').html(iiShopName);
+        $('#iiEnquiryId').val(iiEnquiryId);
+
+        if (ii1 == 1) {
+          $('#ii1').html('<input type="checkbox" id="checkbox1" name="interestedItem1" value="1" class="form-check-input" checked>PVC Sheets 4mm - 5mm ');
+        }else{
+          $('#ii1').html('<input type="checkbox" id="checkbox1" name="interestedItem1" value="1" class="form-check-input">PVC Sheets 4mm - 5mm ');
+        }
+
+        if (ii2 == 1) {
+          $('#ii2').html('<input type="checkbox" id="checkbox1" name="interestedItem2" value="1" class="form-check-input" checked>PVC Sheets 6mm to 18mm ');
+        }else{
+          $('#ii2').html('<input type="checkbox" id="checkbox1" name="interestedItem2" value="1" class="form-check-input">PVC Sheets 6mm to 18mm ');
+        }      
+
+        if (ii3 == 1) {
+          $('#ii3').html('<input type="checkbox" id="checkbox1" name="interestedItem3" value="1" class="form-check-input" checked>PVC Doors ');
+        }else{
+          $('#ii3').html('<input type="checkbox" id="checkbox1" name="interestedItem3" value="1" class="form-check-input">PVC Doors ');
+        }
+
+        if (ii4 == 1) {
+          $('#ii4').html('<input type="checkbox" id="checkbox1" name="interestedItem4" value="1" class="form-check-input" checked>WPC Doors & Choukhats ');
+        }else{
+          $('#ii4').html('<input type="checkbox" id="checkbox1" name="interestedItem4" value="1" class="form-check-input">WPC Doors & Choukhats ');
+        }  
+
+        if (ii5 == 1) {
+          $('#ii5').html('<input type="checkbox" id="checkbox1" name="interestedItem5" value="1" class="form-check-input" checked>Hollow Items ');
+        }else{
+          $('#ii5').html('<input type="checkbox" id="checkbox1" name="interestedItem5" value="1" class="form-check-input">Hollow Items ');
+        }
+
+        if (ii6 == 1) {
+          $('#ii6').html('<input type="checkbox" id="checkbox1" name="interestedItem6" value="1" class="form-check-input" checked>Hollow Doors ');
+        }else{
+          $('#ii6').html('<input type="checkbox" id="checkbox1" name="interestedItem6" value="1" class="form-check-input">Hollow Doors ');
+        }
+
+        if (ii7 == 1) {
+          $('#ii7').html('<input type="checkbox" id="checkbox1" name="interestedItem7" value="1" class="form-check-input" checked>Kitchen ');
+        }else{
+          $('#ii7').html('<input type="checkbox" id="checkbox1" name="interestedItem7" value="1" class="form-check-input">Kitchen ');
+        }
+
+        if (ii8 == 1) {
+          $('#ii8').html('<input type="checkbox" id="checkbox1" name="interestedItem8" value="1" class="form-check-input" checked>Wash Unit ');
+        }else{
+          $('#ii8').html('<input type="checkbox" id="checkbox1" name="interestedItem8" value="1" class="form-check-input">Wash Unit ');
+        }
+
+
+      });
+        //Edit Enuiry Status Data
+        $('#addInterestedItemForm').on("submit", function(event){
+
+          values = jQuery("#addInterestedItemForm").serializeArray();
+          console.log(values);
+          console.log('---------');
+          values = values.concat(
+                  jQuery('#addInterestedItemForm input[type=checkbox]:not(:checked)').map(
+                          function() {
+                              return {"name": this.name, "value": 0}
+                          }).get()
+          );
+
+          console.log(values);
+          event.preventDefault();
+          $.ajax({
+            url:'/update-enquiry',  
+            method:'POST',  
+            data:values,
+            
+
+            success:function(statusResponse){  
+              if(statusResponse.msg=='success'){
+                alert('Status Updated');   
+                $('#addInterestedItemForm')[0].reset();  
+                $('#addInterestedItem').modal('hide'); 
+                iiEnquiryId = "";  
+                iiShopName = "";
+                ii1 = "";
+                ii2 = "";
+                ii3 = "";
+                ii4 = "";
+                ii5 = "";
+                ii6 = "";
+                ii7 = "";
+                ii8 = "";
+              }
+            }
+          });
+        });
+
+      //Model For Update Enquiry Status
+      $(document).on('click', '.updateCategory', function(){  
+        var ecEnquiryId = $(this).data("id");  
+        var ecShopName = $(this).data("shopname");
+        var ecCategory = $(this).data("category");
+        $('#updateCategory').modal('show');
+        $('#ecShopName').html(ecShopName);
+        $('#ecCategory').val(ecCategory);
+        $('#ecEnquiryId').val(ecEnquiryId);
+
+      });  
+
+        //Edit Enuiry Status Data
+        $('#updateCategoryForm').on("submit", function(event){
+          event.preventDefault();
+          $.ajax({
+            url:'/update-enquiry',  
+            method:'POST',  
+            data:$('#updateCategoryForm').serialize(),
+            success:function(statusResponse){  
+              if(statusResponse.msg=='success'){
+                alert('Category Updated');   
+                $('#updateCategoryForm')[0].reset();  
+                $('#updateCategory').modal('hide'); 
+                ecEnquiryId = "";  
+                ecShopName = "";
+                ecCategory = "";                  
+              }
+            }
+          });
+        });
+
+      //Model For Update Marketing Person
+      $(document).on('click', '.updateMarketingPerson', function(){  
+        var mpEnquiryId = $(this).data("id");  
+        var mpShopName = $(this).data("shopname");
+        $('#updateMarketingPerson').modal('show');
+        $('#mpShopName').html(mpShopName);
+        $('#mpEnquiryId').val(mpEnquiryId);
+
+      });     
+        //Edit Enuiry Status Data
+      $('#updateMarketingPersonForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/update-enquiry',  
+          method:'POST',  
+          data:$('#updateMarketingPersonForm').serialize(),
+          success:function(statusResponse){  
+            if(statusResponse.msg=='success'){
+              alert('Status Updated');   
+              $('#updateMarketingPersonForm')[0].reset();  
+              $('#updateMarketingPerson').modal('hide'); 
+              mpEnquiryId = "";  
+              mpShopName = "";                 
+            }
+          }
+        });
+      });
+
+      //Model For Update Next Follow date
+      $(document).on('click', '.updateNextFollowDate', function(){  
+        var npEnquiryId = $(this).data("id");  
+        var npNextFollowDate = $(this).data("nextfollowdate");  
+        $('#updateNextFollowDate').modal('show');
+        $('#npEnquiryId').val(npEnquiryId);
+        $('#npNextFollowDate').val(npNextFollowDate);
+
+      });     
+      
+        //Edit Next followup date
+      $('#updateNextFollowDateForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/update-next-followup-date',  
+          method:'POST',  
+          data:$('#updateNextFollowDateForm').serialize(),
+          success:function(statusResponse){  
+            if(statusResponse.msg=='success'){
+              alert('Status Updated');   
+              $('#updateNextFollowDateForm')[0].reset();  
+              $('#updateMarketingPerson').modal('hide'); 
+              npEnquiryId = "";  
+              npNextFollowDate = "";                 
+            }
+          }
+        });
+      });
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

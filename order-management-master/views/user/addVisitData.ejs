@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title>Add Visit Data</title>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDhz7sMom0avmQhFYQ8hzd7Su2ND2A4DRw" type="text/javascript"></script>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                  <button type="submit" style="margin-top: 20%;" class="btn btn-lg btn-info btn-block submitData"> <span id="payment-button-amount">Add Visit Data</span> </button>
+              </div>
+            </div>
+          </div>
+          <div id="map" style="width: 500px; height: 400px;"></div>
+
+      </div>
+    </div>
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+      <script type="text/javascript">
+    var locations = [
+      ['Bondi Beach', 22.7378479, 75.8882395]
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: new google.maps.LatLng(22.43451, 75.495988),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  </script>
+</body>
+
+</html>
+<!-- end document-->

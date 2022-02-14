@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title>Add Start Petrol Reading</title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                <form id="enquiryForm">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-header">Add Start Petrol Reading</div>
+                        <div class="card-body">
+                          <div class="card-title">
+                            <h3 class="text-center title-2">Add Start Petrol Reading</h3> </div>
+                          <hr>
+                            <div class="form-group">
+                              <label for="marketingPerson" class=" form-control-label">Select Employee</label>
+                              <select name="empId" id="marketingPerson" class="form-control">
+
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="marketingPerson" class=" form-control-label">Start Reading</label>
+                              <input type="number" name="startReading" class="form-control" placeholder="Enter Start Reading">
+                            </div>
+                            
+                            
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-lg btn-info btn-block submitData"> <span id="payment-button-amount">Submit</span> </button>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+          //Submit Enquiry Data
+          $(document).on('click', '.submitData', function() {
+            event.preventDefault();
+            console.log("2");
+            $.ajax({
+              url: '/create-petrol-reading',
+              method: 'POST',
+              data: $('#enquiryForm').serialize(),
+              success: function(responseSubmit) {
+                if(responseSubmit.msg == 'success') {
+                  alert('Petrol Reading Added');
+                }
+                if(responseSubmit.msg == 'fail') {
+                  alert('Enquiry Already Exist!!');
+                }
+              }
+            });
+          });
+          var selectOption = "";
+
+          function marketingPerson(data, index) {
+            console.log(data.name);
+            console.log('------------');
+            selectOption += '<option value="' + data._id + '">' + data.name + '</option>'
+          }
+          enquiryList();
+
+          function enquiryList() {
+            var modelData = "";
+            $.ajax({
+              url: '/all-user',
+              method: 'get',
+              dataType: 'json',
+              success: function(response) {
+                console.log(response);
+                if(response.msg == 'success') {
+                  response.user.forEach((data, index) => {
+                    marketingPerson(data, index);
+                  });
+                  $('#marketingPerson').html(selectOption);
+                }
+              }
+            })
+          }
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

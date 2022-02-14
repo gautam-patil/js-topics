@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title><%= purchase.name %> Ledger</title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                <div class="table-data__tool">
+                      <div class="table-data__tool-left">
+                          <form class="form-header" id="dateSearchForm">
+                              <input type="date" class="form-control" name="firstDate" value="2021-07-24" required />
+                              <input type="date" class="form-control" name="secondDate" value="2021-08-24" required />
+                                
+                              <button class="au-btn--submit submitData" type="submit" style="margin-left: 10px;">
+                                  <i class="zmdi zmdi-search"></i>
+                              </button>
+                          </form>
+                      </div>
+                  </div>
+                  <br>
+                  <hr>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-header">Ledger Info</div>
+                      <div class="card-body">
+                        <div class="card-title">
+                          <h3 class="text-center title-2">Ledger Info</h3> </div>
+                        <hr>
+
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                            <th>Date</th>
+                            <th>User</th>
+                            <th>Bill No</th>
+                            <th>Amount</th>
+                          </thead>
+                          <tbody id="ledgerTable">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+
+          var amount = 0;
+          var itemTotalAmount = 0;
+          var totalOrderAmount = 0;
+          var packingCharge = 0;
+          var transportCharge = 0;
+          var fittingCharge = 0;
+          var totalAmount = 0;
+          var gst = 0;
+          var gstAmount = 0;
+          var discount = 0;
+          var finalAmount = 0;
+          var ledgerData = "";
+
+          function allLedger(data, index) {
+
+
+           ledgerData += '<tr class="tr-shadow">';
+           ledgerData += '<td>'+data.date+'</td>';
+           ledgerData += '<td>'+data.user[0].name+'</td>';
+
+           //For Bill----------------------------
+           if (data.role == 3) {
+           
+            ledgerData += '<td>'+data.billNo+'</td>'
+
+            amount = 0;
+            itemTotalAmount = 0;
+            totalOrderAmount = 0;
+            packingCharge = 0;
+            transportCharge = 0;
+            fittingCharge = 0;
+            totalAmount = 0;
+            gst = 0;
+            gstAmount = 0;
+            discount = 0;
+            finalAmount = 0;
+
+            //Sale Bill Order List
+
+            for (var i = 0; i < data.stock.length; i++) {
+              
+              amount = data.stock[i].totalSqft * data.stock[i].rate;
+              itemTotalAmount += amount;
+              amount = 0;
+
+            }
+
+              totalOrderAmount += itemTotalAmount;
+              itemTotalAmount = 0;
+
+                packingCharge = data.packingCharge;
+                transportCharge = data.transportCharge;
+                fittingCharge = data.fittingCharge;
+
+                totalAmount = totalOrderAmount + packingCharge + transportCharge + fittingCharge;
+
+
+                gst = data.gst;
+
+                gstAmount = gst * totalAmount;
+
+                discount = data.discount;
+
+                finalAmount = totalAmount + gstAmount - discount;
+
+                ledgerData += '<td>'+finalAmount+'</td>'
+
+           }else{
+            payRec = ""
+
+            switch (data.payRec) {
+
+                case 1:
+                  payRec = "Cash Recieve";
+                  break;
+                case 2:
+                  payRec = "Cash Payment";
+                  break;
+                case 3:
+                  payRec = "Round Off";
+                  break;
+                case 4:
+                  payRec = "Balance Match";
+                  break;
+            }
+            ledgerData += '<td>'+payRec+'</td>';
+            ledgerData += '<td>'+data.amount+'</td>';
+           }
+           ledgerData += '</tr>';
+
+          } 
+
+          $('#dateSearchForm').on("submit", function(event){
+          event.preventDefault();
+            $.ajax({
+              url:'/search-purchase-ledger/<%= purchase._id %>',  
+              method:'POST',  
+              data:$('#dateSearchForm').serialize(),
+              success:function(response){  
+                if(response.msg=='success'){
+
+                  ledgerData = "";
+
+                  response.ledger.forEach((data, index) =>{
+                    allLedger(data, index);
+                  });
+
+                  $('#ledgerTable').html(ledgerData);
+                }
+              }
+            });
+          });
+
+
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

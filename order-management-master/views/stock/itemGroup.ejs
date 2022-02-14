@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("../include/headLink")%>
+        <!-- Title Page-->
+        <title>Item Name</title>
+
+</head>
+<style>    
+    .card-hover .reveal {
+        visibility: hidden;
+        opacity: 0;
+        height: 0;
+        padding: 0;
+    }
+
+    .card-hover:hover .hide {
+        /* visibility: hidden; */
+        opacity: 0;
+        height: 0;
+        padding: 0;
+    }
+
+    .card-hover:hover .reveal {
+        height: auto;
+        visibility: visible;
+        opacity: 10;
+        transition: opacity 1s ease;
+        border-style: dashed;
+        padding: 5%;
+        z-index: 1;
+    }
+</style>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <%- include("../include/navbar") %>
+
+            <!-- PAGE CONTAINER-->
+            <div class="page-container">
+                <!-- HEADER DESKTOP-->
+                <%- include("../include/header")%>
+
+                    <!-- MAIN CONTENT-->
+                    <div class="main-content">
+                        <div class="section__content section__content--p30">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!-- DATA TABLE -->
+                                       <h3 class="title-5 m-b-35" id="titleHeading">Item Group List</h3>
+
+                                       <div class="table-data__tool">
+                                          
+                                          <div id="addName">
+                                            
+                                            
+                                          </div>
+
+                                          <div id="back">
+                                            
+                                            <div class="table-data__tool-right">
+                                                  <button class="au-btn-primary" id="backBtn">
+                                                        <i class="zmdi zmdi-plus-square"></i>Back
+                                                  </button>
+                                            </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive table--no-card m-b-40">
+                                    <table class="table table-borderless table-striped table-earning" id="enquiryDataTable">
+                                        <thead>
+                                            
+                                        </thead>
+                                        <tbody id="userTable"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+
+            <!-- Add Item Group Model -->
+            <div id="addItemGroupName" class="modal fade">
+                 <div class="modal-dialog">
+                    <div class="modal-content">
+                       <div class="modal-header">
+                          <h1 class="modal-title" style="text-align: center;">Add Item Group Name</h1>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                       </div>
+                       <div class="modal-body">
+                          <form id="itemGroupForm">
+                             <div class="form-group">
+                                <label>Group Name</label>
+                                <input type="text" class="form-control" name="itemGroupName" placeholder="Enter Item Group Name">
+                             </div>
+                             <div class="form-group">
+                                <label>About</label>
+                                <input type="text" class="form-control" name="aboutItemGroup" placeholder="About Item Group Name">
+                             </div>
+                             <input type="submit" id="insertUserName" value="Insert" class="btn btn-success" />  
+                          </form>
+                       </div>
+                       <div class="modal-footer">    
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+                       </div>
+                    </div>
+                 </div>
+            </div>
+
+           <!-- Update Item opening -->
+           <!-- Update Enquiry Category -->  
+          <div id="updateItemModel" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" style="text-align: center;"> Update Item</h1>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <form id="updateItemForm">
+                    <div class="form-group">
+                      <label>Opening :</label>
+                      <input type="number" class="form-control" name="opening" step=".01" id="utOpening">
+                    </div>
+                    <div class="form-group">
+                      <label>Minimum Quantity :</label>
+                      <input type="number" class="form-control" name="minimumQuantity" step=".01" id="utQuantity">
+                    </div>
+                    <input type="text" id="utItemId" name="itemId">
+                   <!-- <p id="fdEnquiryId"></p> -->
+                   <input type="submit" id="insert1" value="Insert" class="btn btn-success" />  
+                  </form>
+              </div>
+                <div class="modal-footer">    
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+                </div>
+              </div>
+            </div>
+          </div>
+
+            <!-- Add Item Name Model -->
+            <div id="addItemName" class="modal fade">
+                 <div class="modal-dialog">
+                    <div class="modal-content">
+                       <div class="modal-header">
+                          <h1 class="modal-title" style="text-align: center;">Add Item Name</h1>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                       </div>
+                       <div class="modal-body">
+                          <form id="itemForm">
+                             <div class="form-group">
+                                <label>Item Name</label>
+                                <input type="text" class="form-control" name="itemName" placeholder="Enter Item Name" required>
+                             </div>
+                             <div class="form-group">
+                                <label>Sub Item Name</label>
+                                <input type="text" class="form-control" name="subItemName" placeholder="Enter Sub Item Name" required>
+                             </div>
+                             <div class="form-group">
+                                <label>About Item</label>
+                                <input type="text" class="form-control" name="aboutItem" placeholder="About Item Name">
+                             </div>
+                             <div class="form-group">
+                                <label>Group Name</label>
+                                <select name="groupNameId" id="groupName" class="form-control" required>
+                                </select>
+                             </div>
+                             <div class="form-group">
+                                <label>Colour</label>
+                                <select name="colourId" id="colour" class="form-control">
+                                </select>
+                             </div>
+                             <div class="form-group">
+                                <label>Size</label>
+                                <select name="sizeId" id="size" class="form-control">
+                                </select>
+                             </div>
+                             <div class="form-group">
+                                <label>Opening</label>
+                                <input type="number" class="form-control" name="opening" placeholder="Enter Opening Qty" value="0">
+                             </div>
+                             <div class="form-group">
+                                <label>Rate</label>
+                                <input type="number" class="form-control" name="rate" placeholder="About Rate" step=".01" value="0">
+                             </div>
+                             <div class="form-group">
+                                <label>Sq. Ft.</label>
+                                <input type="number" class="form-control" name="sqFt" placeholder="Enter Sq. Ft." step=".01" value="0">
+                             </div>
+                             <div class="form-group">
+                                <label>Minimum Qty</label>
+                                <input type="number" class="form-control" name="minimumQuantity" placeholder="Enter Minimum Qty" value="0">
+                             </div>
+                             <div class="form-group">
+                                <label>Unit</label>
+                                <input type="text" class="form-control" name="unit" placeholder="Enter Unit">
+                             </div>
+                             <div class="form-group">
+                                <label>Thick</label>
+                                <input type="text" class="form-control" name="thick" placeholder="Enter Thick">
+                             </div>
+                             <div class="form-group">
+                                <label>Size</label>
+                                <input type="number" class="form-control" name="size" placeholder="Enter Size">
+                             </div>
+                             <div class="form-group">
+                                <label>Regular</label>
+                                <select name="regular" class="form-control">
+                                  <option value="0">No</option>
+                                  <option value="1">Yes</option>
+                                </select>
+                             </div>
+                             <div class="form-group">
+                                <label>Fabrication</label>
+                                <select name="fabrication" class="form-control">
+                                  <option value="0">No</option>
+                                  <option value="1">Yes</option>
+                                </select>
+                             </div>
+                             <div class="form-group">
+                                <label>Quantity/Sqft.</label>
+                                <select name="quantitySqft" class="form-control">
+                                  <option value="1">Yes (Calclulation By Quantity)</option>
+                                  <option value="0">No (Calclulation By Sqft)</option>
+                                </select>
+                             </div>
+                             <input type="hidden" id="itemGroupId" name="itemGroupId">
+                             <input type="submit" id="insertUserName" value="Insert" class="btn btn-success" />  
+                          </form>
+                       </div>
+                       <div class="modal-footer">    
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+                       </div>
+                    </div>
+                 </div>
+            </div>
+
+            <!-- Jquery JS-->
+            <%- include("../include/jsLink")%>
+
+
+                <script>
+                    $(document).ready(function () {
+
+                         var itemGroupData = "";
+                        var fl = 0;
+
+                        function allItemGroup(data, index) {
+
+                            itemGroupData += '<tr>';
+                            itemGroupData += '<td>'+(index + 1)+'</td>';
+                            itemGroupData += '<td><button type="button" data-id="'+data._id+'" data-itemgroupname="'+data.itemGroupName+'" class="btn btn-info itemGroupBtn">'+(data.itemGroupName)+'</button></td>';
+                            itemGroupData += '<td>'+(data.aboutItemGroup)+'</td>';
+                            itemGroupData += '<td></td>';
+
+                            itemGroupData += '</tr>';
+
+
+                        }
+
+                        function allItemName(data, index) {
+
+                            itemGroupData += '<tr>';
+                            itemGroupData += '<td><div class="table-data-feature"><button type="button" class="item updateItem" data-id="'+data._id+'" data-itemname="'+data.itemName+'" data-about="'+data.aboutItem+'" data-opening="'+data.opening+'" data-rate="'+data.rate+'" data-sqft="'+data.sqFt+'" data-minimumquantity="'+data.minimumQuantity+'" data-unit="'+data.unit+'" data-toggle="tooltip" data-placement="top" title="Update Unit"><i class="zmdi zmdi-edit"></i></button><button type="button" class="item deleteItem" data-id="'+data._id+'" data-toggle="tooltip" data-placement="top" title="Delete Stock"><i class="zmdi zmdi-delete"></i></button></div></td>';
+                            itemGroupData += '<td>'+(index + 1)+'</td>';
+                            itemGroupData += '<td>'+(data.itemName)+'</td>';
+                            itemGroupData += '<td>'+(data.groupName[0].groupName)+'</td>';
+                            itemGroupData += '<td>'+(data.aboutItem)+'</td>';
+                            itemGroupData += '<td>'+(data.opening)+'</td>';
+                            itemGroupData += '<td>'+(data.rate)+'</td>';
+                            itemGroupData += '<td>'+(data.sqFt)+'</td>';
+                            itemGroupData += '<td>'+(data.minimumQuantity)+'</td>';
+                            itemGroupData += '<td>'+(data.unit)+'</td>';
+
+                            itemGroupData += '</tr>';
+
+
+                        }
+
+                        //Model for Edit Item farication yes
+                        $(document).on('click', '.updateItem', function(){  
+                          var utItemId = $(this).data("id");  
+                          var utItemName = $(this).data("itemname");
+                          var utAbout = $(this).data("about");
+                          var utOpening = $(this).data("opening");
+                          var utQuantity = $(this).data("minimumquantity");
+                          var utRate = $(this).data("rate");
+                          $('#updateItemModel').modal('show');
+                          $('#utItemName').html(utItemName);
+                          $('#utOpening').val(utOpening);
+                          $('#utQuantity').val(utQuantity);
+                          $('#utRate').val(utRate);
+                          $('#utItemId').val(utItemId);
+
+                        });
+
+                        //Submit Edit Item farication yes
+                        $('#updateItemForm').on("submit", function(event){
+                          event.preventDefault();
+                          $.ajax({
+                            url:'/update-item-name',  
+                            method:'POST',  
+                            data:$('#updateItemForm').serialize(),
+                            success:function(followupResponse){  
+                              if(followupResponse.msg=='success'){
+
+                                $('#updateItemForm')[0].reset();  
+                                $('#updateItemModel').modal('hide');           
+                              }
+                            }
+                          });
+                        });
+
+                        itemGroupAPI();
+
+                        function itemGroupAPI(){
+
+                          let thead = '<tr><th>S.No</th><th>Item Group</th><th>About</th><th>Action</th></tr>'
+
+                          $('thead').html(thead);
+
+                          $.ajax({
+                              url: '/all-item-group',
+                              method: 'get',
+                              dataType: 'json',
+                              success: function (response) {
+                                  if (response.msg == 'success') {
+
+                                    itemGroupData = "";
+
+                                      response.itemGroup.forEach((data, index) => {
+                                          allItemGroup(data, index);
+                                      });
+                                      $('tbody').html(itemGroupData);
+
+                                  }
+                              }
+                          })
+
+                          let addName = '<div class="table-data__tool-right"><button class="au-btn-primary" data-toggle="modal" data-target="#addItemGroupName"><i class="zmdi zmdi-plus-square"></i>Add Item Group</button></div>'
+
+                            $('#addName').html(addName);
+                        }
+
+                        $(document).on('click', '#backBtn', function(){  
+
+                            itemGroupAPI();
+                        })
+
+                        $(document).on('click', '.itemGroupBtn', function(){  
+
+                            var itemGroupId = $(this).data("id");
+                            var itemGroupName = $(this).data("itemgroupname");
+
+                            let thead = '<tr><th>Edit</th><th>S.No</th><th>Item Name</th><th>Group Name</th><th>About</th><th>Opening</th><th>Rate</th><th>Sq. Ft.</th><th>Min. Qty</th><th>Unit</th><th>Action</th></tr>'
+
+                            $('thead').html(thead);
+
+                            $.ajax({
+                              url: '/all-item-name/'+itemGroupId,
+                              method: 'get',
+                              dataType: 'json',
+                              success: function (response) {
+                                  if (response.msg == 'success') {
+
+                                    itemGroupData = "";
+
+                                      response.itemName.forEach((data, index) => {
+                                          allItemName(data, index);
+                                      });
+                                      $('tbody').html(itemGroupData);
+
+
+
+                                  }
+                              }
+                            })
+                            $('#titleHeading').html('Item List of '+itemGroupName);
+                            $('#itemGroupId').val(itemGroupId);
+
+                            let addName = '<div class="table-data__tool-right"><button class="au-btn-primary" data-toggle="modal" data-target="#addItemName"><i class="zmdi zmdi-plus-square"></i>Add Item Name</button></div>'
+
+                            $('#addName').html(addName);
+
+                      });
+
+                      // Submit Item Group Data
+                      $('#itemGroupForm').on("submit", function(event){
+                         event.preventDefault();
+                         $.ajax({
+                            url:'/create-item-group',  
+                            method:'POST',  
+                            data:$('#itemGroupForm').serialize(),
+                            success:function(userResponse){  
+                               if(userResponse.msg=='success'){
+                                 alert('Item Group Inserted');   
+                                 $('#addItemGroupName').modal('hide');                   
+                               }
+                            }
+                         });
+                      }); 
+
+                      // Submit Item Name Data
+                      $('#itemForm').on("submit", function(event){
+                         event.preventDefault();
+                         $.ajax({
+                            url:'/create-item-name',  
+                            method:'POST',  
+                            data:$('#itemForm').serialize(),
+                            success:function(userResponse){  
+                               if(userResponse.msg=='success'){
+                                 alert('Item Name Inserted');   
+                                 $('#addItemName').modal('hide');                   
+                               }
+                            }
+                         });
+                      }); 
+
+                      var selectColourOption = '<option value=""> Select Colour</option>';
+
+                      function colour(data, index) {
+                        selectColourOption += '<option value="' + data._id + '">' + data.colourName + '</option>'
+                      }
+
+                      var modelData = "";
+                      $.ajax({
+                        url: '/all-colour',
+                        method: 'get',
+                        dataType: 'json',
+                        success: function(response) {
+                          if(response.msg == 'success') {
+                            response.colour.forEach((data, index) => {
+                              colour(data, index);
+                            });
+                            $('#colour').html(selectColourOption);
+                          }
+                        }
+                      })
+
+                      var selectGroupOption = '<option value=""> Select Group</option>';
+
+                      function group(data, index) {
+                        selectGroupOption += '<option value="' + data._id + '">' + data.groupName + '</option>'
+                      }
+
+                      var modelData = "";
+                      $.ajax({
+                        url: '/all-group-list',
+                        method: 'get',
+                        dataType: 'json',
+                        success: function(response) {
+                          if(response.msg == 'success') {
+                            response.group.forEach((data, index) => {
+                              group(data, index);
+                            });
+                            $('#groupName').html(selectGroupOption);
+                          }
+                        }
+                      })
+
+                      var selectSizeOption = '<option value=""> Select Size</option>';
+
+                      function size(data, index) {
+                        selectSizeOption += '<option value="' + data._id + '">' + data.size + '</option>'
+                      }
+
+                      var modelData = "";
+                      $.ajax({
+                        url: '/all-size',
+                        method: 'get',
+                        dataType: 'json',
+                        success: function(response) {
+                          if(response.msg == 'success') {
+                            response.size.forEach((data, index) => {
+                              size(data, index);
+                            });
+                            $('#size').html(selectSizeOption);
+                          }
+                        }
+                      })
+
+                      $(document).on('click', '.deleteItem', function(){  
+
+                            var dItemId = $(this).data("id");  
+                            
+                            event.preventDefault();
+                            $.ajax({
+                              url:'/delete-item-data',  
+                              method:'POST',
+                              data:{Id:dItemId},
+                              success:function(response){  
+                                if(response.msg=='success'){
+                                    
+                                    alert('Item Delete');             
+                                }else{
+
+                                    alert('Item Use in Order');
+                                }
+                              }
+                            });
+
+                            dItemId = "";
+
+                          });
+
+                    });
+
+                </script>
+
+</body>
+
+</html>
+<!-- end document-->

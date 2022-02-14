@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title>CO Entry</title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                <h3 class="text-center title-2">Final Confirm Order Entry</h3>
+                <form action="/create-co" method="POST">
+                  <div class="row">
+                    <div class="col-md-6">
+                          <hr>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Order No.:- </label>
+                              <input type="text" placeholder="Enter Order No." name="orderNo" class="form-control">
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Party Name:- </label>
+                              <%= enquiry[0].shopName %>
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Transport:- </label>
+                              <select class="form-control" id="transport" name="transport">
+                                <option value="Self">Self</option>
+                                <option value="Local">Local</option>
+                                <option value="GNT">GNT</option>
+                                <option value="Transport">Transport</option>
+                                
+                              </select>
+                            </div>
+                            <div id="transportDetail">
+                              
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Packing:- </label>
+                              <select class="form-control" id="packing" name="packing">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                                
+                              </select>
+                            </div>
+                            <div id="packingDetail">
+                              
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Fabricate Date:- </label>
+                              <input type="date" name="fabricateDate" class="form-control">
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Fabricate Urgent:- </label>
+                              <select class="form-control" id="fabricate" name="fabricateUrgent">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                                
+                              </select>
+                            </div>
+                            <div id="fabricateUrgent">
+                              
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Dispatch Date:- </label>
+                              <input type="date" name="dispatchDate" class="form-control">
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Dispatch Urgent:- </label>
+                              <select class="form-control" id="urgent" name="dispatchUrgentCO">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                                
+                              </select>
+                            </div>
+                            <div id="urgentDetail">
+                              
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Hardware:- </label>
+                              <select class="form-control" name="hardware">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                                
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Fitting:- </label>
+                              <select class="form-control" name="fitting">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                                
+                              </select>
+                            </div>
+                            <input type="hidden" name="partyId" value="<%= enquiry[0]._id %>">
+                            <hr>
+                            <h3>Enter Item Details</h3>
+                            <hr>
+                            </div>
+                  </div>
+                            <div class="table-responsive m-b-40">
+                                    <table class="table table-borderless table-data3" id="enquiryDataTable">
+                                        <thead>
+                                            <th style="width: 5%;">S.No</th>
+                                            <th>Stock Group</th>
+                                            <th>Stock Item</th>
+                                            <th style="width: 15%">Size</th>
+                                            <th style="width: 20%">Amount</th>
+                                        </thead>
+                                        <tbody id="addItem">
+                                            <tr>
+                                              <td>
+                                                1
+                                              </td>
+                                              <td>
+                                                <select class="form-control-sm form-control itemGroup" data-count="0" id="itemGroup0" name="itemGroupId[0]" required>
+                                                  
+                                                </select>
+                                              </td>
+                                              <td>
+                                                <select class="form-control-sm form-control" id="itemName0" name="itemId[0]">
+                                                  
+                                                </select>
+                                              </td>
+                                              <td>
+                                                <input type="text" id="input-small" class="input-sm form-control-sm form-control" name="size[0]" placeholder="Enter Size">
+                                              </td>
+                                              <td>
+                                                <select class="input-sm form-control-sm form-control" name="fabricateRole[0]">
+                                                  <option value="">Select Fabricate</option>
+                                                  <option value="1">Yes</option>
+                                                  <option value="0">No</option>
+                                                  
+                                                </select>
+                                              </td>  
+                                            </tr>
+
+                                            <tr>
+                                              <td id="addItemButton1">
+                                                <div class="table-data-feature">
+                                                  <button class="item add" type="button" data-placement="top"><i class="zmdi zmdi-plus-square"></i></button>
+                                                </div>
+                                              </td>
+                                              <td>
+                                                <input type="number" id="quantity0" class="input-sm form-control-sm form-control" step=".01" name="quantity[0]" placeholder="Enter Quantity">
+                                              </td>
+                                              <td>
+                                                <input type="number" id="totalSqft0" class="input-sm form-control-sm form-control change" data-count="0" step=".01" name="totalSqft[0]" placeholder="Enter Total Sq.Ft.">
+                                              </td>
+                                              <td>
+                                                <input type="number" id="rate0" class="input-sm form-control-sm form-control change" step=".01" data-count="0"  name="rate[0]" placeholder="Enter Rate">
+                                              </td>
+                                              <td>
+                                                <input type="number" class="input-sm form-control-sm form-control" placeholder="Amount" id="amount0" disabled>
+                                              </td>
+                                            </tr>
+                                            </tbody>
+                                            <tbody>
+                                            
+                                              <tr style=" border-top: 2px dashed #000;">
+                                                <td colspan="4" style="text-align: left; font-size: 15px;">
+                                                  <b>Total Amount:</b>
+                                                </td>
+                                                <td>
+                                                  <input type="number" class="input-sm form-control-sm form-control" placeholder="Total Amount" id="itemTotalAmount" disabled>
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="4" style="text-align: left; font-size: 15px;">
+                                                  <b>Packing Charge:</b>
+                                                </td>
+                                                <td>
+                                                  <input type="number" id="packingCharge" class="input-sm form-control-sm form-control calculationChange" step=".01" name="packingCharge" placeholder="Enter Packaging Charge" value="0">
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="4" style="text-align: left; font-size: 15px;">
+                                                  <b>Transport Charge:</b>
+                                                </td>
+                                                <td>
+                                                  <input type="number" id="transportCharge" class="input-sm form-control-sm form-control calculationChange" name="transportCharge" step=".01" placeholder="Enter Transport Charge" value="0">
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="4" style="text-align: left; font-size: 15px;">
+                                                  <b>Fitting Charge:</b>
+                                                </td>
+                                                <td>
+                                                  <input type="number" id="fittingCharge" class="input-sm form-control-sm form-control calculationChange" name="fittingCharge" step=".01" placeholder="Enter Fitting Charge" value="0">
+                                                </td>
+                                              </tr>
+                                              <tr style=" border-top: 2px dashed #000;">
+                                                <td colspan="4" style="text-align: left; font-size: 15px;">
+                                                  <b>Total Amount:</b>
+                                                </td>
+                                                <td>
+                                                  <input type="number" class="input-sm form-control-sm form-control" placeholder="Total Amount" id="totalAmount" disabled>
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="3" style="text-align: left; font-size: 15px;">
+                                                  <b>GST:</b>
+                                                </td>
+                                                <td style="text-align: right; font-size: 15px;">
+                                                  <select class="form-control-sm form-control calculationChange" name="gst" id="gst">
+                                                    
+                                                    <option value="0">0</option>
+                                                    <option value="0.05">5%</option>
+                                                    <option value="0.12">12%</option>
+                                                    <option value="0.18">18%</option>
+                                                  </select>
+                                                </td>
+                                                <td>
+                                                  <input type="number" class="input-sm form-control-sm form-control" placeholder="GST" step='.01' id="gstAmount" disabled>
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="4" style="text-align: left; font-size: 15px;">
+                                                  <b>Discount:</b>
+                                                </td>
+                                                <td>
+                                                  <input type="number" id="discount" class="input-sm form-control-sm form-control calculationChange" name="discount" step=".01" placeholder="Enter Discount" value="0">
+                                                </td>
+                                              </tr>
+                                              <tr style="border-top: 2px solid #000; border-bottom: 2px solid #000;">
+                                                <td colspan="4" style="text-align: left; font-size: 15px;">
+                                                  <b>Total Amount:</b>
+                                                </td>
+                                                <td>
+                                                  <input type="number" class="input-sm form-control-sm form-control" placeholder="Final Total Amount" id="finalAmount" disabled>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          
+                                    </table>
+                                </div>
+                                <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Comment:- </label>
+                              <input type="text" class="form-control" name="commentCO" placeholder="Enter Comment">
+                            </div>
+                    
+                  <input type="hidden" name="totalItem" id="totalItemNo" value="0">
+                  <button type="submit" class="btn btn-lg btn-info btn-block submitData"> <span id="payment-button-amount">Submit</span> </button>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+
+
+
+        var count = 0;
+        var itemData = "";
+        var buttonData = "";
+
+        $(document).on('click', '.remove', function(){ 
+
+          var itemRowCount = $(this).data("count");
+
+          $('.item'+itemRowCount).html(" ");
+
+          calculation();
+
+        })
+
+        $(document).on('click', '.add', function(){ 
+
+          count++;
+
+          itemData += '<tr class="item'+count+'">'
+          itemData += '<td>'+(count + 1)+'</td>'
+          itemData += '<td><select class="form-control-sm form-control itemGroup" data-count="'+count+'" id="itemGroup'+count+'" name="itemGroupId['+count+']"></select></td>'
+          
+          itemGroupList();
+
+          itemData += '<td><select class="form-control-sm form-control"  id="itemName'+count+'" name="itemId['+count+']"></select></td>'
+
+          itemData += '<td><input type="text" id="input-small" class="input-sm form-control-sm form-control" name="size['+count+']" placeholder="Enter Size"></td>'
+          
+          itemData += '<td><select class="input-sm form-control-sm form-control" name="fabricateRole['+count+']"><option value="">Select Fabricate</option><option value="1">Yes</option><option value="0">No</option></select></td>'
+
+          itemData += '</tr>'
+          itemData += '<tr class="item'+count+'">'
+          itemData += '<td id="addItemButton'+(count+1)+'"><div class="table-data-feature"><button class="item add" type="button" data-placement="top"><i class="zmdi zmdi-plus-square"></i></button></div></td>'
+
+          itemData += '<td><input type="number" id="quantity'+count+'" class="input-sm form-control-sm form-control" step=".01" name="quantity['+count+']" placeholder="Enter Quantity"></td>'
+
+          itemData += '<td><input type="number" id="totalSqft'+count+'" class="input-sm form-control-sm form-control change" step=".01" data-count="'+count+'" name="totalSqft['+count+']" placeholder="Enter Total Sq.Ft."></td>'
+
+          itemData += '<td><input type="number" id="rate'+count+'" class="input-sm form-control-sm form-control change" step=".01" data-count="'+count+'" name="rate['+count+']" placeholder="Enter Rate"></td>'
+          
+          itemData += '<td><input type="number" class="input-sm form-control-sm form-control" placeholder="Amount" id="amount'+count+'" disabled></td>'                                            
+          itemData += '</tr>'   
+
+          if (count == 1) {
+
+            buttonData = "";
+          } else {
+
+            buttonData += '<div class="table-data-feature">';
+            buttonData += '<button class="item remove" type="button" data-count="'+(count-1)+'" data-placement="top"><i class="zmdi zmdi-minus-square"></i></button>'
+            buttonData += '</div>'
+          }  
+
+
+          $('#addItem').append(itemData);
+          $('#addItemButton'+count).html(buttonData);
+          $('#totalItemNo').val(count);
+
+
+          itemData = "";   
+          buttonData = "";
+                     
+        });
+
+          itemGroupList();
+
+      //Item Group
+
+      var selectItemGroup = '<option>Select Item Group</option>';
+
+      function itemGroup(data, index) {
+
+        selectItemGroup += '<option value="' + data._id + '">' + data.itemGroupName + '</option>'
+      }
+
+      
+
+      function itemGroupList() {
+        var modelData = "";
+        $.ajax({
+          url: '/all-item-group',
+          method: 'get',
+          dataType: 'json',
+          success: function(response) {
+            if(response.msg == 'success') {
+              selectItemGroup = "'<option>Select Item Group</option>'";
+              response.itemGroup.forEach((data, index) => {
+                itemGroup(data, index);
+              });
+              $('#itemGroup'+count).html(selectItemGroup);
+            }
+          }
+        })
+      }
+
+      //Item Name
+      var selectItemName = "";
+
+      function itemName(data, index) {
+
+        selectItemName += '<option value="' + data._id + '">' + data.itemName + '</option>'
+      }
+
+      $(document).on('change', '.itemGroup', function(){
+
+        console.log('1');
+
+        var itemGroupId = $(this).val();
+        var itemGroupCount = $(this).data("count");  
+
+        $.ajax({
+          url:'/all-item-name/'+itemGroupId,
+          method:'get',
+          dataType: 'json',
+          success:function(response)
+          {
+            selectItemName = "";
+            response.itemName.forEach((data, index) => {
+              itemName(data, index);
+            });
+            $('#itemName'+itemGroupCount).html(selectItemName);
+          }
+        })
+      });
+
+          var itemNo = 0;
+          var itemDetail = "";
+
+          //Get transport vvalue
+          $('#transport').on('change', function() {
+            let transport = this.value;
+            if (transport == "Transport") {
+
+              transport = '<div class="form-group"><label for="currentWorking" class=" form-control-label">Transport Name</label><input type="text" id="currentWorking" name="transportName" placeholder="Enter Transport Name" value="<%= enquiry[0].transportName%>" class="form-control"> </div><div class="form-group"><label for="currentWorking" class=" form-control-label">Transport Number</label><input type="number" id="currentWorking" name="transportNumber" placeholder="Enter Transport Number" value="<%= enquiry[0].transportNumber%>" class="form-control"> </div>'
+
+              $('#transportDetail').html(transport);
+            }else{
+
+              $('#transportDetail').html(" ");
+            }
+
+          });
+
+          //Get packing value
+          $('#packing').on('change', function() {
+            let packing = this.value;
+            if (packing == "Yes") {
+
+              packing = '<div class="form-group"><label for="enquiryDate" class="control-label mb-1">Choose Packing:- </label><select class="form-control" name="packingDetail"><option value="Plain">Plain</option><option value="Carboard">Carboard</option><option value="Bubble">Bubble</option></select></div>'
+
+              $('#packingDetail').html(packing);
+            }else{
+
+              $('#packingDetail').html(" ");
+            }
+
+          });
+
+          //Get urgent value
+          $('#urgent').on('change', function() {
+            let urgent = this.value;
+            if (urgent == "Yes") {
+
+              urgent = '<div class="form-group"><label for="enquiryDate" class="control-label mb-1">Choose FP:- </label><select class="form-control" name="fpDispatchCO"><option value="1">1</option><option value="2">2</option></select></div>'
+
+              $('#urgentDetail').html(urgent);
+            }else{
+
+              $('#urgentDetail').html(" ");
+            }
+
+          });
+
+          //Get fabricate value
+          $('#fabricate').on('change', function() {
+            let fabricate = this.value;
+            if (fabricate == "Yes") {
+
+              fabricate = '<div class="form-group"><label for="enquiryDate" class="control-label mb-1">Choose Fab. FP:- </label><select class="form-control" name="fpFabricate"><option value="1">1</option><option value="2">2</option></select></div>'
+
+              $('#fabricateUrgent').html(fabricate);
+            }else{
+
+              $('#fabricateUrgent').html(" ");
+            }
+
+          });
+
+          //Amount Calculation
+
+          var quantity = 0;
+          var rate = 0;
+          var amount = 0;
+          var itemAmount = 0;
+          var itemTotalAmount = 0;
+          var packingCharge = 0;
+          var transportCharge = 0;
+          var fittingCharge = 0;
+          var totalAmount = 0;
+          var gst = 0;
+          var gstAmount = 0;
+          var discount = 0;
+          var finalAmount = 0;
+
+
+          $(document).on('change', '.change', function(){
+                
+                var changeCount = $(this).data("count");  
+
+                quantity = parseFloat(document.getElementById('totalSqft'+changeCount).value);
+                rate = parseFloat(document.getElementById('rate'+changeCount).value);
+
+                amount = (quantity*rate).toFixed(2);
+                $('#amount'+changeCount).val(amount);
+
+                calculation();
+
+                
+
+            });
+
+          $(document).on('change', '.calculationChange', function(){
+
+            calculation();
+          });
+
+          function calculation(){
+
+              for (var i = 0; i <= count; i++) {
+
+                  itemAmount = parseFloat(document.getElementById('amount'+i).value);
+
+                  if (Number.isNaN(itemAmount)) {
+
+                    itemAmount = 0;
+                  }
+
+                  itemTotalAmount = parseFloat((itemTotalAmount + itemAmount).toFixed(2));
+                  itemAmount = 0;
+                  
+                }
+                $('#itemTotalAmount').val(itemTotalAmount);
+
+                packingCharge = parseFloat(document.getElementById('packingCharge').value);
+                transportCharge = parseFloat(document.getElementById('transportCharge').value);
+                fittingCharge = parseFloat(document.getElementById('fittingCharge').value);
+
+                totalAmount = parseFloat((itemTotalAmount + packingCharge + transportCharge + fittingCharge).toFixed(2));
+
+                $('#totalAmount').val(totalAmount);
+
+                gst = parseFloat(document.getElementById('gst').value);
+
+                gstAmount = parseFloat((gst * totalAmount).toFixed(2));
+
+                console.log(typeof(gstAmount))
+
+                $('#gstAmount').val(gstAmount);
+
+                discount = parseFloat(document.getElementById('discount').value);
+
+                finalAmount = totalAmount + gstAmount - discount;
+
+                $('#finalAmount').val(finalAmount);
+
+                quantity = 0;
+                rate = 0;
+                amount = 0;
+                itemAmount = 0;
+                itemTotalAmount = 0;
+                packingCharge = 0;
+                transportCharge = 0;
+                fittingCharge = 0;
+                totalAmount = 0;
+                gst = 0;
+                gstAmount = 0;
+                discount = 0;
+                finalAmount = 0;
+          }
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

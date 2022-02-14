@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>Show Enquiry Followup</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Enquiry table</h3>
+                <% if ( role  == 1 ){ %>
+                  <form id="searchEnquiryForm">
+                      <div class="row mb-0">
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search....:</label>
+                                  <input type="text" class="form-control" placeholder="Enter Shop Name/MobileNo." name="searchTerm">
+                               </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Enquiry Date :</label>
+                                  <input type="date" class="form-control" name="enquiryDate">
+                               </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Enquiry Status</label>
+                                  <select name="enquiryStatus" id="enquiryStatus" class="form-control">
+                                    <option value="">Select Enquiry Status</option>
+                                    <option value="Lead">Lead</option>
+                                    <option value="Enquiry">Enquiry</option>
+                                    <option value="New Dealer">New Dealer</option>
+                                    <option value="Confirm Dealer">Confirm Dealer</option>
+                                    <option value="Not Confirm">Not Confirm</option>
+                                  </select>
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search State</label>
+                                  <input type="text" class="form-control" placeholder="Enter State" name="state">
+                               </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search City</label>
+                                  <input type="text" class="form-control" placeholder="Enter City" name="city">
+                               </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Mkt. Person</label>
+                                  <select name="marketingPerson" id="marketingPerson" class="form-control">
+
+                                  </select>
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Shop Type</label>
+                                  <select name="shopType" id="shopType" class="form-control">
+                                    <option value="">Select Shop Type</option>
+                                    <option value="Existing Dealer">Existing Dealer</option>
+                                    <option value="Enquiry for Dealer">Enquiry for Dealer</option>
+                                    <option value="Faricator">Faricator</option>
+                                    <option value="Wholeseller">Wholeseller</option>
+                                    <option value="Customer">Customer</option>
+                                    <option value="Builder">Builder</option>
+                                    <option value="Architecture">Architecture</option>
+                                  </select>
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Select Shop Category :</label>
+                                  <select name="category" id="category" class="form-control">
+                                    <option value="">Select Shop Category</option>
+                                    <option value="VIP">VIP</option>
+                                    <option value="D+++">D+++</option>
+                                    <option value="D++">D++</option>
+                                    <option value="D+">D+</option>
+                                    <option value="D">D</option>
+                                    <option value="D-">D-</option>
+                                  </select>
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Followup Date :</label>
+                                  <input type="date" class="form-control" name="followupDate">
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Next Followup Date :</label>
+                                  <input type="date" class="form-control" name="nextFollowupDate">
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                              <button class="btn btn-primary btn-sm submitClassFormData" type="submit" name="search">Search</button>
+                          </div>
+                      </div>    
+                  </form> 
+                  <div class="row mb-0">
+                      <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                          <button class="btn btn-success btn-sm" id="exporttable">Export</button>
+                      </div>
+                  </div>
+                <% } if ( role  == 2 ){ %>  
+                  <form id="searchEnquiryForm">
+                      <div class="row mb-0">
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Search....:</label>
+                                  <input type="text" class="form-control" placeholder="Enter Shop Name/MobileNo." name="searchTerm">
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Enquiry Date :</label>
+                                  <input type="date" class="form-control" name="enquiryDate">
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Enquiry Status</label>
+                                  <select name="enquiryStatus" id="enquiryStatus" class="form-control">
+                                    <option value="">Select Enquiry Status</option>
+                                    <option value="Lead">Lead</option>
+                                    <option value="Enquiry">Enquiry</option>
+                                    <option value="New Dealer">New Dealer</option>
+                                    <option value="Confirm Dealer">Confirm Dealer</option>
+                                    <option value="Not Confirm">Not Confirm</option>
+                                  </select>
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Shop Type</label>
+                                  <select name="shopType" id="shopType" class="form-control">
+                                    <option value="">Select Shop Type</option>
+                                    <option value="Existing Dealer">Existing Dealer</option>
+                                    <option value="Enquiry for Dealer">Enquiry for Dealer</option>
+                                    <option value="Faricator">Faricator</option>
+                                    <option value="Wholeseller">Wholeseller</option>
+                                    <option value="Customer">Customer</option>
+                                    <option value="Builder">Builder</option>
+                                    <option value="Architecture">Architecture</option>
+                                  </select>
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Select Shop Category :</label>
+                                  <select name="category" id="category" class="form-control">
+                                    <option value="">Select Shop Category</option>
+                                    <option value="VIP">VIP</option>
+                                    <option value="D+++">D+++</option>
+                                    <option value="D++">D++</option>
+                                    <option value="D+">D+</option>
+                                    <option value="D">D</option>
+                                    <option value="D-">D-</option>
+                                  </select>
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Followup Date :</label>
+                                  <input type="date" class="form-control" name="followupDate">
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Next Followup Date :</label>
+                                  <input type="date" class="form-control" name="nextFollowupDate">
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                              <button class="btn btn-primary btn-sm submitClassFormData" type="submit" name="search">Search</button>
+                          </div>
+                      </div>    
+                  </form> 
+                <% } %>
+
+                <div class="table-data__tool">
+                  <div class="table-responsive table--no-card m-b-40">
+                    <table class="table table-borderless table-striped table-earning" id="dataTable">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>Shop Name</th>
+                          <th>State</th>
+                          <th>City</th>
+                          <th>Mobile</th>
+                          <th>Mkt. By</th>
+                          <th>Enquiry Status</th>
+                          <th>followup Date 5</th>
+                          <th>Followup 5</th>
+                          <th>Next Followup Date 5</th>
+                          <th>followup Date 4</th>
+                          <th>Followup 4</th>
+                          <th>Next Followup Date 4</th>
+                          <th>followup Date 3</th>
+                          <th>Followup 3</th>
+                          <th>Next Followup Date 3</th>
+                          <th>followup Date 2</th>
+                          <th>Followup 2</th>
+                          <th>Next Followup Date 2</th>
+                          <th>followup Date 1</th>
+                          <th>Followup 1</th>
+                          <th>Next Followup Date 1</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- END DATA TABLE -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    //Excel export
+    $("#exporttable").click(function(e){
+      e.preventDefault();
+      ResultsToTable();
+    });
+
+    function ResultsToTable(){    
+        $("#dataTable").table2excel({
+            exclude: ".noExl",
+            name: "Results"
+        });
+    }
+
+    var selectOption = '<option value=""> Search for MKT Person</option>';
+
+    function marketingPerson(data, index) {
+      selectOption += '<option value="' + data._id + '">' + data.name + '</option>'
+    }
+
+    var modelData = "";
+    $.ajax({
+      url: '/all-user',
+      method: 'get',
+      dataType: 'json',
+      success: function(response) {
+        if(response.msg == 'success') {
+          response.user.forEach((data, index) => {
+            marketingPerson(data, index);
+          });
+          $('#marketingPerson').html(selectOption);
+          $('#mpMarketingPerson').html(selectOption);
+        }
+      }
+    })
+
+    var enquiryData = "";
+    var fl = 0;
+
+    var followupDate1 = "-------";
+    var comment1 = "-------";
+    var nextFollowupDate1 = "-------";
+
+    var followupDate2 = "-------";
+    var comment2 = "-------";
+    var nextFollowupDate2 = "-------";
+
+    var followupDate3 = "-------";
+    var comment3 = "-------";
+    var nextFollowupDate3 = "-------";
+
+    var followupDate4 = "-------";
+    var comment4 = "-------";
+    var nextFollowupDate4 = "-------";
+
+    var followupDate5 = "-------";
+    var comment5 = "-------";
+    var nextFollowupDate5 = "-------";
+
+    function allEnquiry(data, index) {
+
+
+      if (data.followups) {
+
+        fl = data.followups.length;
+
+        if (data.followups[fl-1] != "") {
+
+          followupDate5 = data.followups[fl-1].followupDate;                    
+          comment5 = data.followups[fl-1].comment;
+          nextFollowupDate5 = data.followups[fl-1].nextFollowupDate;
+
+        }else{
+
+          followupDate5 = "--------";
+          comment5 = "--------";
+          nextFollowupDate5 = "--------";
+        }
+
+        console.log(data.followups.length);
+
+        if (data.followups.length >= 2) {
+
+          followupDate4 = data.followups[fl-2].followupDate;                    
+          comment4 = data.followups[fl-2].comment;
+          nextFollowupDate4 = data.followups[fl-2].nextFollowupDate;
+
+        }else{
+
+          followupDate4 = "--------";
+          comment4 = "--------";
+          nextFollowupDate4 = "--------";
+        }
+
+        if (data.followups.length >= 3) {
+
+          followupDate3 = data.followups[fl-3].followupDate;                    
+          comment3 = data.followups[fl-3].comment;
+          nextFollowupDate3 = data.followups[fl-3].nextFollowupDate;
+
+        }else{
+
+          followupDate3 = "--------";
+          comment3 = "--------";
+          nextFollowupDate3 = "--------";
+        }
+
+        if (data.followups.length >= 4) {
+
+          followupDate2 = data.followups[fl-4].followupDate;                    
+          comment2 = data.followups[fl-4].comment;
+          nextFollowupDate2 = data.followups[fl-4].nextFollowupDate;
+
+        }else{
+
+          followupDate2 = "--------";
+          comment2 = "--------";
+          nextFollowupDate2 = "--------";
+        }
+
+        if (data.followups.length >= 5) {
+
+          followupDate1 = data.followups[fl-5].followupDate;                    
+          comment1 = data.followups[fl-5].comment;
+          nextFollowupDate1 = data.followups[fl-5].nextFollowupDate;
+
+        }else{
+
+          followupDate1 = "--------";
+          comment1 = "--------";
+          nextFollowupDate1 = "--------";
+        }
+
+
+      } 
+      var marketingPerson = data.marketingPersonName[0].name;
+
+     // var followupDate = data.followups[0].followupDate;
+     // var comment = data.followups[0].comment;
+     // var nextFollowupDate = data.followups[0].nextFollowupDate;
+
+
+     enquiryData += '<tr class="tr-shadow">';
+     enquiryData += '<td>'+(index + 1)+'</td>';
+     enquiryData += '<td><a href="/view-enquiry-page/'+data._id+'" target="_blank">'+data.shopName+'</a></td>';
+     enquiryData += '<td>'+data.state+'</td>';
+     enquiryData += '<td>'+data.city+'</td>';
+     enquiryData += '<td>'+data.mobile+'</td>';
+     enquiryData += '<td><butoon class="updateMarketingPerson" data-id="'+data._id+'" data-shopname="'+data.shopName+'">'+marketingPerson+'</button></td>';
+     enquiryData += '<td><butoon class="updateEnquiryStatus" data-id="'+data._id+'" data-shopname="'+data.shopName+'" data-enquirystatus="'+data.enquiryStatus+'">'+data.enquiryStatus+'</button></td>';
+
+     enquiryData += '<td>'+followupDate5+'</td>';
+     enquiryData += '<td>'+comment5+'</td>';
+     enquiryData += '<td>'+nextFollowupDate5+'</td>';
+
+     enquiryData += '<td>'+followupDate4+'</td>';
+     enquiryData += '<td>'+comment4+'</td>';
+     enquiryData += '<td>'+nextFollowupDate4+'</td>';
+
+     enquiryData += '<td>'+followupDate3+'</td>';
+     enquiryData += '<td>'+comment3+'</td>';
+     enquiryData += '<td>'+nextFollowupDate3+'</td>';
+
+     enquiryData += '<td>'+followupDate2+'</td>';
+     enquiryData += '<td>'+comment2+'</td>';
+     enquiryData += '<td>'+nextFollowupDate2+'</td>';
+
+     enquiryData += '<td>'+followupDate1+'</td>';
+     enquiryData += '<td>'+comment1+'</td>';
+     enquiryData += '<td>'+nextFollowupDate1+'</td>';
+     enquiryData += '</tr>';
+
+     followupDate1 = "-------";
+      comment1 = "-------";
+      nextFollowupDate1 = "-------";
+
+      followupDate2 = "-------";
+      comment2 = "-------";
+      nextFollowupDate2 = "-------";
+
+      followupDate3 = "-------";
+      comment3 = "-------";
+      nextFollowupDate3 = "-------";
+
+      followupDate4 = "-------";
+      comment4 = "-------";
+      nextFollowupDate4 = "-------";
+
+      followupDate5 = "-------";
+      comment5 = "-------";
+      nextFollowupDate5 = "-------";
+
+    } 
+    
+
+      var modelData = "";
+
+      // if ('<%= role%> == 1') {}
+        $.ajax({  
+        url:'/see-enquiry',  
+        method:'get',  
+        dataType:'json', 
+        success:function(response){ 
+             if(response.msg=='success'){   
+
+              response.enquiry.forEach((data, index) =>{
+                allEnquiry(data, index);
+              });
+              $('tbody').html(enquiryData);
+            }
+          }
+        })
+
+      //Model for Followup Data
+      $(document).on('click', '.addFollowup', function(){  
+        var fdEnquiryId = $(this).data("id");  
+        var fdShopName = $(this).data("shopname");
+        $('#addFollowupModal').modal('show');
+        $('#fdShopName').html(fdShopName);
+        $('#fdEnquiryId').val(fdEnquiryId);
+
+      });
+
+      //Submit Followup Data
+      $('#followupData').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/update-followup',  
+          method:'POST',  
+          data:$('#followupData').serialize(),
+          success:function(followupResponse){  
+            if(followupResponse.msg=='success'){
+              alert('Followup Updated');   
+              $('#followupData')[0].reset();  
+              $('#addFollowupModal').modal('hide');                   
+            }
+          }
+        });
+      });
+
+      //Search Enquiry Data
+      $('#searchEnquiryForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/search-enquiry',  
+          method:'POST',
+          data:$('#searchEnquiryForm').serialize(),
+          success:function(response){  
+            if(response.msg=='success'){
+
+              enquiryData = "";
+              response.enquiry.forEach((data, index) =>{
+                allEnquiry(data, index);
+              });
+              $('tbody').html(enquiryData);
+
+            }
+          }
+        });
+      });
+
+      //Model For Update Enquiry Status
+      $(document).on('click', '.updateEnquiryStatus', function(){  
+        var esEnquiryId = $(this).data("id");  
+        var esShopName = $(this).data("shopname");
+        var esEnquiryStatus = $(this).data("enquirystatus");
+        $('#updateEnquiryStatus').modal('show');
+        $('#esShopName').html(esShopName);
+        $('#esEnquiryStatus').val(esEnquiryStatus);
+
+
+        //Edit Enuiry Status Data
+        $('#updateEnquiryStatusForm').on("submit", function(event){
+          event.preventDefault();
+          $.ajax({
+            url:'/update-enquiry/'+esEnquiryId,  
+            method:'POST',  
+            data:$('#updateEnquiryStatusForm').serialize(),
+            success:function(statusResponse){  
+              if(statusResponse.msg=='success'){
+                alert('Status Updated');   
+                $('#updateEnquiryStatusForm')[0].reset();  
+                $('#updateEnquiryStatus').modal('hide'); 
+                esEnquiryId = "";  
+                esShopName = "";
+                esEnquiryStatus = "";                  
+              }
+            }
+          });
+        });
+      });  
+
+      //Model For Update Marketing Person
+      $(document).on('click', '.updateMarketingPerson', function(){  
+        var mpEnquiryId = $(this).data("id");  
+        var mpShopName = $(this).data("shopname");
+        $('#updateMarketingPerson').modal('show');
+        $('#mpShopName').html(mpShopName);
+        $('#mpEnquiryId').val(mpEnquiryId);
+
+      });     
+        //Edit Enuiry Status Data
+      $('#updateMarketingPersonForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/update-enquiry',  
+          method:'POST',  
+          data:$('#updateMarketingPersonForm').serialize(),
+          success:function(statusResponse){  
+            if(statusResponse.msg=='success'){
+              alert('Status Updated');   
+              $('#updateMarketingPersonForm')[0].reset();  
+              $('#updateMarketingPerson').modal('hide'); 
+              mpEnquiryId = "";  
+              mpShopName = "";                 
+            }
+          }
+        });
+      });
+
+      //Model For Update Next Follow date
+      $(document).on('click', '.updateNextFollowDate', function(){  
+        var npEnquiryId = $(this).data("id");  
+        var npNextFollowDate = $(this).data("nextfollowdate");  
+        $('#updateNextFollowDate').modal('show');
+        $('#npEnquiryId').val(npEnquiryId);
+        $('#npNextFollowDate').val(npNextFollowDate);
+
+      });     
+      
+        //Edit Next followup date
+      $('#updateNextFollowDateForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/update-next-followup-date',  
+          method:'POST',  
+          data:$('#updateNextFollowDateForm').serialize(),
+          success:function(statusResponse){  
+            if(statusResponse.msg=='success'){
+              alert('Status Updated');   
+              $('#updateNextFollowDateForm')[0].reset();  
+              $('#updateMarketingPerson').modal('hide'); 
+              npEnquiryId = "";  
+              npNextFollowDate = "";                 
+            }
+          }
+        });
+      });
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

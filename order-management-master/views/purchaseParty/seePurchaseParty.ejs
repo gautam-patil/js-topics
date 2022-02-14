@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>See Purchase Party</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Purchase table</h3>
+                  <!-- <form id="searchEnquiryForm">
+                      <div class="row mb-0">
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search....:</label>
+                                  <input type="text" class="form-control" placeholder="Enter Shop Name/MobileNo." name="searchTerm">
+                               </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Enquiry Date :</label>
+                                  <input type="date" class="form-control" name="enquiryDate">
+                               </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Enquiry Status</label>
+                                  <select name="enquiryStatus" id="enquiryStatus" class="form-control">
+                                    <option value="">Select Enquiry Status</option>
+                                    <option value="Lead">Lead</option>
+                                    <option value="Enquiry">Enquiry</option>
+                                    <option value="New Dealer">New Dealer</option>
+                                    <option value="Confirm Dealer">Confirm Dealer</option>
+                                    <option value="Not Confirm">Not Confirm</option>
+                                  </select>
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search State</label>
+                                  <input type="text" class="form-control" placeholder="Enter State" name="state">
+                               </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search City</label>
+                                  <input type="text" class="form-control" placeholder="Enter City" name="city">
+                               </div>
+                          </div>
+
+                          <% if ( username.seeMktEnquiryRole  == 0 ){ %>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Mkt. Person</label>
+                                  <select name="marketingPerson" id="marketingPerson" class="form-control">
+
+                                  </select>
+                               </div>
+                          </div>
+
+                          <% } %>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Shop Type</label>
+                                  <select name="shopType" id="shopType" class="form-control">
+                                    <option value="">Select Shop Type</option>
+                                    <option value="Existing Dealer">Existing Dealer</option>
+                                    <option value="Enquiry for Dealer">Enquiry for Dealer</option>
+                                    <option value="Faricator">Faricator</option>
+                                    <option value="Wholeseller">Wholeseller</option>
+                                    <option value="Customer">Customer</option>
+                                    <option value="Builder">Builder</option>
+                                    <option value="Architecture">Architecture</option>
+                                  </select>
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Select Shop Category :</label>
+                                  <select name="category" id="category" class="form-control">
+                                    <option value="">Select Shop Category</option>
+                                    <option value="VIP">VIP</option>
+                                    <option value="D+++">D+++</option>
+                                    <option value="D++">D++</option>
+                                    <option value="D+">D+</option>
+                                    <option value="D">D</option>
+                                    <option value="D-">D-</option>
+                                  </select>
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Followup Date :</label>
+                                  <input type="date" class="form-control" name="followupDate">
+                               </div>
+                          </div>
+                          <div class="col-md-3 col-sm-3">
+                              <div class="form-group">
+                                  <label>Next Followup Date :</label>
+                                  <input type="date" class="form-control" name="nextFollowupDate">
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                              <button class="btn btn-primary btn-sm submitClassFormData" type="submit" name="search">Search</button>
+                          </div>
+                      </div>    
+                  </form>  -->
+                  <div class="row mb-0">
+                      <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                          <button class="btn btn-success btn-sm" id="exporttable">Export</button>
+                      </div>
+                  </div>
+
+                <div class="table-data__tool">
+                  <div class="table-responsive m-b-40">
+                    <table class="table table-borderless table-data3" id="dataTable">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>Action</th>
+                          <th>Shop Name</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- END DATA TABLE -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    //Excel export
+    $("#exporttable").click(function(e){
+      e.preventDefault();
+      ResultsToTable();
+    });
+
+    function ResultsToTable(){    
+        $("#dataTable").table2excel({
+            exclude: ".noExl",
+            name: "Results"
+        });
+    }
+
+    var selectOption = '<option value=""> Search for MKT Person</option>';
+
+    function marketingPerson(data, index) {
+      selectOption += '<option value="' + data._id + '">' + data.name + '</option>'
+    }
+
+    var modelData = "";
+    $.ajax({
+      url: '/all-user',
+      method: 'get',
+      dataType: 'json',
+      success: function(response) {
+        if(response.msg == 'success') {
+          response.user.forEach((data, index) => {
+            marketingPerson(data, index);
+          });
+          $('#marketingPerson').html(selectOption);
+          $('#mpMarketingPerson').html(selectOption);
+        }
+      }
+    })
+
+    var enquiryData = "";
+    var fl = 0;
+
+    function allEnquiry(data, index) {
+
+
+     // var followupDate = data.followups[0].followupDate;
+     // var comment = data.followups[0].comment;
+     // var nextFollowupDate = data.followups[0].nextFollowupDate;
+
+
+     enquiryData += '<tr class="tr-shadow">';
+     enquiryData += '<td>'+(index + 1)+'</td>';
+     enquiryData += '<td><div class="table-data-feature"><a href="/view-purchase-ledger/'+data._id+'" target="_blank"><button class="item" data-toggle="tooltip" data-placement="top" title="See Ledger"><i class="fas fa-book"></i></button></a></div></td>'
+     
+     enquiryData += '<td>'+data.name+'</td>';
+     enquiryData += '</tr>';
+
+    } 
+    
+
+      var modelData = "";
+
+      // if ('<%= role%> == 1') {}
+        $.ajax({  
+        url:'/all-purchase-party',  
+        method:'get',  
+        dataType:'json', 
+        success:function(response){ 
+             if(response.msg=='success'){   
+
+              response.purchaseParty.forEach((data, index) =>{
+                allEnquiry(data, index);
+              });
+              $('tbody').html(enquiryData);
+            }
+          }
+        })
+
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

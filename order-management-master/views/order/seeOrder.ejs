@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>See Order</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Order table</h3>
+
+                  <form id="searchOrderForm">
+                      <div class="row mb-0">
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search....:</label>
+                                  <input type="text" class="form-control" placeholder="Enter Shop Name/MobileNo." name="searchTerm">
+                               </div>
+                          </div>
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Select Order Type:</label>
+                                  <select class="form-control" name="orderRole">
+                                    <option value="">Select Order Type</option>
+                                    <option value="1">Book</option>
+                                    <option value="2">Pending</option>
+                                    <option value="3">Confirm</option>
+                                    
+                                  </select>
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                              <button class="btn btn-primary btn-sm submitClassFormData" type="submit" name="search">Search</button>
+                          </div>
+                      </div>    
+                  </form> 
+
+                <div class="table-data__tool">
+                  <div class="table-responsive m-b-40">
+                    <table class="table table-borderless table-data3" id="dataTable">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>Shop Name</th>
+                          <th>Order No.</th>
+                          <th>Conf. Date</th>
+                          <th>Conf. User</th>
+                          <th>Fab. Urgent</th>
+                          <th>Fab. FP</th>
+                          <th>Fab. Date</th>
+                          <th>Dis. Urgent</th>
+                          <th>Dis. FP</th>
+                          <th>Dis. Date</th>
+                          <th>Fab. User</th>
+                          <th>Fab. Date</th>
+                          <th>Fab. Time</th>
+                          <th>Fab. Comment</th>
+                          <th>check. User</th>
+                          <th>check. Date</th>
+                          <th>check. Time</th>
+                          <th>check. Comment</th>
+                          
+                          <th>dis. Date</th>
+                          <th>dis. Time</th>
+                          <th>dis. Comment</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- END DATA TABLE -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    var orderData = "";
+
+    function allOrder(data, index) {
+
+     orderData += '<tr class="tr-shadow">';
+     orderData += '<td>'+(index + 1)+'</td>';
+     orderData += '<td><a href="/view-enquiry-page/'+data.enquiries[0]._id+'">'+data.enquiries[0].shopName+'</td>';
+
+     if (data.confirmDate) {
+
+       orderData += '<td><a href="/view-order/'+data._id+'">'+data.orderNo+'</a></td>';
+       orderData += '<td>'+data.confirmDate+'</td>';
+       orderData += '<td>'+data.confirmUser[0].name+'</td>';
+       orderData += '<td>'+data.fabricateUrgent+'</td>';
+       orderData += '<td>'+data.fpFabricate+'</td>';
+       orderData += '<td>'+data.fabricateDate+'</td>';
+       orderData += '<td>'+data.dispatchUrgentCO+'</td>';
+       orderData += '<td>'+data.fpDispatchCO+'</td>';
+       orderData += '<td>'+data.dispatchDate+'</td>';
+       if (data.fabricateDone == 0) {
+
+        orderData += '<td colspan="4">Not Done</td>'
+       } else {
+
+        orderData += '<td>'+data.fabricateUser[0].name+'</td>'
+        orderData += '<td>'+data.fabricateDoneDate+'</td>'
+        orderData += '<td>'+data.fabricateDoneTime+'</td>'
+        orderData += '<td>'+data.fabricateComment+'</td>'
+       }
+       
+       if (data.checkDone == 0) {
+
+        orderData += '<td colspan="4">Not Done</td>'
+       } else {
+
+        orderData += '<td>'+data.checkUser[0].name+'</td>'
+        orderData += '<td>'+data.checkDoneDate+'</td>'
+        orderData += '<td>'+data.checkDoneTime+'</td>'
+        orderData += '<td>'+data.checkComment+'</td>'
+       }
+
+
+       if (data.dispatchDone == 0) {
+
+          orderData += '<td colspan="4">Not Done</td>'
+       } else {
+
+        orderData += '<td>'+data.dispatchDoneDate+'</td>'
+        orderData += '<td>'+data.dispatchDoneTime+'</td>'
+        orderData += '<td>'+data.dispatchComment+'</td>'
+
+       }
+     } else {
+
+       orderData += '<td><a href="/view-order/'+data._id+'">Not FC</a></td>';
+       orderData += '<td>Not FC</td>';
+       orderData += '<td>Not FC</td>';
+     }
+
+
+     
+     orderData += '</tr>';
+
+    } 
+    
+
+
+      //Search Enquiry Data
+      $('#searchOrderForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/search-order',  
+          method:'POST',
+          data:$('#searchOrderForm').serialize(),
+          success:function(response){  
+            if(response.msg=='success'){
+
+              orderData = "";
+              response.order.forEach((data, index) =>{
+                allOrder(data, index);
+              });
+              $('tbody').html(orderData);
+
+            }
+          }
+        });
+      });
+
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

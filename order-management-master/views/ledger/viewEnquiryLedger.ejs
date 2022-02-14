@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title><%= enquiry.shopName %> Ledger</title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                <div class="table-data__tool">
+                      <div class="table-data__tool-left">
+                          <form class="form-header" id="dateSearchForm">
+
+                            <% if ( enquiry.softDate ){ %>
+
+                              <input type="date" class="form-control" value="<%= enquiry.softDate %>" disabled />
+                              <input type="hidden" name="firstDate" class="form-control" value="<%= enquiry.softDate %>" />
+
+                              <input type="date" class="form-control" name="secondDate" value="2021-08-30" required />
+                              <input type="hidden" name="openingType" value="1">
+
+                            <% }else if ( enquiry.openingDate ){ %>
+
+                              <input type="date" class="form-control" value="<%= enquiry.openingDate %>" disabled />
+                              <input type="hidden" name="firstDate" class="form-control" value="<%= enquiry.openingDate %>" />
+
+                              <input type="date" class="form-control" name="secondDate" value="2021-08-30" required />
+
+                              <input type="hidden" name="openingType" value="2">
+                            <% }%>
+                                
+                              <button class="au-btn--submit submitData" type="submit" style="margin-left: 10px;">
+                                  <i class="zmdi zmdi-search"></i>
+                              </button>
+                          </form>
+                      </div>
+                  </div>
+                  <br>
+                  <hr>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-header">Ledger Info</div>
+                      <div class="card-body">
+                        <div class="card-title">
+                          <h3 class="text-center title-2">Ledger Info</h3> </div>
+                        <hr>
+                        <% if ( enquiry.softDate ){ %>
+
+                          <h3 class="title-2">Balance= <%= enquiry.softOpening %></h3>
+                        <% }else if ( enquiry.openingDate ){ %>
+
+                          <h3 class="title-2">Balance= <%= enquiry.openingAmount %></h3>
+                        <% }%>
+                        <br>
+
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                            <th>Date</th>
+                            <th>User</th>
+                            <th>Bill No</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                          </thead>
+                          <tbody id="ledgerTable">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div id="matchModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="corderNo" style="text-align: center;">Match Form</h1>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="matchForm">
+                <div class="form-group">
+                  <label>Balance Amount :</label>
+                  <input type="number" class="form-control balanceAmount" placeholder="Enter Amount" Disabled>
+                  <input type="hidden" name="softOpening" class="balanceAmount">
+                </div>
+               <!-- <p id="fdEnquiryId"></p> -->
+               <input type="submit" id="insert1" value="Insert" class="btn btn-success" />  
+              </form>
+          </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+
+          var amount = 0;
+          var itemTotalAmount = 0;
+          var totalOrderAmount = 0;
+          var packingCharge = 0;
+          var transportCharge = 0;
+          var fittingCharge = 0;
+          var totalAmount = 0;
+          var gst = 0;
+          var gstAmount = 0;
+          var discount = 0;
+          var finalAmount = 0;
+          var ledgerData = "";
+          var totalBillFinalAmount = 0;
+          var totalCashFinalAmount = 0;
+          var balanceAmount = 0;
+
+          function allLedger(data, index) {
+
+
+           ledgerData += '<tr class="tr-shadow">';
+           ledgerData += '<td>'+data.date+'</td>';
+           ledgerData += '<td>'+data.user[0].name+'</td>';
+
+           //For Bill----------------------------
+           if (data.role == 1) {
+           
+            ledgerData += '<td>'+data.billNo+'</td>'
+
+            amount = 0;
+            itemTotalAmount = 0;
+            totalOrderAmount = 0;
+            packingCharge = 0;
+            transportCharge = 0;
+            fittingCharge = 0;
+            totalAmount = 0;
+            gst = 0;
+            gstAmount = 0;
+            discount = 0;
+            finalAmount = 0;
+            balanceAmount = 0;
+
+            //Sale Bill Order List
+
+            for (var i = 0; i < data.stock.length; i++) {
+              
+              amount = data.stock[i].totalSqft * data.stock[i].rate;
+              itemTotalAmount += amount;
+              amount = 0;
+
+            }
+
+              totalOrderAmount += itemTotalAmount;
+              itemTotalAmount = 0;
+
+                packingCharge = data.packingCharge;
+                transportCharge = data.transportCharge;
+                fittingCharge = data.fittingCharge;
+
+                totalAmount = totalOrderAmount + packingCharge + transportCharge + fittingCharge;
+
+
+                gst = data.gst;
+
+                gstAmount = gst * totalAmount;
+
+                discount = data.discount;
+
+                finalAmount = totalAmount + gstAmount - discount;
+
+                
+                ledgerData += '<td>'+(finalAmount).toFixed(2)+'</td>'
+                ledgerData += '<td></td>'
+                totalBillFinalAmount += parseFloat(finalAmount);
+
+                finalAmount = 0;
+
+           }else{
+
+            switch (data.payRec) {
+
+                case 1:
+                  payRec = "Cash Recieve";
+                  ledgerData += '<td>'+payRec+'</td>';
+                  ledgerData += '<td></td>'
+                  ledgerData += '<td>'+data.amount+'</td>';
+                  totalCashFinalAmount += parseFloat(data.amount);
+                  break;
+                case 2:
+                  payRec = "Cash Payment";
+                  ledgerData += '<td>'+payRec+'</td>';
+                  ledgerData += '<td>'+data.amount+'</td>';
+                  ledgerData += '<td></td>';
+                  totalBillFinalAmount += parseFloat(data.amount);                  
+                  break;
+                case 3:
+                  payRec = "Round Off";
+                  ledgerData += '<td>'+payRec+'</td>';
+                  ledgerData += '<td>'+data.amount+'</td>';
+                  ledgerData += '<td></td>';
+                  totalBillFinalAmount += parseFloat(data.amount);                  
+                  break;
+                case 4:
+                  payRec = "Balance Match";
+                  ledgerData += '<td>'+payRec+'</td>';
+                  ledgerData += '<td>'+data.amount+'</td>';
+                  ledgerData += '<td></td>';
+                  totalBillFinalAmount += parseFloat(data.amount);                  
+                  break;
+            }
+
+           }
+           ledgerData += '</tr>';
+
+          } 
+
+          $('#dateSearchForm').on("submit", function(event){
+          event.preventDefault();
+            $.ajax({
+              url:'/search-enquiry-ledger/<%= enquiry._id %>',  
+              method:'POST',  
+              data:$('#dateSearchForm').serialize(),
+              success:function(response){  
+                if(response.msg=='success'){
+
+                  ledgerData = "";
+
+                  response.ledger.forEach((data, index) =>{
+                    allLedger(data, index);
+                  });
+
+                  console.log('Total cash amount= '+totalCashFinalAmount);
+                  console.log('Total Bill Amount= '+totalBillFinalAmount);
+
+                  if ('<%= enquiry.softDate %>') {
+
+                    console.log('Opening amount= <%= enquiry.softOpening %>');
+                    balanceAmount = (totalBillFinalAmount - totalCashFinalAmount + parseInt('<%= enquiry.softOpening %>')).toFixed(2);
+
+                  }else if('<%= enquiry.openingDate %>'){
+                    
+                    console.log('Opening amount= <%= enquiry.openingAmount %>');
+                    balanceAmount = (totalBillFinalAmount - totalCashFinalAmount + parseInt('<%= enquiry.openingAmount %>')).toFixed(2);                    
+
+                  }
+
+
+                  ledgerData += '<tr class="tr-shadow"><td colspan="3">Balance Match</td><td colspan="2">'+balanceAmount+'</td></tr>';
+
+
+                  ledgerData += '<tr class="tr-shadow"><td colspan="3"><button class="btn btn-success" id="match" type="button">Match</button></td></tr>';
+                  
+
+                  $('#ledgerTable').html(ledgerData);
+                  $('.balanceAmount').val(balanceAmount);
+
+                  balanceAmount = 0;
+                }
+              }
+            });
+          });
+
+          $(document).on('click', '#match', function(){  
+
+            $('#matchModel').modal('show');
+
+          });
+            //Edit Enuiry Status Data
+            $('#matchForm').on("submit", function(event){
+              event.preventDefault();
+              $.ajax({
+                url:'/update-enquiry-opening/<%= enquiry._id %>',  
+                method:'POST',  
+                data:$('#matchForm').serialize(),
+                success:function(statusResponse){  
+                  if(statusResponse.msg=='success'){
+                    alert('Status Updated');   
+                    $('#matchForm')[0].reset();  
+                    $('#matchModel').modal('hide'); 
+                    
+                  }
+                }
+              });
+            });
+
+
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Today Task</title>
+    <!-- Required meta tags-->
+    <%- include("../include/headLink")%>
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <%- include("../include/navbar") %>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <%- include("../include/header") %>
+            <!-- END HEADER DESKTOP-->
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- DATA TABLE -->
+                                <h1 style="text-align: center; font-size: 50px;">Today Task</h1>
+
+                                <hr>
+                                <br>
+                                
+
+                                <div class="table-responsive table-responsive-data2">
+                                    <table class="table table-data3">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No.</th>
+                                                <th>Task</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="task">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END DATA TABLE -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Add Branch Model -->
+
+    <!-- Add Self Review -->
+      <div id="addSelfReview" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" style="text-align: center;">Self Reivew</h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <h3 id="task"></h3>
+              <form id="selfReviewForm">
+                <div class="form-group">
+                  <label>Score out of 10</label>
+                  <select class="form-control" name="Score">
+                    <option value="10">10</option>
+                    <option value="9">9</option>
+                    <option value="8">8</option>
+                    <option value="7">7</option>
+                    <option value="6">6</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                    <option value="0">0</option>
+
+                    
+                  </select>
+                  
+                </div>
+                <div class="form-group">
+                  <label>Self Review</label>
+                  <input type="text" class="form-control" name="selfReview" placeholder="Enter Self Review">
+                </div>
+                <br />  
+                 <!-- <input type="text" name="enquiryId" id="utItemId"> -->
+                <input type="hidden" name="taskId" id="taskId" /> 
+                <!-- <p id="utItemId"></p> -->
+                <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Jquery JS-->
+    <%- include("../include/jsLink")%>
+
+    <script>
+        $(document).ready(function(){  
+            
+
+                var taskData = "";
+            
+            function allTask(data, index) {
+
+
+               taskData += '<tr class="tr-shadow">';
+               taskData += '<td>'+(index +1)+'</td>'
+               taskData += '<td style="text-align: left;">'+data.task+'</td>';
+
+               taskData += '<td><div class="table-data-feature"><button type="button" class="item selfReview" data-id="'+data._id+'" data-task="'+data.task+'" data-toggle="tooltip" data-placement="top" title="Add Self Review"><i class="zmdi zmdi-check-circle"></i></button></div></td>'
+
+               // taskData += '<td><div class="table-data-feature"><button class="item editBranch" data-id="'+data._id+'" data-colourname="'+data.colourName+'"  data-toggle="tooltip" data-placement="top" title="Edit Colour Name"><i class="zmdi zmdi-edit"></i></button></div></td>'
+               taskData += '</tr>';
+
+            }
+
+                var modelData = "";
+                
+                taskList();
+                function taskList() {
+
+                  $.ajax({  
+                    url:'/all-my-today-task', 
+                    method:'get',  
+                    dataType:'json', 
+                    success:function(response){
+                       // console.log(response);  
+                       if(response.msg=='success'){   
+                          
+                          response.task.forEach((data, index) =>{
+                             allTask(data, index);
+                           });
+                          $('#task').html(taskData);
+                         }
+                      }
+                  })
+                }
+
+
+                // Submit Member Data
+                $('#taskForm').on("submit", function(event){
+                   event.preventDefault();
+                   $.ajax({
+                      url:'/create-task',  
+                      method:'POST',  
+                      data:$('#taskForm').serialize(),
+                      success:function(response){  
+                         if(response.msg=='success'){
+
+                           taskData = "";
+                           taskList();
+                           $('#taskForm')[0].reset();  
+                           $('#addTask').modal('hide');                   
+                         }
+                      }
+                   });
+                });
+
+                //Model for Add Self Review
+                $(document).on('click', '.selfReview', function(){  
+                  var Id = $(this).data("id");  
+                  var task = $(this).data("task");
+                  $('#addSelfReview').modal('show');
+                  $('#task').html(task);
+                  $('#taskId').val(Id);
+
+                });
+
+                //Submit Followup Data
+                $('#selfReviewForm').on("submit", function(event){
+                  event.preventDefault();
+                  $.ajax({
+                    url:'/add-task-review',  
+                    method:'POST',  
+                    data:$('#selfReviewForm').serialize(),
+                    success:function(followupResponse){  
+                      if(followupResponse.msg=='success'){
+                        alert('Self Review Updated');   
+                        $('#selfReviewForm')[0].reset();  
+                        $('#addSelfReview').modal('hide'); 
+                        // purchaseStockData = "";
+                        // purchaseItem();                  
+                      }
+                    }
+                  });
+                });
+
+
+
+        });
+
+    </script>
+
+</body>
+
+</html>
+<!-- end document-->

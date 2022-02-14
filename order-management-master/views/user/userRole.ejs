@@ -1,0 +1,1244 @@
+	<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+	  <%- include("../include/headLink")%>
+	  <!-- Title Page-->
+	  <title><%= userData.name %> Role</title>
+
+	</head>
+
+	<body class="animsition">
+	  <div class="page-wrapper">
+	      <!-- HEADER MOBILE-->
+	      <%- include("../include/navbar") %>
+
+	      <!-- PAGE CONTAINER-->
+	      <div class="page-container">
+	          <!-- HEADER DESKTOP-->
+	          <%- include("../include/header")%>
+
+	          <!-- MAIN CONTENT-->
+	          <div class="main-content">
+	              <div class="section__content section__content--p30">
+	                  <div class="container-fluid">
+	                      <div class="row">
+	                          <div class="col-md-12">
+	                              <!-- DATA TABLE -->
+	                              <h3 class="title-5 m-b-35"><%= userData.name %> User table</h3>
+
+	                              <div class="table-responsive table-responsive-data2">
+	                                  <table class="table table-data3">
+	                                      <thead>
+	                                          <tr>
+	                                              <th>Software Role</th>
+	                                              <th>Yes/No</th>
+	                                          </tr>
+	                                      </thead>
+	                                      <tbody>
+	                                      		<tr>
+	                                      			<th colspan="2">Enquiry</th>
+	                                      		</tr>
+	                                      		<tr>
+		                                          	<td>New Enquiry</td>
+		                                          	<td id="newEnquiryRole">
+		                                          		<% if ( userData.newEnquiryRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="newEnquiryRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="newEnquiryRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>See All Enquiry</td>
+		                                          	<td id="seeAllEnquiryRole">
+		                                          		<% if ( userData.seeAllEnquiryRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="seeAllEnquiryRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="seeAllEnquiryRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>See Mkt Enquiry</td>
+		                                          	<td id="seeMktEnquiryRole">
+		                                          		<% if ( userData.seeMktEnquiryRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="seeMktEnquiryRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="seeMktEnquiryRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<th>Courier</th>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Request Courier</td>
+		                                          	<td id="requestCourierRole">
+		                                          		<% if ( userData.requestCourier  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="requestCourierRole" />
+
+		                                          		<% } else { %>
+
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="requestCourierRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Confirm Requested Courier</td>
+		                                          	<td id="requestedCourierRole">
+		                                          		<% if ( userData.requestedCourierRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="requestedCourierRole" />
+
+		                                          		<% } else { %>
+
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="requestedCourierRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Send Courier</td>
+		                                          	<td id="sendCourierRole">
+		                                          		<% if ( userData.sendCourierRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="sendCourierRole" />
+
+		                                          		<% } else { %>
+
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="sendCourierRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Recieve Courier</td>
+		                                          	<td id="recieveCourierRole">
+		                                          		<% if ( userData.recieveCourierRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="recieveCourierRole" />
+
+		                                          		<% } else { %>
+
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="recieveCourierRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<th>Order</th>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>All Order</td>
+		                                          	<td id="allOrderRole">
+		                                          		<% if ( userData.allOrderRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="allOrderRole" />
+
+		                                          		<% } else { %>
+
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="allOrderRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+
+		                                          <tr>
+		                                          	<td>Add Book Order</td>
+		                                          	<td id="bookOrderRole">
+		                                          		<% if ( userData.bookOrderRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="bookOrderRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="bookOrderRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Add Confirm Order</td>
+		                                          	<td id="confirmOrderRole">
+		                                          		<% if ( userData.confirmOrderRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="confirmOrderRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="confirmOrderRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Add Final Confirm Order</td>
+		                                          	<td id="finalConfirmOrderRole">
+		                                          		<% if ( userData.finalConfirmOrderRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="finalConfirmOrderRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="finalConfirmOrderRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Book Order Confirm</td>
+		                                          	<td id="bookOrderConfirmRole">
+		                                          		<% if ( userData.bookOrderConfirmRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="bookOrderConfirmRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="bookOrderConfirmRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Final Order Confirm</td>
+		                                          	<td id="finalOrderConfirmRole">
+		                                          		<% if ( userData.finalOrderConfirmRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="finalOrderConfirmRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="finalOrderConfirmRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>MIS Report</td>
+		                                          	<td id="misReportRole">
+		                                          		<% if ( userData.misReportRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="misReportRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="misReportRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Create Sale Bill</td>
+		                                          	<td id="createSaleBillRole">
+		                                          		<% if ( userData.createSaleBillRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="createSaleBillRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="createSaleBillRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>See Sale Bill</td>
+		                                          	<td id="seeSaleBillRole">
+		                                          		<% if ( userData.seeSaleBillRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="seeSaleBillRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="seeSaleBillRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Fabricate Stock</td>
+		                                          	<td id="fabricateStockRole">
+		                                          		<% if ( userData.fabricateStockRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="fabricateStockRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="fabricateStockRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<th>Stock</th>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>See All Stock</td>
+		                                          	<td id="seeAllStockRole">
+		                                          		<% if ( userData.seeAllStockRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="seeAllStockRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="seeAllStockRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Godown-1 Stock</td>
+		                                          	<td id="godownOneStockRole">
+		                                          		<% if ( userData.godownOneStockRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="godownOneStockRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="godownOneStockRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Godown-3 Stock</td>
+		                                          	<td id="godownThreeStockRole">
+		                                          		<% if ( userData.godownThreeStockRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="godownThreeStockRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="godownThreeStockRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Godown Transfer</td>
+		                                          	<td id="godownTransferRole">
+		                                          		<% if ( userData.godownTransferRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="godownTransferRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="godownTransferRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Phusical Stock</td>
+		                                          	<td id="physicalStockRole">
+		                                          		<% if ( userData.physicalStockRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="physicalStockRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="physicalStockRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Tally Stock</td>
+		                                          	<td id="tallyStockRole">
+		                                          		<% if ( userData.tallyStockRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="tallyStockRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="tallyStockRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<th>Purchase</th>
+		                                          	
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Purchase Stock</td>
+		                                          	<td id="purchaseStockRole">
+		                                          		<% if ( userData.purchaseStockRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="purchaseStockRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="purchaseStockRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>Recieve Stock</td>
+		                                          	<td id="recieveStockRole">
+		                                          		<% if ( userData.recieveStockRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="recieveStockRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="recieveStockRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+		                                          <tr>
+		                                          	<th>User</th>
+		                                          </tr>
+		                                          <tr>
+		                                          	<td>See User</td>
+		                                          	<td id="seeUserRole">
+		                                          		<% if ( userData.seeUserRole  == 1 ){ %>
+
+		                                          			<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="seeUserRole" />
+
+		                                          		<% } else {%>
+		                                          			<input type="checkbox" class="form-control role" name="role" value="1" data-role="seeUserRole" />
+
+
+
+		                                          		<% } %>
+		                                          		
+		                                          	</td>
+		                                          </tr>
+	                                      </tbody>
+	                                  </table>
+	                              </div>
+	                              <!-- END DATA TABLE -->
+	                          </div>
+	                      </div>
+	                  </div>
+	              </div>
+	          </div>
+	      </div>
+
+	  </div>
+
+	  <!-- Jquery JS-->
+	  <%- include("../include/jsLink")%>
+
+	  <script>
+	      $(document).ready(function(){     
+
+	      	var roleData = "";
+
+	      		$(document).on('change', '.role', function(){
+
+	      			roleData = "";
+	                
+	                var role = $(this).val();
+	                var name = $(this).data("role"); 
+
+	                switch (name) {
+
+	                	  //Enquiry----------------------------
+	                	  case 'newEnquiryRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{newEnquiryRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="newEnquiryRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="newEnquiryRole" />';
+
+			                        	}
+
+			                        	$('#newEnquiryRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'seeAllEnquiryRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{seeAllEnquiryRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="seeAllEnquiryRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="seeAllEnquiryRole" />';
+
+			                        	}
+
+			                        	$('#seeAllEnquiryRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'seeMktEnquiryRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{seeMktEnquiryRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="seeMktEnquiryRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="seeMktEnquiryRole" />';
+
+			                        	}
+
+			                        	$('#seeMktEnquiryRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    //Courier
+						    case 'requestCourierRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{requestCourierRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="requestCourierRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="requestCourierRole" />';
+
+			                        	}
+
+			                        	$('#requestCourierRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'requestedCourierRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{requestedCourierRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="requestedCourierRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="requestedCourierRole" />';
+
+			                        	}
+
+			                        	$('#requestedCourierRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'sendCourierRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{sendCourierRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="sendCourierRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="sendCourierRole" />';
+
+			                        	}
+
+			                        	$('#sendCourierRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'recieveCourierRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{recieveCourierRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="recieveCourierRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="recieveCourierRole" />';
+
+			                        	}
+
+			                        	$('#recieveCourierRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    //Order------------------------------------
+
+						  case 'allOrderRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{allOrderRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="allOrderRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="allOrderRole" />';
+
+			                        	}
+
+			                        	$('#allOrderRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+						  case 'bookOrderRole':
+
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{bookOrderRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                            if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="bookOrderRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="bookOrderRole" />';
+
+			                        	}
+
+			                        	$('#bookOrderRole').html(roleData);
+			                        }
+			                    }
+			                });
+						    break;
+
+						    case 'confirmOrderRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{confirmOrderRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="confirmOrderRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="confirmOrderRole" />';
+
+			                        	}
+
+			                        	$('#confirmOrderRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'finalConfirmOrderRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{finalConfirmOrderRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="finalConfirmOrderRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="finalConfirmOrderRole" />';
+
+			                        	}
+
+			                        	$('#finalConfirmOrderRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'bookOrderConfirmRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{bookOrderConfirmRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="bookOrderConfirmRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="bookOrderConfirmRole" />';
+
+			                        	}
+
+			                        	$('#bookOrderConfirmRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'finalOrderConfirmRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{finalOrderConfirmRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="finalOrderConfirmRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="finalOrderConfirmRole" />';
+
+			                        	}
+
+			                        	$('#finalOrderConfirmRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'misReportRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{misReportRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="misReportRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="misReportRole" />';
+
+			                        	}
+
+			                        	$('#misReportRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'createSaleBillRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{createSaleBillRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="createSaleBillRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="createSaleBillRole" />';
+
+			                        	}
+
+			                        	$('#createSaleBillRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'seeSaleBillRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{seeSaleBillRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="seeSaleBillRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="seeSaleBillRole" />';
+
+			                        	}
+
+			                        	$('#seeSaleBillRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'fabricateStockRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{fabricateStockRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="fabricateStockRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="fabricateStockRole" />';
+
+			                        	}
+
+			                        	$('#fabricateStockRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    //Stock-----------------------------------
+						    case 'seeAllStockRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{seeAllStockRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="seeAllStockRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="seeAllStockRole" />';
+
+			                        	}
+
+			                        	$('#seeAllStockRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'godownOneStockRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{godownOneStockRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="godownOneStockRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="godownOneStockRole" />';
+
+			                        	}
+
+			                        	$('#godownOneStockRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'godownThreeStockRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{godownThreeStockRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="godownThreeStockRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="godownThreeStockRole" />';
+
+			                        	}
+
+			                        	$('#godownThreeStockRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'godownTransferRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{godownTransferRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="godownTransferRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="godownTransferRole" />';
+
+			                        	}
+
+			                        	$('#godownTransferRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'physicalStockRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{physicalStockRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="physicalStockRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="physicalStockRole" />';
+
+			                        	}
+
+			                        	$('#physicalStockRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'tallyStockRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{tallyStockRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="tallyStockRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="tallyStockRole" />';
+
+			                        	}
+
+			                        	$('#tallyStockRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    //Purchase-------------------------------------
+
+						    case 'purchaseStockRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{purchaseStockRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="purchaseStockRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="purchaseStockRole" />';
+
+			                        	}
+
+			                        	$('#purchaseStockRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    case 'recieveStockRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{recieveStockRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="recieveStockRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="recieveStockRole" />';
+
+			                        	}
+
+			                        	$('#recieveStockRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						    //User-----------------------------------------
+
+						    case 'seeUserRole':
+						    
+						    $.ajax({
+			                    url:"/update-user/<%= userData._id %>",
+			                    method:"POST",
+			                    data:{seeUserRole:role},
+			                    success:function(response)
+			                    {
+			                        if(response.msg=='success'){   
+
+			                        	if (role == 0) {
+
+			                        		roleData = '<input type="checkbox" class="form-control role" name="role" value="1" data-role="seeUserRole" />';
+			                        	}else{
+
+			                            	roleData = '<input type="checkbox" class="form-control role" checked name="role" value="0" data-role="seeUserRole" />';
+
+			                        	}
+
+			                        	$('#seeUserRole').html(roleData);
+
+			                        }
+			                    }
+			                });
+						    
+						    break;
+
+						  case 2:
+						    day = "Tuesday";
+						    break;
+						  case 3:
+						    day = "Wednesday";
+						    break;
+						  case 4:
+						    day = "Thursday";
+						    break;
+						  case 5:
+						    day = "Friday";
+						    break;
+						  case  6:
+						    day = "Saturday";
+					}
+	                
+	                
+
+	            });
+	      });
+
+	  </script>
+
+	</body>
+
+</html>
+<!-- end document-->

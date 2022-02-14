@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title>Book Pending Orderr</title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-header">Book Order Detail</div>
+                        <div class="card-body">
+                          <div class="card-title">
+                            <h3 class="text-center title-2">Book Order</h3> </div>
+                          <hr>
+                            <table class="table table-bordered table-striped">
+                              <tbody>
+                                <tr>
+                                      <td>Book Date</td>
+                                      <td><%= bookOrder[0].bookDate %></td>
+                                  </tr>
+                                  <tr>
+                                      <td>Purchase Party</td>
+                                      <td><%= bookOrder[0].saleParty[0].shopName %></td>
+                                  </tr>
+                                  <tr>
+                                      <td>Book User</td>
+                                      <td><%= bookOrder[0].user[0].name %></td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <button class="btn btn-success" id="confirmBook">Confirm Book</button>
+                                    </td>
+                                    <td>
+                                      <button class="btn btn-primary" id="addItem">Add Item</button>
+                                    </td>
+                                  </tr>
+                              </tbody>
+                            </table>
+                            <br>
+                            <hr>
+
+                            <h3 class="title-2">Item Details</h3>
+                            <br>
+                            <div class="table-data__tool">
+                              <div class="table-responsive table--no-card m-b-40">
+                                <table class="table table-borderless table-striped table-earning">
+                                  <thead>
+                                    <th>S.No.</th>
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                    <th>Rate</th>
+                                    <th>Action</th>
+                                  </thead>
+                              <tbody class="itemTable">
+                              </tbody>
+                                </table>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <!-- Confirm Book Model -->
+      <div id="confirmBookModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" style="text-align: center;">Confirm Book</h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="confirmBookForm">
+                <div class="form-group">
+                  <label>Order No.</label>
+                  <input type="text" class="form-control" name="pendingOrderNo" placeholder="Enter Order No">
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Transport:- </label>
+                  <select class="form-control" id="transport" name="transport">
+                    <option value="<%= bookOrder[0].transport %>"><%= bookOrder[0].transport%></option>
+                    <option value="Self">Self</option>
+                    <option value="Local">Local</option>
+                    <option value="GNT">GNT</option>
+                    <option value="Transport">Transport</option>
+                    
+                  </select>
+                </div>
+                <div id="transportDetail">
+                  <% if ( bookOrder[0].transport  == "Transport" ){ %>
+                    <div class="form-group">
+                      <label for="currentWorking" class=" form-control-label">Transport Name</label>
+                      <input type="text" id="currentWorking" name="transportName" placeholder="Enter Transport Name" value="<%= bookOrder[0].transportName%>" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="currentWorking" class=" form-control-label">Transport Number</label>
+                      <input type="number" id="currentWorking" name="transportNumber" placeholder="Enter Transport Number" value="<%= bookOrder[0].transportNumber%>" class="form-control"> 
+                    </div>
+                  <% }%>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Packing:- </label>
+                  <select class="form-control" id="packing" name="packing">
+                    <option value="<%= bookOrder[0].packing %>"><%= bookOrder[0].packing%></option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    
+                  </select>
+                </div>
+                <div id="packingDetail">
+                  <% if ( bookOrder[0].packing  == "Yes" ){ %>
+                    <div class="form-group">
+                      <label for="enquiryDate" class="control-label mb-1">Choose Packing:- </label>
+                      <select class="form-control" name="packingDetail">
+                        <option value="<%= bookOrder[0].packingDetail %>"><%= bookOrder[0].packingDetail%></option>
+                        <option value="Plain">Plain</option>
+                        <option value="Carboard">Carboard</option>
+                        <option value="Bubble">Bubble</option>
+                      </select>
+                    </div>
+                  <%} %>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Urgent:- </label>
+                  <select class="form-control" id="urgent" name="urgent">
+                    <option value="<%= bookOrder[0].urgent %>"><%= bookOrder[0].urgent%></option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    
+                  </select>
+                </div>
+                <div id="urgentDetail">
+                  <% if ( bookOrder[0].urgent  == "Yes" ){ %>
+                    <div class="form-group">
+                      <label for="enquiryDate" class="control-label mb-1">Choose FP:- </label><select class="form-control" name="fp">
+                        <option value="<%= bookOrder[0].fp %>"><%= bookOrder[0].fp %></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                      </select>
+                    </div>
+                  <%} %>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Hardware:- </label>
+                  <select class="form-control" name="hardware">
+                    <option value="<%= bookOrder[0].hardware %>"><%= bookOrder[0].hardware%></option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Fitting:- </label>
+                  <select class="form-control" name="fitting">
+                    <option value="<%= bookOrder[0].fitting %>"><%= bookOrder[0].fitting%></option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Comment:- </label>
+                  <input type="text" class="form-control" value="<%= bookOrder[0].comment %>" name="comment" placeholder="Enter Comment">
+                </div>
+                <br />  
+                 <!-- <input type="text" name="enquiryId" id="utItemId"> -->
+                <input type="hidden" value="<%= bookOrder[0]._id %>" name="orderId" /> 
+                <!-- <p id="utItemId"></p> -->
+                <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Update Item -->
+      <div id="updateItemModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" id="utItemName" style="text-align: center;"></h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="itemData">
+                <div class="form-group">
+                  <label>Quantity</label>
+                  <input type="number" id="utQuantity" class="form-control" name="quantity">
+                </div>
+                <div class="form-group">
+                  <label>Rate</label>
+                  <input type="number" id="utRate" class="form-control" name="rate">
+                </div>
+                <br />  
+                 <!-- <input type="text" name="enquiryId" id="utItemId"> -->
+                <input type="hidden" name="stockItemId" id="utItemId" /> 
+                <!-- <p id="utItemId"></p> -->
+                <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!-- Add Item -->
+      <div id="addItemModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" style="text-align: center;">Add Item</h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="addItemForm">
+                <div class="form-group">
+                  <label>Item Group</label>
+                  <select class="form-control" id="itemGroup" name="itemGroupId">
+                    
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Item Name</label>
+                  <select class="form-control" id="itemName" name="itemId">
+                    
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Quantity</label>
+                  <input type="number" class="form-control" name="quantity">
+                </div>
+                <div class="form-group">
+                  <label>Rate</label>
+                  <input type="number" class="form-control" name="rate">
+                </div>
+                <input type="hidden" value="<%= bookOrder[0]._id %>" name="foreginId">
+                <input type="hidden" value="4" name="role">
+                <input type="hidden" value="1" name="godownNo">
+                <br />  
+
+                <!-- <p id="utItemId"></p> -->
+                <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+
+              var selectItemGroup = '<option>Select Item Group</option>';
+
+      function itemGroup(data, index) {
+
+        selectItemGroup += '<option value="' + data._id + '">' + data.itemGroupName + '</option>'
+      }
+
+      itemGroupList();
+
+      
+
+      function itemGroupList() {
+        var modelData = "";
+        $.ajax({
+          url: '/all-item-group',
+          method: 'get',
+          dataType: 'json',
+          success: function(response) {
+            console.log(response);
+            if(response.msg == 'success') {
+              selectItemGroup = "'<option>Select Item Group</option>'";
+              response.itemGroup.forEach((data, index) => {
+                itemGroup(data, index);
+              });
+              $('#itemGroup').html(selectItemGroup);
+            }
+          }
+        })
+      }
+
+      //Item Name
+      var selectItemName = "";
+
+      function itemName(data, index) {
+
+        selectItemName += '<option value="' + data._id + '">' + data.itemName + '</option>'
+      }
+
+      $(document).on('change', '#itemGroup', function(){
+
+        console.log('clickkk');
+        var itemGroupId = $(this).val();
+        $.ajax({
+          url:'/all-item-name/'+itemGroupId,
+          method:'get',
+          dataType: 'json',
+          success:function(response)
+          {
+            selectItemName = "";
+            response.itemName.forEach((data, index) => {
+              itemName(data, index);
+            });
+            $('#itemName').html(selectItemName);
+          }
+        })
+      });
+
+          var itemNo = 0;
+          var itemDetail = "";
+
+          var purchaseStockData = "";
+
+          function bookOrder(data, index) {
+
+           purchaseStockData += '<tr class="tr-shadow">';
+           purchaseStockData += '<td>'+(index + 1)+'</td>';
+           purchaseStockData += '<td>'+data.item[0].itemName+'</td>';
+
+
+          purchaseStockData += '<td>'+data.quantity+'</td>';
+          purchaseStockData += '<td>'+data.rate+'</td>';
+
+          if (data.role == 4) {
+
+            purchaseStockData += '<td><div class="table-data-feature"><button type="button" class="item"><i class="zmdi zmdi-check-circle"></i></button></div></td>'
+
+          } else {
+
+            purchaseStockData += '<td><div class="table-data-feature"><button type="button" class="item updateItem" data-id="'+data._id+'" data-itemname="'+data.item[0].itemName+'" data-quantity="'+data.quantity+'" data-rate="'+data.rate+'" data-toggle="tooltip" data-placement="top" title="Update Quantity"><i class="zmdi zmdi-edit"></i></button><button type="button" class="item confirmBooking" data-id="'+data._id+'" data-toggle="tooltip" data-placement="top" title="Confirm Booking"><i class="zmdi zmdi-check-circle"></i></button></div></td>'
+          }
+
+           
+           purchaseStockData += '</tr>';
+
+          } 
+
+          //Confirm Booking
+          $(document).on('click', '.confirmBooking', function(){  
+            var utItemId = $(this).data("id");  
+
+            $.ajax({
+              url:'/update-stock-data',  
+              method:'POST',  
+              data: {stockItemId: utItemId, role: 4},
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+
+                  purchaseStockData = "";
+                  purchaseItem();                  
+                }
+              }
+            });
+
+          });
+
+          //Model for Followup Data
+          $(document).on('click', '.updateItem', function(){  
+            var utItemId = $(this).data("id");  
+            var utItemName = $(this).data("itemname");
+            var utQuantity = $(this).data("quantity");
+            var utRate = $(this).data("rate");
+            $('#updateItemModel').modal('show');
+            $('#utItemName').html(utItemName);
+            $('#utQuantity').val(utQuantity);
+            $('#utRate').val(utRate);
+            $('#utItemId').val(utItemId);
+
+          });
+
+          //Submit Followup Data
+          $('#itemData').on("submit", function(event){
+            event.preventDefault();
+            $.ajax({
+              url:'/update-stock-data',  
+              method:'POST',  
+              data:$('#itemData').serialize(),
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+                  alert('Item Updated');   
+                  $('#itemData')[0].reset();  
+                  $('#updateItemModel').modal('hide'); 
+                  purchaseStockData = "";
+                  purchaseItem();                  
+                }
+              }
+            });
+          });
+
+          //Add Receive Item
+          $(document).on('click', '#addItem', function(){  
+
+            $('#addItemModel').modal('show');
+
+          });
+
+          //Submit Item Data
+          $('#addItemForm').on("submit", function(event){
+            event.preventDefault();
+            $.ajax({
+              url:'/add-stock-data',  
+              method:'POST',  
+              data:$('#addItemForm').serialize(),
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+                  alert('Item Added');   
+                  $('#addItemForm')[0].reset();  
+                  $('#addItemModel').modal('hide'); 
+                  purchaseStockData = "";
+                  purchaseItem();                  
+                }
+              }
+            });
+          });
+
+           //Confirm Receive Purchase
+          $(document).on('click', '#confirmBook', function(){  
+
+                $('#confirmBookModel').modal('show');
+            
+            });
+
+          $('#confirmBookForm').on("submit", function(event){
+            event.preventDefault();
+            $.ajax({
+              url:'/pending-book-order',  
+              method:'POST',  
+              data:$('#confirmBookForm').serialize(),
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+
+                  window.location.href = "/book-order";
+                }
+              }
+            });
+          });
+
+
+
+          purchaseItem();
+
+          //Display Item Name
+          function purchaseItem() {
+            $.ajax({
+              url: '/fetch-purchase-item-name/<%= bookOrder[0]._id %>',
+              method: 'get',
+              dataType: 'json',
+              success: function(response) {
+                console.log(response);
+                if(response.msg == 'success') {
+                  console.log(response);
+                  response.purchaseStock.forEach((data, index) => {
+                    bookOrder(data, index);
+                  });
+                  $('.itemTable').html(purchaseStockData);
+                }
+              }
+            })
+          }
+
+          //Get transport vvalue
+          $('#transport').on('change', function() {
+
+            console.log(this.value);
+            let transport = this.value;
+            if (transport == "Transport") {
+
+              transport = '<div class="form-group"><label for="currentWorking" class=" form-control-label">Transport Name</label><input type="text" id="currentWorking" name="transportName" placeholder="Enter Transport Name" value="<%= bookOrder[0].saleParty[0].transportName %>" class="form-control"> </div><div class="form-group"><label for="currentWorking" class=" form-control-label">Transport Number</label><input type="number" id="currentWorking" name="transportNumber" placeholder="Enter Transport Number" value="<%= bookOrder[0].saleParty[0].transportNumber %>" class="form-control"> </div>'
+
+              $('#transportDetail').html(transport);
+            }else{
+
+              $('#transportDetail').html(" ");
+            }
+
+          });
+
+          //Get packing value
+          $('#packing').on('change', function() {
+            let packing = this.value;
+            if (packing == "Yes") {
+
+              packing = '<div class="form-group"><label for="enquiryDate" class="control-label mb-1">Choose Packing:- </label><select class="form-control" name="packingDetail"><option value="Plain">Plain</option><option value="Carboard">Carboard</option><option value="Bubble">Bubble</option></select></div>'
+
+              $('#packingDetail').html(packing);
+            }else{
+
+              $('#packingDetail').html(" ");
+            }
+
+          });
+
+          //Get urgent value
+          $('#urgent').on('change', function() {
+            let urgent = this.value;
+            if (urgent == "Yes") {
+
+              urgent = '<div class="form-group"><label for="enquiryDate" class="control-label mb-1">Choose FP:- </label><select class="form-control" name="fp"><option value="1">1</option><option value="2">2</option></select></div>'
+
+              $('#urgentDetail').html(urgent);
+            }else{
+
+              $('#urgentDetail').html(" ");
+            }
+
+          });
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

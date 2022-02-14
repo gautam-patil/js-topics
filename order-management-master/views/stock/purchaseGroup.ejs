@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>Purchase Group</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Purchase Group</h3>
+
+                <div class="table-data__tool">
+                    <div class="table-data__tool-left">
+                        <form class="form-header" id="searchForm">
+                            <select class="au-input au-input--sl form-control" name="role" style="margin-right: 10px;">
+                              <option value="">Select Confirmation</option>
+                              <option value="1">Yes</option>
+                              <option value="2">No</option>
+                            </select>
+                            <input type="text" class="au-input au-input--sl form-control" name="purchaseBookingNo" placeholder="Enter Purchase Booking No">
+                            <button class="au-btn--submit" type="submit">
+                                <i class="zmdi zmdi-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                  
+                  <div class="table-data__tool">
+                    <div class="table-responsive table--no-card m-b-40">
+                      <table class="table table-borderless table-striped table-earning" id="dataTable">
+                        <thead>
+                          <tr>
+                            <th>S.No.</th>
+                            <th>Party Name</th>
+                            <th>Booking No.</th>
+                            <th>Book User</th>
+                            <th>Book Date</th>
+                            <th>Invoice No</th>
+                            <th>Confirm User</th>
+                            <th>Confirm Date</th>
+                            <th>Comment</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- END DATA TABLE -->
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    //Excel export
+    $("#exporttable").click(function(e){
+      e.preventDefault();
+      ResultsToTable();
+    });
+
+    function ResultsToTable(){    
+        $("#dataTable").table2excel({
+            exclude: ".noExl",
+            name: "Results"
+        });
+    }
+
+
+    var itemData = "";
+    let totalItem = 0;
+
+    function allPurchaseGroup(data, index) {
+
+     itemData += '<tr class="tr-shadow">';
+     itemData += '<td>'+(index + 1)+'</td>'
+     itemData += '<td>'+data.purchaseParty[0].name+'</td>';
+     itemData += '<td>'+data.purchaseBookingNo+'</td>';
+     itemData += '<td>'+data.bookUser[0].name+'</td>';
+     itemData += '<td>'+data.bookDate+'</td>';
+
+     if (data.role == 2) {
+        
+        itemData += '<td>'+data.invoiceNo+'</td>';      
+        itemData += '<td>'+data.confirmUser[0].name+'</td>';
+        itemData += '<td>'+data.confirmDate+'</td>';      
+        itemData += '<td>'+data.comment+'</td>';      
+     }else{
+
+        itemData += '<td></td>'
+        itemData += '<td></td>'
+        itemData += '<td></td>'
+        itemData += '<td></td>'
+        itemData += '<td><div class="table-data-feature"><a href="/view-purchase-booking/'+data._id+'"><button class="item" data-toggle="tooltip" data-placement="top" title="See Purchase Booking"><i class="zmdi zmdi-eye"></i></button></a></div></td>'
+     }
+     itemData += '</tr>'
+    } 
+    
+      //Search Item Stock Data
+      $('#searchForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/search-purchase-group',  
+          method:'POST',
+          data:$('#searchForm').serialize(),
+          success:function(response){  
+            if(response.msg=='success'){
+
+              itemData = "";
+
+              if (response.purchaseGroup.length == 0) {
+
+                itemData = '<tr class="tr-shadow"><td colspan="4">Data Not Found</td></tr>'
+              }else{
+
+                response.purchaseGroup.forEach((data, index) =>{
+                  allPurchaseGroup(data, index);
+                });
+              }
+                $('tbody').html(itemData);
+
+            }
+          }
+        });
+      });
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

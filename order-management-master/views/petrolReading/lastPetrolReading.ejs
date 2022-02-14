@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>Add Last Petrol Reading</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Petrol Reading table</h3>
+                <br>
+
+                <div class="table-data__tool">
+                  <div class="table-responsive table--no-card m-b-40">
+                    <table class="table table-borderless table-striped table-earning" id="dataTable">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>Date</th>
+                          <th>Employee Name</th>
+                          <th>Start Reading</th>
+                          <th>User Id</th>
+                          <th>Add Last Reading</th>                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- END DATA TABLE -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="lastPetrolReadingModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" style="text-align: center;">Add Last Reading</h1>
+              <br>
+              <hr>
+              <h4 id="empName" style="text-align: center;"></h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="lastReadingForm">
+                <div class="form-group">
+                  <label>Last Reading</label>
+                  <input type="number" class="form-control" name="lastReading" placeholder="Enter Last Reading">
+                </div>
+                <div class="form-group">
+                  <label>Place Visit</label>
+                  <input type="text" class="form-control" name="placeVisit" placeholder="Enter Today Place Visit name">
+                </div>
+                <br />  
+                 <!-- <input type="text" name="enquiryId" id="petrolReadingId"> -->
+                <input type="hidden" name="petrolReadingId" id="petrolReadingId" /> 
+                <!-- <p id="petrolReadingId"></p> -->
+                <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    function startReadingData(){
+
+    $.ajax({  
+        url:'/all-start-petrol-reading',  
+        method:'get',  
+        dataType:'json', 
+        success:function(response){ 
+             if(response.msg=='success'){   
+
+              response.startReading.forEach((data, index) =>{
+                allStartReading(data, index);
+              });
+              $('tbody').html(readingData);
+            }
+          }
+        })
+    }
+
+    startReadingData();
+
+    var readingData = "";
+    var fl = 0
+
+    function allStartReading(data, index) {
+
+
+     // var followupDate = data.followups[0].followupDate;
+     // var comment = data.followups[0].comment;
+     // var nextFollowupDate = data.followups[0].nextFollowupDate;
+
+
+     readingData += '<tr class="tr-shadow">';
+     readingData += '<td>'+(index + 1)+'</td>';
+     readingData += '<td>'+data.date+'</td>';
+     readingData += '<td>'+data.emp[0].name+'</td>';
+     readingData += '<td>'+data.startReading+'</td>';
+     readingData += '<td>'+data.startUser[0].name+'</td>';
+     readingData += '<td><div class="table-data-feature"><button type="button" class="item lastReading" data-id="'+data._id+'" data-empname="'+data.emp[0].name+'" data-toggle="tooltip" data-placement="top" title="Confirm Courier"><i class="zmdi zmdi-check-circle"></i></button></div></td>'
+     readingData += '</tr>';
+
+    } 
+
+     $(document).on('click', '.lastReading', function(){  
+        var petrolReadingId = $(this).data("id");  
+        var empName = $(this).data("empname");
+        $('#lastPetrolReadingModel').modal('show');
+        $('#empName').html(empName);
+        $('#petrolReadingId').val(petrolReadingId);
+
+      });
+
+      //Submit Followup Data
+      $('#lastReadingForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/update-last-petrol-reading',  
+          method:'POST',  
+          data:$('#lastReadingForm').serialize(),
+          success:function(followupResponse){  
+            if(followupResponse.msg=='success'){
+              alert('Last Reding Added');   
+              $('#lastReadingForm')[0].reset();  
+              $('#lastPetrolReadingModel').modal('hide'); 
+              readingData = "";
+              startReadingData();                  
+            }
+          }
+        });
+      });
+    
+
+      var modelData = "";
+
+      // if ('<%= role%> == 1') {}
+        
+
+
+
+
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

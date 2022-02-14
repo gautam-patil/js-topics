@@ -1,0 +1,94 @@
+* {
+
+	box-sizing: border-box;
+}
+
+body {
+
+	height: 100vh;
+	width: 100%;
+	position: fixed;
+}
+
+.navbar {
+
+	display: flex;
+	padding: 20px;
+	width: 100%;
+	background-color: red;
+	justify-content: space-between;
+}
+
+.navBox {
+
+	height: 30px;
+	width: 10%;
+	align-items: center;
+	background-color: dimgrey;
+	padding: 20px;
+	margin-left: 10px;
+}
+/*.navBoxRight {
+
+	position: absolute;
+	right: 20px;
+}*/
+
+.navbarLeft {
+
+	display: flex;
+	flex-flow: row;
+}
+
+/*.navbarRight {
+
+	justify-content: space-between;
+}*/
+
+.content {
+
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	height: 100%;
+}
+.leftContent {
+
+	display: flex;
+	flex: 30%;
+	padding: 20px;
+	height: 82%;
+	background-color: lightgrey;
+	justify-content: space-between;
+	flex-flow: column;
+}
+/*.leftContentBoxBottom {
+
+	position: absolute;
+	top: 67%;
+}*/
+
+.leftContentBox {
+
+	height: 100px;
+	width: 70%;
+	align-items: center;
+	background-color: dimgrey;
+	padding: 20px;
+	margin-top: 10px;
+}
+
+.rightContent {
+
+	flex: 70%;
+	
+}
+
+.rightContentBox {
+
+	height: 170px;
+	width: 100%;
+	background-color: dimgrey;
+	padding: 20px;
+	margin-top: 10px;
+}

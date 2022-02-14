@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title><%= enquiry.shopName %></title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                <form id="editEnquiryForm">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="card">
+                        <div class="card-header">Enquiry Info</div>
+                        <div class="card-body">
+                          <div class="card-title">
+                            <h3 class="text-center title-2">Enquiry Info</h3> </div>
+                          <hr>
+                            <div class="form-group has-success">
+                              <label for="refrenceBy" class="control-label mb-1">Opening Amount</label>
+                              <input type="number" id="refrenceBy" name="openingAmount" placeholder="Enter Opening Amount" value="<%= enquiry.openingAmount%>" class="form-control"> 
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Opening Date</label>
+                              <input id="enquiryDate" name="openingDate" type="date" class="form-control" aria-required="true" aria-invalid="false" value="<%= enquiry.openingDate %>"> 
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Enquiry Date</label>
+                              <input id="enquiryDate" name="enquiryDate" type="text" class="form-control" aria-required="true" aria-invalid="false" value="<%= enquiry.enquiryDate %>"> 
+                            </div>
+
+                            <!-- <div class="form-group">
+                              <label for="marketingPerson" class=" form-control-label">Select Marketing Person</label>
+                              <select name="marketingPerson" id="marketingPerson" class="form-control">
+
+                              </select>
+                            </div> -->
+
+                            <div class="form-group has-success">
+                              <label for="refrenceBy" class="control-label mb-1">Refrence By</label>
+                              <input type="text" id="refrenceBy" name="refrenceBy" placeholder="Enter Refrence By" value="<%= enquiry.refrenceBy%>" class="form-control"> 
+                            </div>
+                            <hr>
+                            <div class="card-title">
+                              <h3 class="text-center title-2">Contact Info</h3> 
+                            </div>
+                            <hr>
+                            <div class="form-group">
+                              <label for="firstContactPersonName" class=" form-control-label">1st Contact Person Name</label>
+                              <input type="text" id="firstContactPersonName" name="firstContactPersonName" placeholder="Enter 1st Contact Person Name" value="<%= enquiry.firstContactPersonName%>" class="form-control"> 
+                            </div>
+
+                            <div class="form-group">
+                              <label for="firstContactPersonMobile" class=" form-control-label">1st Person Contact No.</label>
+                              <input type="number" id="firstContactPersonMobile" name="firstContactPersonMobile" placeholder="Enter 1st Person Contact No."  value="<%= enquiry.firstContactPersonMobile%>" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                              <label for="secondContactPersonName" class=" form-control-label">2nd Contact Person Name</label>
+                              <input type="text" id="secondContactPersonName" name="secondContactPersonName" placeholder="Enter 2nd Contact Person Name"  value="<%= enquiry.secondContactPersonName%>" class="form-control"> 
+                            </div>
+
+                            <div class="form-group">
+                              <label for="secondContactPersonMobile" class=" form-control-label">2nd Person Contact No.</label>
+                              <input type="number" id="secondContactPersonMobile" name="secondContactPersonMobile" placeholder="Enter 2nd Person Contact No."  value="<%= enquiry.secondContactPersonMobile%>" class="form-control"> 
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="card">
+                        <div class="card-header"> <strong>Shop</strong> <small> Info</small> </div>
+                        <div class="card-body card-block">
+                          <div class="card-title">
+                            <h3 class="text-center title-2">Shop Info</h3> </div>
+                          <div class="form-group">
+                            <label for="shopName" class=" form-control-label">Shop Name</label>
+                            <input type="text" id="shopName" name="shopName" placeholder="Enter your shop name" class="form-control" value="<%= enquiry.shopName %>"> </div>
+                          <div class="form-group">
+                            <label for="enquiryStatus" class=" form-control-label">Select Enquiry Status</label>
+                            <select name="enquiryStatus" id="enquiryStatus" class="form-control">
+                              <option  value="<%= enquiry.enquiryStatus%>"><%= enquiry.enquiryStatus%></option>
+                              <option value="Lead">Lead</option>
+                              <option value="Enquiry">Enquiry</option>
+                              <option value="Dealer">Dealer</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="shopType" class=" form-control-label">Select Shop Type</label>
+                            <select name="shopType" id="shopType" class="form-control">
+                              <option  value="<%= enquiry.shopType%>"><%= enquiry.shopType%></option>
+                              <option value="Existing Dealer">Existing Dealer</option>
+                              <option value="Enquiry for Dealer">Enquiry for Dealer</option>
+                              <option value="Faricator">Faricator</option>
+                              <option value="Wholeseller">Wholeseller</option>
+                              <option value="Customer">Customer</option>
+                              <option value="Builder">Builder</option>
+                              <option value="Architecture">Architecture</option>
+                              <option value="Contractor">Contractor</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="category" class=" form-control-label">Select Shop Category</label>
+                            <select name="category" id="category" class="form-control">
+                              <option  value="<%= enquiry.category%>"><%= enquiry.category%></option>
+                              <option value="VIP">VIP</option>
+                              <option value="D+++">D+++</option>
+                              <option value="D++">D++</option>
+                              <option value="D+">D+</option>
+                              <option value="D">D</option>
+                              <option value="D-">D-</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="mobile" class=" form-control-label">Mobile</label>
+                            <input type="number" name="mobile" id="mobile" placeholder="Enter Mobile No." value="<%= enquiry.mobile%>" class="form-control"> 
+                          </div>
+                          <div class="form-group">
+                            <label for="email" class=" form-control-label">E-mail</label>
+                            <input type="email" id="email" name="email" placeholder="Enter E-mail" value="<%= enquiry.email%>" class="form-control"> 
+                          </div>
+                          <div class="form-group">
+                            <label for="state" class=" form-control-label">State</label>
+                            <input type="text" id="state" name="state" placeholder="Enter State" value="<%= enquiry.state%>" class="form-control"> 
+                          </div>
+                          <div class="form-group">
+                            <label for="city" class=" form-control-label">City</label>
+                            <input type="text" id="city" name="city" placeholder="Enter City" value="<%= enquiry.city%>" class="form-control"> 
+                          </div>
+                          <div class="form-group">
+                            <label for="address" class=" form-control-label">Address</label>
+                            <input type="text" id="address" name="address" placeholder="Enter Address" value="<%= enquiry.address%>" class="form-control"> 
+                          </div>
+                          <div class="form-group">
+                            <label for="requirement" class=" form-control-label">Requirement</label>
+                            <input type="text" id="requirement" name="requirement" placeholder="Enter Requirement" value="<%= enquiry.requirement%>" class="form-control"> 
+                          </div>
+                          <div class="form-group">
+                            <label for="currentWorking" class=" form-control-label">Current Working</label>
+                            <input type="text" id="currentWorking" name="currentWorking" placeholder="Enter Current Working" value="<%= enquiry.currentWorking%>" class="form-control"> 
+                          </div>
+                          <div class="form-group">
+                            <label for="currentWorking" class=" form-control-label">Transport Name</label>
+                            <input type="text" id="currentWorking" name="transportName" placeholder="Enter Transport Name" value="<%= enquiry.transportName%>" class="form-control"> 
+                          </div>
+                          <div class="form-group">
+                            <label for="currentWorking" class=" form-control-label">Transport Number</label>
+                            <input type="text" id="currentWorking" name="transportNumber" placeholder="Enter Transport Number" value="<%= enquiry.transportNumber%>" class="form-control"> 
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-lg btn-info btn-block submitData"> <span id="payment-button-amount">Submit</span> </button>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+          //Submit Enquiry Data
+
+          var selectOption = "";
+          var selectOption1 = "";
+          var findMarketingPerson;
+          // var marketingPersonName = '<%= enquiry._id %>';
+          // console.log(typeof(marketingPersonName));
+          function marketingPerson(data, index) {
+            
+              selectOption1 += '<option value="' + data._id + '">' + data.name + '</option>';
+
+              for (var i = 0; i < index; i++) {
+
+                if ('<%= enquiry.marketingPerson%>' == data._id) {
+
+                    findMarketingPerson = '<option value="' + data._id + '">' + data.name + '</option>';
+                    break;
+                }
+              }
+
+              if (findMarketingPerson) {
+
+                  selectOption += findMarketingPerson;
+              }
+              if (selectOption) {
+
+                  selectOption += selectOption1;
+              }
+          }
+            var modelData = "";
+            $.ajax({
+              url: '/all-user',
+              method: 'get',
+              dataType: 'json',
+              success: function(response) {
+                console.log(response);
+                if(response.msg == 'success') {
+                  response.user.forEach((data, index) => {
+                    marketingPerson(data, index);
+                  });
+                  $('#marketingPerson').html(selectOption);
+                }
+              }
+            })
+
+            $('#editEnquiryForm').on("submit", function(event){
+              event.preventDefault();
+              $.ajax({
+                url:'/update-enquiry/<%= enquiry._id%>',  
+                method:'POST',  
+                data:$('#editEnquiryForm').serialize(),
+                success:function(statusResponse){  
+                  if(statusResponse.msg=='success'){
+                    alert('Status Updated');   
+                    $('#editEnquiryForm')[0].reset();                     
+                  }
+                }
+              });
+            });
+          
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

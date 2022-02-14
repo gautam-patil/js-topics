@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>Purchase Booking</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Purchase Booking</h3>
+
+                <div class="table-data__tool">
+                    <div class="table-data__tool-left">
+                        <form class="form-header" id="searchForm">
+                            <select class="au-input au-input--sl form-control" id="itemGroup" name="itemGroupId" style="margin-right: 10px;">
+                            </select>
+                            <input type="text" class="au-input au-input--sl form-control" name="purchaseBookingNo" placeholder="Enter Purchase Booking No">
+                            <button class="au-btn--submit" type="submit">
+                                <i class="zmdi zmdi-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="table-data__tool">
+                    <div class="table-data__tool-right">
+                        <a href="/add-purchase-booking">
+                            <button class="au-btn-primary">
+                                Add Purchase Booking
+                            </button>
+                        </a>
+                    </div>
+                    <div class="table-data__tool-left">
+                            <button class="au-btn-primary" id="groupPurchaseBooking">
+                                Group Purchase Booking
+                            </button>
+                    </div>
+                </div>
+                <br>
+                  
+                  <div class="table-data__tool">
+                    <div class="table-responsive table--no-card m-b-40">
+                      <table class="table table-borderless table-striped table-earning" id="dataTable">
+                        <thead>
+                          <tr>
+                            <th>S.No.</th>
+                            <th>Item Group</th>
+                            <th>Item Name</th>
+                            <th>Qty</th>
+                            <th>Rate</th>
+                            <th>Booking No.</th>
+                            <th>User</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- END DATA TABLE -->
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="groupPurchaseBookingModel" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title" style="text-align: center;">Group Booking</h1>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form id="groupPurchaseBookingForm">
+              <div class="form-group">
+                <label for="enquiryDate" class="control-label mb-1">Party Name</label>
+                <select name="partyId" id="purchaseParty" class="form-control">
+
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Purchase Booking No.</label>
+                <input type="text" class="form-control" name="purchaseBookingNo" placeholder="Enter Purchase Booking No." required>
+              </div>
+              <div class="form-group">
+                <label>Comment</label>
+                <input type="text" class="form-control" name="comment" placeholder="Enter Comment">
+              </div>
+              <br />  
+              <!-- <p id="fdEnquiryId"></p> -->
+              <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+            </form>
+          </div>
+          <div class="modal-footer">    
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    //Excel export
+    $("#exporttable").click(function(e){
+      e.preventDefault();
+      ResultsToTable();
+    });
+
+    function ResultsToTable(){    
+        $("#dataTable").table2excel({
+            exclude: ".noExl",
+            name: "Results"
+        });
+    }
+
+    var selectOption = '<option value=""> Search by Item Group</option>';
+
+    function itemGroup(data, index) {
+      selectOption += '<option value="' + data._id + '">' + data.itemGroupName + '</option>'
+    }
+
+    var modelData = "";
+    $.ajax({
+      url: '/all-item-group',
+      method: 'get',
+      dataType: 'json',
+      success: function(response) {
+        if(response.msg == 'success') {
+          response.itemGroup.forEach((data, index) => {
+            itemGroup(data, index);
+          });
+          $('#itemGroup').html(selectOption);
+        }
+      }
+    })
+
+    var itemData = "";
+    let totalItem = 0;
+
+    function allPurchaseBooking(data, index) {
+
+     itemData += '<tr class="tr-shadow">';
+     itemData += '<td>'+(index + 1)+'</td>'
+     itemData += '<td>'+data.itemGroup[0].itemGroupName+'</td>';
+     itemData += '<td>'+data.item[0].itemName+'</td>';
+     itemData += '<td>'+data.quantity+'</td>';
+     itemData += '<td>'+data.rate+'</td>';
+     itemData += '<td>'+data.purchaseBookingNo+'</td>';
+     itemData += '<td>'+data.user[0].name+'</td>';
+     itemData += '</tr>'
+    } 
+    
+      //Search Item Stock Data
+      $('#searchForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/search-purchase-booking',  
+          method:'POST',
+          data:$('#searchForm').serialize(),
+          success:function(response){  
+            if(response.msg=='success'){
+
+              itemData = "";
+
+              if (response.purchaseBooking.length == 0) {
+
+                itemData = '<tr class="tr-shadow"><td colspan="4">Data Not Found</td></tr>'
+              }else{
+
+                response.purchaseBooking.forEach((data, index) =>{
+                  allPurchaseBooking(data, index);
+                });
+              }
+                $('tbody').html(itemData);
+
+            }
+          }
+        });
+      });
+
+      //Model for Group Purcahse Booking
+      $(document).on('click', '#groupPurchaseBooking', function(){  
+
+        $('#groupPurchaseBookingModel').modal('show');
+
+      });
+
+      //Submit Followup Data
+      $('#groupPurchaseBookingForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/create-purchase-booking-group',  
+          method:'POST',  
+          data:$('#groupPurchaseBookingForm').serialize(),
+          success:function(followupResponse){  
+            if(followupResponse.msg=='success'){
+              alert('Group Done');   
+              $('#groupPurchaseBookingForm')[0].reset();  
+              $('#groupPurchaseBookingModel').modal('hide');                   
+            }
+          }
+        });
+      });
+
+      //Purcahse Party Name
+
+      var selectPurchasePartyOption = "";
+
+          function purchaseParty(data, index) {
+
+            selectPurchasePartyOption += '<option value="' + data._id + '">' + data.name + '</option>'
+          }
+
+          enquiryList();
+
+          function enquiryList() {
+            var modelData = "";
+            $.ajax({
+              url: '/all-purchase-party',
+              method: 'get',
+              dataType: 'json',
+              success: function(response) {
+                console.log(response);
+                if(response.msg == 'success') {
+                  response.purchaseParty.forEach((data, index) => {
+                    purchaseParty(data, index);
+                  });
+                  $('#purchaseParty').html(selectPurchasePartyOption);
+                }
+              }
+            })
+          }
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

@@ -1,0 +1,14 @@
+module.exports.authController = require('./auth.controller');
+module.exports.userController = require('./user.controller');
+module.exports.documentController = require('./document.controller');
+module.exports.hairstyleController = require('./hairstyle.controller');
+module.exports.tutorialController = require('./tutorial.controller');
+module.exports.settingsController = require('./settings.controller');
+module.exports.packageController = require('./package.controller');
+module.exports.categoryController = require('./category.controller');
+module.exports.colorController = require('./color.controller');
+module.exports.purchasedPackageController = require('./purchasedPackage.controller');
+module.exports.modelController = require('./model.controller');
+module.exports.appController = require('./app.controller');
+module.exports.transactionController = require('./transaction.controller');
+module.exports.photoController = require('./photo.controller');

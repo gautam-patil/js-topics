@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>MIS Order Report</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">MIS Order Report</h3>
+                  <form id="searchEnquiryForm">
+                      <div class="row mb-0">
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Order No</label>
+                                  <input type="text" class="form-control" placeholder="Enter Order No." name="orderNo">
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                              <button class="btn btn-primary btn-sm submitClassFormData" type="submit" name="search">Search</button>
+                          </div>
+                      </div>    
+                  </form> 
+
+                <div class="table-data__tool">
+                  <div class="table-responsive m-b-40">
+                    <table class="table table-borderless table-data3" id="dataTable">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>Order No.</th>
+                          <th>Sale Party</th>
+                          <th>Order Date</th>
+                          <th>UserId</th>
+                          <th>Fab. Urgent</th>
+                          <th>Fab. FP</th>
+                          <th>Fab. Date</th>
+                          <th>Fab. Done</th>
+                          <th>Check. Done</th>
+                          <th>Dis. Urgent</th>
+                          <th>Dis. FP</th>
+                          <th>Dis. Date</th>
+                          <th>Dis. Done</th>
+                        </tr>
+                      </thead>
+                      <tbody id="orderTable">
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- END DATA TABLE -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fabricate Model -->
+      <div id="fabricateModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="forderNo" style="text-align: center;"></h1>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="fabricateForm">
+                <div class="form-group">
+                  <label>Comment :</label>
+                  <input type="text" class="form-control" name="fabricateComment" placeholder="Enter Comment">
+                </div>
+                <input type="hidden" name="orderId" id="forderId">
+               <!-- <p id="fdEnquiryId"></p> -->
+               <input type="submit" id="insert1" value="Insert" class="btn btn-success" />  
+              </form>
+          </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fabricate Done Model -->
+      <div id="fabricateDoneModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" style="text-align: center;">Fabrication Status</h1>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-borderless table-data3">
+                <tr>
+                  <td>Order No</td>
+                  <td id="fabricateOrderNo"></td>
+                </tr>
+                <tr>
+                  <td>Date</td>
+                  <td id="fabricateDate"></td>
+                </tr>
+                <tr>
+                  <td>Time</td>
+                  <td id="fabricateTime"></td>
+                </tr>
+                <tr>
+                  <td>Comment</td>
+                  <td id="fabricateComment"></td>
+                </tr>
+                <tr>
+                  <td>Username</td>
+                  <td id="fabricateUsername"></td>
+                </tr>
+              </table>
+          </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Check Model -->
+      <div id="checkModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="corderNo" style="text-align: center;"></h1>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="checkForm">
+                <div class="form-group">
+                  <label>Comment :</label>
+                  <input type="text" class="form-control" name="checkComment" placeholder="Enter Comment">
+                </div>
+                <input type="hidden" name="orderId" id="corderId">
+               <!-- <p id="fdEnquiryId"></p> -->
+               <input type="submit" id="insert1" value="Insert" class="btn btn-success" />  
+              </form>
+          </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fabricate Done Model -->
+      <div id="checkDoneModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" style="text-align: center;">Check Status</h1>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-borderless table-data3">
+                <tr>
+                  <td>Order No</td>
+                  <td id="checkOrderNo"></td>
+                </tr>
+                <tr>
+                  <td>Date</td>
+                  <td id="checkDate"></td>
+                </tr>
+                <tr>
+                  <td>Time</td>
+                  <td id="checkTime"></td>
+                </tr>
+                <tr>
+                  <td>Comment</td>
+                  <td id="checkComment"></td>
+                </tr>
+                <tr>
+                  <td>Username</td>
+                  <td id="checkUsername"></td>
+                </tr>
+              </table>
+          </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dispatch Model -->
+      <div id="dispatchModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="dorderNo" style="text-align: center;"></h1>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="dispatchForm">
+                <div class="form-group">
+                  <label>Bill No :</label>
+                  <input type="text" class="form-control" name="billNo" placeholder="Enter Bill No.">
+                </div>
+                <div id="transport">
+                </div>
+                <div class="form-group">
+                  <label>Comment :</label>
+                  <input type="text" class="form-control" name="dispatchComment" placeholder="Enter Comment">
+                </div>
+                <input type="hidden" name="orderId" id="dorderId">
+               <!-- <p id="fdEnquiryId"></p> -->
+               <input type="submit" id="insert1" value="Insert" class="btn btn-success" />  
+              </form>
+          </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    console.log('hit');
+
+    function getOrder(){
+
+    $.ajax({  
+        url:'/all-mis-order',  
+        method:'get',  
+        dataType:'json', 
+        success:function(response){ 
+             if(response.msg=='success'){   
+
+              bookData = "";
+              response.order.forEach((data, index) =>{
+                allBookOrder(data, index);
+              });
+              $('#orderTable').html(bookData);
+            }
+          }
+        })
+    }
+
+    getOrder();
+
+    var bookData = "";
+    var fl = 0
+
+    function allBookOrder(data, index) {
+
+
+     // var followupDate = data.followups[0].followupDate;
+     // var comment = data.followups[0].comment;
+     // var nextFollowupDate = data.followups[0].nextFollowupDate;
+
+
+     bookData += '<tr class="tr-shadow">';
+     bookData += '<td>'+(index + 1)+'</td>';
+     bookData += '<td><a href="/view-order/'+data._id+'">'+data.orderNo+'</a></td>';
+     bookData += '<td><a href="/view-enquiry-page/'+data.saleParty[0]._id+'">'+data.saleParty[0].shopName+'</a></td>';
+     bookData += '<td><a href="/view-order/'+data._id+'">'+data.confirmDate+'</a></td>';
+     bookData += '<td>'+data.confirmUser[0].name+'</td>';
+     bookData += '<td>'+data.fabricateUrgent+'</td>';
+     bookData += '<td>'+data.fpFabricate+'</td>';
+     bookData += '<td>'+data.fabricateDate+'</td>';
+     if (data.fabricateDone == 0) {
+
+      bookData += '<td><div class="table-data-feature"><button class="item fabricate" data-id="'+data._id+'" data-orderno="'+data.orderNo+'" data-toggle="tooltip" data-placement="top" title="Update Lead"><i class="zmdi zmdi-comment-edit"></i></button></div></td>'
+     } else {
+
+      bookData += '<td><div class="table-data-feature"><button class="item fabricateDone" data-orderno="'+data.orderNo+'" data-username="'+data.fabricateUser[0].name+'" data-date="'+data.fabricateDoneDate+'" data-time="'+data.fabricateDoneTime+'" data-comment="'+data.fabricateComment+'" data-toggle="tooltip" data-placement="top" title="Add Fabricate"><i class="zmdi zmdi-check-circle"></i></button></div></td>'
+     }
+     
+     if (data.checkDone == 0) {
+
+      bookData += '<td><div class="table-data-feature"><button class="item check" data-id="'+data._id+'" data-orderno="'+data.orderNo+'" data-toggle="tooltip" data-placement="top" title="Update Lead"><i class="zmdi zmdi-comment-edit"></i></button></div></td>'
+     } else {
+
+      bookData += '<td><div class="table-data-feature"><button class="item checkDone" data-orderno="'+data.orderNo+'" data-username="'+data.checkUser[0].name+'" data-date="'+data.checkDoneDate+'" data-time="'+data.checkDoneTime+'" data-comment="'+data.checkComment+'" data-toggle="tooltip" data-placement="top" title="Add Check"><i class="zmdi zmdi-check-circle"></i></button></div></td>'
+     }
+
+     bookData += '<td>'+data.dispatchUrgentCO+'</td>';
+     bookData += '<td>'+data.fpDispatchCO+'</td>';
+     bookData += '<td>'+data.dispatchDate+'</td>';
+
+     if (data.dispatchDone == 0) {
+
+        bookData += '<td><div class="table-data-feature"><button class="item dispatch" data-id="'+data._id+'" data-orderno="'+data.orderNo+'" data-transport="'+data.transport+'" data-toggle="tooltip" data-placement="top" title="Update Lead"><i class="zmdi zmdi-comment-edit"></i></button></div></td>'
+     }
+     bookData += '</tr>';
+
+    } 
+    
+    //Fabricate
+
+    $(document).on('click', '.fabricate', function(){  
+
+      
+      var forderId = $(this).data("id");  
+      var forderNo = $(this).data("orderno");
+      $('#fabricateModel').modal('show');
+      $('#forderNo').html(forderNo);
+      $('#forderId').val(forderId);
+
+
+    });
+      //Edit Enuiry Status Data
+      $('#fabricateForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/update-fabricate-order',  
+          method:'POST',  
+          data:$('#fabricateForm').serialize(),
+          success:function(statusResponse){  
+            if(statusResponse.msg=='success'){
+              alert('Status Updated');   
+              $('#fabricateForm')[0].reset();  
+              $('#fabricateModel').modal('hide'); 
+              getOrder();
+            }
+          }
+        });
+      });
+
+      $(document).on('click', '.fabricateDone', function(){  
+
+        var fabricateOrderNo = $(this).data("orderno");
+        var fabricateDate = $(this).data("date");
+        var fabricateTime = $(this).data("time");
+        var fabricateComment = $(this).data("comment");
+        var fabricateUsername = $(this).data("username");
+        $('#fabricateDoneModel').modal('show');
+        $('#fabricateOrderNo').html(fabricateOrderNo);
+        $('#fabricateDate').html(fabricateDate);
+        $('#fabricateTime').html(fabricateTime);
+        $('#fabricateComment').html(fabricateComment);
+        $('#fabricateUsername').html(fabricateUsername);
+
+
+      });
+
+      //Check
+      $(document).on('click', '.check', function(){  
+
+      
+        var corderId = $(this).data("id");  
+        var corderNo = $(this).data("orderno");
+        $('#checkModel').modal('show');
+        $('#corderNo').html(corderNo);
+        $('#corderId').val(corderId);
+
+
+      });
+        //Edit Enuiry Status Data
+        $('#checkForm').on("submit", function(event){
+          event.preventDefault();
+          $.ajax({
+            url:'/update-check-order',  
+            method:'POST',  
+            data:$('#checkForm').serialize(),
+            success:function(statusResponse){  
+              if(statusResponse.msg=='success'){
+                alert('Status Updated');   
+                $('#checkForm')[0].reset();  
+                $('#checkModel').modal('hide'); 
+                getOrder();
+              }
+            }
+          });
+        });
+
+        $(document).on('click', '.checkDone', function(){  
+
+          var checkOrderNo = $(this).data("orderno");
+          var checkDate = $(this).data("date");
+          var checkTime = $(this).data("time");
+          var checkComment = $(this).data("comment");
+          var checkUsername = $(this).data("username");
+          $('#checkDoneModel').modal('show');
+          $('#checkOrderNo').html(checkOrderNo);
+          $('#checkDate').html(checkDate);
+          $('#checkTime').html(checkTime);
+          $('#checkComment').html(checkComment);
+          $('#checkUsername').html(checkUsername);
+
+
+        });
+
+        //Dispatch
+      $(document).on('click', '.dispatch', function(){  
+
+      
+        var dorderId = $(this).data("id");  
+        var dorderNo = $(this).data("orderno");
+        var transport = $(this).data("transport");
+        $('#dispatchModel').modal('show');
+        $('#dorderNo').html(dorderNo);
+        if (transport != "Self") {
+
+          $('#transport').html('<div class="form-group"><label>Select Trasport Name :</label><select name="dispatchTransportName" id="marketingPerson" class="form-control"></select></div>');
+          enquiryList();
+        }
+        $('#dorderId').val(dorderId);
+
+
+      });
+        //Edit Enuiry Status Data
+        $('#dispatchForm').on("submit", function(event){
+          event.preventDefault();
+          $.ajax({
+            url:'/update-dispatch-order',  
+            method:'POST',  
+            data:$('#dispatchForm').serialize(),
+            success:function(statusResponse){  
+              if(statusResponse.msg=='success'){
+                alert('Status Updated');   
+                $('#dispatchForm')[0].reset();  
+                $('#dispatchModel').modal('hide'); 
+                getOrder();
+              }
+            }
+          });
+        });
+
+        var selectOption = '<option value="">Select Trasport Name</option>';
+
+          function marketingPerson(data, index) {
+            selectOption += '<option value="' + data._id + '">' + data.name + '</option>'
+          }
+          
+
+          function enquiryList() {
+            var modelData = "";
+            $.ajax({
+              url: '/all-user',
+              method: 'get',
+              dataType: 'json',
+              success: function(response) {
+
+                if(response.msg == 'success') {
+                  response.user.forEach((data, index) => {
+                    marketingPerson(data, index);
+                  });
+                  $('#marketingPerson').html(selectOption);
+                }
+              }
+            })
+          }
+        
+
+
+
+
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

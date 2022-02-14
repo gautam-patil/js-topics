@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title>BO Entry</title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                <form action="/create-purchase-booking" method="POST">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-header">Purchase Booking Entry</div>
+                        <div class="card-body">
+                          <div class="card-title">
+                            <h3 class="text-center title-2">Purchase Booking Entry</h3> </div>
+                          <hr>
+                            <hr>
+                            <h3>Item Details</h3>
+                            <hr>
+                            <div class="table-responsive table--no-card m-b-40">
+                              <table class="table table-borderless table-striped table-earning" id="item_table">
+                                <thead>
+                                  <tr>
+                                    <th>Item Group</th>
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                    <th>Rate</th>
+                                    <th>Purchase Booking No.</th>
+
+                                  </tr>
+                                </thead>
+                                <tbody></tbody>
+                                    
+                            </table>
+                            </div>
+                            <button type="button" class="add"><i class="fas fa-plus-square fa-1x"></i></button>
+                            <script>
+                              
+                            </script>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="hidden" name="totalItem" id="totalItemNo" value="0">
+                  <button type="submit" class="btn btn-lg btn-info btn-block submitData"> <span id="payment-button-amount">Submit</span> </button>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+
+          var count = -1;
+
+      $(document).on('click', '.add', function(){
+        count++;
+        var html = '';
+        html += '<tr>';
+        html += '<td><select name="itemGroupId['+count+']" class="form-control itemGroup" id="itemGroup'+count+'"></select></td>';
+        html += '<td><select name="itemId['+count+']" class="form-control" id="itemName'+count+'"></select></td>';
+        html += '<td><input type="number" name="quantity['+count+']" class="form-control" placeholder="Qty"></td>'
+        html += '<td><input type="number" name="rate['+count+']" class="form-control" placeholder="Rate"></td>'
+        html += '<td><input type="text" name="purchaseBookingNo['+count+']" class="form-control" placeholder="Purcahse Booking No"></td>'
+        // html += '<td><button type="button" name="remove" class="btn btn-danger btn-xs remove"><span class="glyphicon glyphicon-minus"></span></button></td>';
+        $('tbody').append(html);
+        itemGroupList();
+        $('#totalItemNo').val(count);
+      });
+
+      $(document).on('click', '.remove', function(){
+        $(this).closest('tr').remove();
+      });
+
+      //Item Group
+
+      var selectItemGroup = '<option>Select Item Group</option>';
+
+      function itemGroup(data, index) {
+
+        selectItemGroup += '<option value="' + data._id + '">' + data.itemGroupName + '</option>'
+      }
+
+      
+
+      function itemGroupList() {
+        var modelData = "";
+        $.ajax({
+          url: '/all-item-group',
+          method: 'get',
+          dataType: 'json',
+          success: function(response) {
+            console.log(response);
+            if(response.msg == 'success') {
+              selectItemGroup = "'<option>Select Item Group</option>'";
+              response.itemGroup.forEach((data, index) => {
+                itemGroup(data, index);
+              });
+              $('#itemGroup'+count).html(selectItemGroup);
+            }
+          }
+        })
+      }
+
+      //Item Name
+      var selectItemName = "";
+
+      function itemName(data, index) {
+
+        selectItemName += '<option value="' + data._id + '">' + data.itemName + '</option>'
+      }
+
+      $(document).on('change', '.itemGroup', function(){
+
+        console.log('clickkk');
+        var itemGroupId = $(this).val();
+        $.ajax({
+          url:'/all-item-name/'+itemGroupId,
+          method:'get',
+          dataType: 'json',
+          success:function(response)
+          {
+            selectItemName = "";
+            response.itemName.forEach((data, index) => {
+              itemName(data, index);
+            });
+            $('#itemName'+count).html(selectItemName);
+          }
+        })
+      });
+
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title>View Order</title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-header">
+                          View Order Detail
+
+                        </div>
+                        <div class="card-body">
+                          <div class="card-title">
+                            <h3 class="text-center title-2">View Order</h3> 
+                            <div class="table-data-feature">
+                            <button class="item" id="updateOrder" data-toggle="tooltip" data-placement="top" title="Update Order"><i class="zmdi zmdi-edit"></i></button>
+                            <div id="deleteOrderDiv">
+                              
+                              
+                            </div>
+                          </div>
+                          </div>
+                          <hr>
+                            <div class="row">
+                              <div class="col-lg-6">
+                                
+                                                       
+                              <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Purchase Party</td>
+                                        <td><%= order[0].saleParty[0].shopName %></td>
+                                    </tr>
+                                    <% if ( order[0].confirmDate){ %>
+                                      <tr>
+                                          <td>Confirm Date</td>
+                                          <td><%= order[0].confirmDate %></td>
+                                      </tr>
+                                      <tr>
+                                          <td>Confirm User</td>
+                                          <td><%= order[0].confirmUser[0].name %></td>
+                                      </tr>
+                                      <tr>
+                                          <td>Confirm Order No</td>
+                                          <td><%= order[0].orderNo %></td>
+                                      </tr>
+                                    <% } if ( order[0].pendingDate){ %>
+                                      <tr>
+                                          <td>Pending Date</td>
+                                          <td><%= order[0].pendingDate %></td>
+                                      </tr>
+                                      <tr>
+                                          <td>Pending User</td>
+                                          <td><%= order[0].pendingUser[0].name %></td>
+                                      </tr>
+
+                                    <% } if ( order[0].bookDate){ %>
+                                      <tr>
+                                          <td>Book Date</td>
+                                          <td><%= order[0].bookDate %></td>
+                                      </tr>
+                                      <tr>
+                                          <td>Book User</td>
+                                          <td><%= order[0].bookUser[0].name %></td>
+                                      </tr>
+                                    <% } %>
+                                    <tr>
+                                    <td>Dispatch Urgent BO</td>
+                                    <td><%= order[0].dispatchUrgentBO %></td>
+                                  </tr>
+                                  <% if ( order[0].dispatchUrgentBO  == "Yes" ){ %>
+                                    <tr>
+                                      <td>FP Dispatch BO</td>
+                                      <td><%= order[0].fpDispatchBO %></td>
+                                    </tr>
+                                  <% }%>
+                                  <% if ( order[0].billDone  == "0" ){ %>
+                                    <tr>
+
+                                      <td>
+                                        <button class="btn btn-primary" id="addItem">Add Item</button>
+                                      </td>
+                                    </tr>
+                                  <% }%>
+                                </tbody>
+                              </table>
+                              </div>
+                              <div class="col-lg-6">
+                                
+                                                       
+                              <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                      <td>Transport</td>
+                                      <td><%= order[0].transport %></td>
+                                  </tr>
+                                  <% if ( order[0].transport  == "Transport" ){ %>
+                                    <tr>
+                                      <td>Transport Name</td>
+                                      <td><%= order[0].transportName %></td>
+                                    </tr>
+                                    <tr>
+                                      <td>Transport Number</td>
+                                      <td><%= order[0].transportNumber %></td>
+                                    </tr>
+                                  <% }%>
+                                  <tr>
+                                      <td>Fabricate Date</td>
+                                      <td><%= order[0].fabricateDate %></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Fabricate Urgent</td>
+                                    <td><%= order[0].fabricateUrgent %></td>
+                                  </tr>
+                                  <% if ( order[0].fabricateUrgent == "Yes" ){ %>
+                                    <tr>
+                                      <td>FP Fabricate</td>
+                                      <td><%= order[0].fpFabricate %></td>
+                                    </tr>
+                                  <% }%>
+                                  <tr>
+                                      <td>Dispatch Date</td>
+                                      <td><%= order[0].dispatchDate %></td>
+                                  </tr>
+                                  
+                                  <tr>
+                                    <td>Dispatch Urgent CO</td>
+                                    <td><%= order[0].dispatchUrgentCO %></td>
+                                  </tr>
+                                  <% if ( order[0].dispatchUrgentCO  == "Yes" ){ %>
+                                    <tr>
+                                      <td>FP Dispatch CO</td>
+                                      <td><%= order[0].fpDispatchCO %></td>
+                                    </tr>
+                                  <% }%>
+                                  <tr>
+                                      <td>Packing</td>
+                                      <td><%= order[0].packing %></td>
+                                    </tr>
+                                  <tr>
+                                  <% if ( order[0].packing  == "Yes" ){ %>
+                                  <tr>
+                                    <td>Packing Detail</td>
+                                    <td><%= order[0].packingDetail%></td>
+                                  </tr>
+                                  <% }%>
+                                  <tr>
+                                    <td>Hardware</td>
+                                    <td><%= order[0].hardware%></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Fitting</td>
+                                    <td><%= order[0].fitting%></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              </div>
+                              
+                            </div>
+                            <br>
+                            <hr>
+                          </div>
+                        </div>
+                            <div class="card">
+                              <div class="card-header">View Item Detail</div>
+                              <div class="card-body">
+                                <div class="card-title">
+                                  <h3 class="text-center title-2">Item Details</h3> 
+                                </div>
+                            <br>
+                            <div class="table-data__tool">
+                              <div class="table-responsive m-b-40">
+                                <table class="table table-borderless table-data3">
+                                  <thead>
+                                    <th>S.No.</th>
+                                    <th>Item Name</th>
+                                    <th>Fab.</th>
+                                    <th>Size</th>
+                                    <th>Total Sq.Ft.</th>
+                                    <th>Quantity</th>
+                                    <th>Rate</th>
+                                    <th>Amount</th>
+                                  </thead>
+                              <tbody class="itemTable">
+                              </tbody>
+                              <tbody>
+                                <tr style=" border-top: 2px dashed #000;">
+                                  <td colspan="7" style="text-align: left; font-size: 15px;"><b>Total Amount</b></td>
+                                  <td id="itemTotalAmount"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="7" style="text-align: left; font-size: 15px;"><b>Packing Charge</b></td>
+                                  <td><%= order[0].packingCharge %></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="7" style="text-align: left; font-size: 15px;"><b>Trasport Charge</b></td>
+                                  <td><%= order[0].transportCharge %></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="7" style="text-align: left; font-size: 15px;"><b>Fitting Charge</b></td>
+                                  <td><%= order[0].fittingCharge %></td>
+                                </tr>
+                                <tr style=" border-top: 2px dashed #000;">
+                                  <td colspan="7" style="text-align: left; font-size: 15px;"><b>Total Amount</b></td>
+                                  <td id="totalAmount"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="6" style="text-align: left; font-size: 15px;"><b>GST</b></td>
+                                  <% if ( order[0].gst  == 0 ){ %>
+                                    <td>0%</td>
+
+                                  <% }else if ( order[0].gst  == 0.05){%>
+                                    <td>5%</td>
+
+                                  <% }else if ( order[0].gst  == 0.12){%>
+                                    <td>12%</td>
+
+                                  <% }else if ( order[0].gst  == 0.18){%>
+                                    <td>18%</td>
+
+                                  <% }%>
+                                  <td id="gstAmount"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="7" style="text-align: left; font-size: 15px;"><b>Discount</b></td>
+                                  <td><%= order[0].discount %></td>
+                                </tr>
+                                <tr style="border-top: 2px solid #000; border-bottom: 2px solid #000;">
+                                  <td colspan="7" style="text-align: left; font-size: 15px;"><b>Final Total Amount</b></td>
+                                  <td id="finalTotalAmount"></td>
+                                </tr>
+                              </tbody>
+                                </table>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+
+      <!-- Update Item  fabrication yes-->
+      <div id="updateItemModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title utItemName" style="text-align: center;"></h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="itemData">
+                <div class="form-group">
+                  <label>Size</label>
+                  <input type="text" class="form-control utSize" name="size">
+                </div>
+                <div class="form-group">
+                  <label>Total SqFt.</label>
+                  <input type="number" class="form-control utTotalSqft" step=".01" name="totalSqft">
+                </div>
+                <div class="form-group">
+                  <label>Quantity</label>
+                  <input type="number" class="form-control utQuantity" step=".01" name="quantity">
+                </div>
+                <div class="form-group">
+                  <label>Rate</label>
+                  <input type="number" class="form-control utRate" step=".01" name="rate">
+                </div>
+                <div class="utFabricateId">
+                  
+                </div>
+                <br />  
+                 <!-- <input type="text" name="enquiryId" id="utItemId"> -->
+                <input type="hidden" name="stockItemId" class="utItemId" /> 
+                <!-- <p id="utItemId"></p> -->
+                <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+       <!-- Add Item -->
+      <div id="addItemModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" style="text-align: center;">Add Item</h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="addItemForm">
+                <div class="form-group">
+                  <label>Item Group</label>
+                  <select class="form-control" id="itemGroup" name="itemGroupId">
+                    
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Item Name</label>
+                  <select class="form-control" id="itemName" name="itemId">
+                    
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Size</label>
+                  <input type="text" class="form-control" name="size" placeholder="Enter Size">
+                </div>
+                <div class="form-group">
+                  <label>Total Sq.Ft.</label>
+                  <input type="number" class="form-control" name="totalSqft" step=".01" placeholder="Enter Total Sq.Ft.">
+                </div>
+                <div class="form-group">
+                  <label>Quantity</label>
+                  <input type="number" class="form-control" placeholder="Enter Quantity" step=".01" name="quantity">
+                </div>
+                <div class="form-group">
+                  <label>Rate</label>
+                  <input type="number" class="form-control" step=".01" placeholder="Enter Rate" name="rate">
+                </div>
+                <input type="hidden" value="<%= order[0]._id %>" name="foreginId">
+                <% if ( order[0].orderRole  == 1 ){ %>
+
+                  <input type="hidden" value="3" name="role">
+
+                <% }else if ( order[0].orderRole  == 2){%>
+
+                  <input type="hidden" value="4" name="role">
+
+                <% }else if ( order[0].orderRole  == 3){%>
+
+                  <input type="hidden" value="5" name="role">
+                <% }%>
+
+                <input type="hidden" value="3" name="godownNo">
+                <br />  
+
+                <!-- <p id="utItemId"></p> -->
+                <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirm Book Model -->
+      <div id="updateOrderModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" style="text-align: center;">Update</h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="updateOrderForm">
+                <div class="form-group">
+                      <label for="currentWorking" class=" form-control-label">Order No</label>
+                      <input type="text" id="currentWorking" name="orderNo" placeholder="Enter Order No" value="<%= order[0].orderNo%>" class="form-control">
+                    </div>
+
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Transport:- </label>
+                  <select class="form-control" id="transport" name="transport">
+                    <option value="<%= order[0].transport %>"><%= order[0].transport%></option>
+                    <option value="Self">Self</option>
+                    <option value="Local">Local</option>
+                    <option value="GNT">GNT</option>
+                    <option value="Transport">Transport</option>
+                    
+                  </select>
+                </div>
+                <div id="transportDetail">
+                  <% if ( order[0].transport  == "Transport" ){ %>
+                    <div class="form-group">
+                      <label for="currentWorking" class=" form-control-label">Transport Name</label>
+                      <input type="text" id="currentWorking" name="transportName" placeholder="Enter Transport Name" value="<%= order[0].transportName%>" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="currentWorking" class=" form-control-label">Transport Number</label>
+                      <input type="number" id="currentWorking" name="transportNumber" placeholder="Enter Transport Number" value="<%= order[0].transportNumber%>" class="form-control"> 
+                    </div>
+                  <% }%>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Packing:- </label>
+                  <select class="form-control" id="packing" name="packing">
+                    <option value="<%= order[0].packing %>"><%= order[0].packing%></option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    
+                  </select>
+                </div>
+                <div id="packingDetail">
+                  <% if ( order[0].packing  == "Yes" ){ %>
+                    <div class="form-group">
+                      <label for="enquiryDate" class="control-label mb-1">Choose Packing:- </label>
+                      <select class="form-control" name="packingDetail">
+                        <option value="<%= order[0].packingDetail %>"><%= order[0].packingDetail%></option>
+                        <option value="Plain">Plain</option>
+                        <option value="Carboard">Carboard</option>
+                        <option value="Bubble">Bubble</option>
+                      </select>
+                    </div>
+                  <%} %>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Fabricate Date:- </label>
+                  <input type="date" name="fabricateDate" class="form-control" value="<%= order[0].fabricateDate %>">
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Farbicate Urgent:- </label>
+                  <select class="form-control" id="fabricateUrgent" name="fabricateUrgent">
+                    <option value="<%= order[0].fabricateUrgent %>"><%= order[0].fabricateUrgent%></option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    
+                  </select>
+                </div>
+                <div id="fabricateUrgentDetail">
+                  <% if ( order[0].fabricateUrgent  == "Yes" ){ %>
+                    <div class="form-group">
+                      <label for="enquiryDate" class="control-label mb-1">Choose Fabricate FP:- </label><select class="form-control" name="fpFabricate">
+                        <option value="<%= order[0].fpFabricate %>"><%= order[0].fpFabricate %></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                      </select>
+                    </div>
+                  <%} %>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Dispatch Date:- </label>
+                  <input type="date" name="dispatchDate" class="form-control" value="<%= order[0].dispatchDate %>">
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Dispatch Urgent:- </label>
+                  <select class="form-control" id="urgent" name="dispatchUrgentCO">
+                    <option value="<%= order[0].dispatchUrgentCO %>"><%= order[0].dispatchUrgentCO%></option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    
+                  </select>
+                </div>
+                <div id="urgentDetail">
+                  <% if ( order[0].dispatchUrgentCO  == "Yes" ){ %>
+                    <div class="form-group">
+                      <label for="enquiryDate" class="control-label mb-1">Choose Dispatch FP:- </label><select class="form-control" name="fpDispatchBO">
+                        <option value="<%= order[0].fpDispatchCO %>"><%= order[0].fpDispatchCO %></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                      </select>
+                    </div>
+                  <%} %>
+                  
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Hardware:- </label>
+                  <select class="form-control" name="hardware">
+                    <option value="<%= order[0].hardware %>"><%= order[0].hardware%></option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Fitting:- </label>
+                  <select class="form-control" name="fitting">
+                    <option value="<%= order[0].fitting %>"><%= order[0].fitting%></option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Packing Charge:- </label>
+                  <input type="number" class="form-control" step=".01" value="<%= order[0].packingCharge %>" name="packingCharge" placeholder="Enter Packing Charge">
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Transport Charge:- </label>
+                  <input type="number" class="form-control" step=".01" value="<%= order[0].transportCharge %>" name="transportCharge" placeholder="Enter Transport Charge">
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Fitting Charge:- </label>
+                  <input type="number" class="form-control" step=".01" value="<%= order[0].fittingCharge %>" name="fittingCharge" placeholder="Enter Fitting Charge">
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">GST:- </label>
+                  <select class="form-control-sm form-control" name="gst" id="gst">   
+                    <option value="<%= order[0].gst %>"><%= order[0].gst%></option>
+                    <option value="0">0</option>
+                    <option value="0.05">5%</option>
+                    <option value="0.12">12%</option>
+                    <option value="0.18">18%</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Discount:- </label>
+                  <input type="number" class="form-control" step=".01" value="<%= order[0].discount %>" name="discount" placeholder="Enter Discount">
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Comment:- </label>
+                  <input type="text" class="form-control" value="<%= order[0].commentCO %>" name="commentBO" placeholder="Enter Comment">
+                </div>
+                <br />  
+                <!-- <p id="utItemId"></p> -->
+                <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+
+             var selectItemGroup = '<option>Select Item Group</option>';
+
+      function itemGroup(data, index) {
+
+        selectItemGroup += '<option value="' + data._id + '">' + data.itemGroupName + '</option>'
+      }
+
+      itemGroupList();
+
+      
+
+      function itemGroupList() {
+        var modelData = "";
+        $.ajax({
+          url: '/all-item-group',
+          method: 'get',
+          dataType: 'json',
+          success: function(response) {
+            if(response.msg == 'success') {
+              selectItemGroup = "'<option>Select Item Group</option>'";
+              response.itemGroup.forEach((data, index) => {
+                itemGroup(data, index);
+              });
+              $('#itemGroup').html(selectItemGroup);
+            }
+          }
+        })
+      }
+
+      //Item Name
+      var selectItemName = "";
+
+      function itemName(data, index) {
+
+        selectItemName += '<option value="' + data._id + '">' + data.itemName + '</option>'
+      }
+
+      $(document).on('change', '#itemGroup', function(){
+
+        var itemGroupId = $(this).val();
+        $.ajax({
+          url:'/all-item-name/'+itemGroupId,
+          method:'get',
+          dataType: 'json',
+          success:function(response)
+          {
+            selectItemName = "";
+            response.itemName.forEach((data, index) => {
+              itemName(data, index);
+            });
+            $('#itemName').html(selectItemName);
+          }
+        })
+      });
+
+
+          var itemNo = 0;
+          var itemDetail = "";
+
+          var purchaseStockData = "";
+          var amount = 0;
+          var itemTotalAmount =0;
+
+          function pendingOrder(data, index) {
+
+           purchaseStockData += '<tr class="tr-shadow">';
+
+            purchaseStockData += '<td><div class="table-data-feature">'+(index + 1)+ '<button type="button" class="item updateItem" data-id="'+data._id+'" data-itemname="'+data.item[0].itemName+'" data-size="'+data.size+'" data-totalsqft="'+data.totalSqft+'" data-quantity="'+data.quantity+'" data-rate="'+data.rate+'" data-fabricate="'+data.fabricateRole+'" data-toggle="tooltip" data-placement="top" title="Update Quantity"><i class="zmdi zmdi-edit"></i></button><button type="button" class="item deleteItem" data-id="'+data._id+'" data-toggle="tooltip" data-placement="top" title="Delete Stock"><i class="zmdi zmdi-delete"></i></button></div></td>';
+
+           purchaseStockData += '<td>'+data.item[0].itemName+'</td>';
+
+           if (data.fabricateRole == 0) {
+
+              purchaseStockData += '<td>No</td>';
+           } else if(data.fabricateRole == 1) {
+
+              purchaseStockData += '<td>Yes</td>';
+
+           }else if(data.fabricateRole == 2) {
+
+              purchaseStockData += '<td><a href="/view-fabricate/'+data._id+'">Done</a></td>';
+           }else{
+
+              purchaseStockData += '<td>No</td>'
+           }
+
+           if (data.size) {
+
+            purchaseStockData += '<td>'+data.size+'</td>';
+           }else{
+            
+            purchaseStockData += '<td>---</td>';
+           }
+           
+           if (data.totalSqft) {
+
+            purchaseStockData += '<td>'+data.totalSqft+'</td>';
+           }else{
+            
+            purchaseStockData += '<td>---</td>';
+           }
+
+          purchaseStockData += '<td>'+data.quantity+'</td>';
+          purchaseStockData += '<td>'+data.rate+'</td>';
+
+          amount = data.totalSqft * data.rate;
+          itemTotalAmount += amount
+
+          purchaseStockData += '<td>'+(amount).toFixed(2)+'</td>'
+           purchaseStockData += '</tr>';
+
+           amount = 0;
+
+          } 
+
+          //Confirm Booking
+
+
+          //Model for Edit Item farication yes
+          $(document).on('click', '.updateItem', function(){  
+            var utItemId = $(this).data("id");  
+            var utItemName = $(this).data("itemname");
+            var utSize = $(this).data("size");
+            var utTotalSqft = $(this).data("totalsqft");
+            var utQuantity = $(this).data("quantity");
+            var utRate = $(this).data("rate");
+            var utFabricate = $(this).data("fabricate");
+            $('#updateItemModel').modal('show');
+            $('.utItemName').html(utItemName);
+            $('.utSize').val(utSize);
+            $('.utTotalSqft').val(utTotalSqft);
+            $('.utQuantity').val(utQuantity);
+            $('.utRate').val(utRate);
+
+            $('.utFabricateId').html('');
+
+            console.log('fabricate= '+utFabricate);
+            if (utFabricate == 1) {
+
+              $('.utFabricateId').html('<div class="form-group"><label>Fabricate</label><select class="form-control" name="fabricateRole"><option value="1">Yes</option><option value="0">No</option></select></div>');
+
+            } 
+
+            if (utFabricate == 0 || utFabricate == "undefined" || utFabricate == null) {
+
+              $('.utFabricateId').html('<div class="form-group"><label>Fabricate</label><select class="form-control" name="fabricateRole"><option value="0">No</option><option value="1">Yes</option></select></div>');
+            }
+            $('.utItemId').val(utItemId);
+
+          });
+
+          //Submit Edit Item farication yes
+          $('#itemData').on("submit", function(event){
+            event.preventDefault();
+            $.ajax({
+              url:'/update-stock-data',  
+              method:'POST',  
+              data:$('#itemData').serialize(),
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+
+                  $('#itemData')[0].reset();  
+                  $('#updateItemModel').modal('hide'); 
+                  purchaseStockData = "";
+                  purchaseItem();                  
+                }
+              }
+            });
+          });
+
+          $(document).on('click', '.deleteItem', function(){  
+
+            var dItemId = $(this).data("id");  
+            
+            event.preventDefault();
+            $.ajax({
+              url:'/delete-stock-data',  
+              method:'POST',
+              data:{stockId:dItemId},
+              success:function(response){  
+                if(response.msg=='success'){
+
+                  purchaseStockData = "";
+                  purchaseItem();                  
+                }
+              }
+            });
+
+            dItemId = "";
+
+          });
+
+          $(document).on('click', '#deleteOrder', function(){  
+
+            var orderId = $(this).data("id");  
+            
+            event.preventDefault();
+            $.ajax({
+              url:'/delete-order-data',  
+              method:'POST',
+              data:{orderId:orderId},
+              success:function(response){  
+                if(response.msg=='success'){
+
+                  window.location.href = "/mis-order-report";                  
+                }
+              }
+            });
+
+            dItemId = "";
+
+          });
+
+
+
+          //Add Receive Item
+          $(document).on('click', '#addItem', function(){  
+
+            $('#addItemModel').modal('show');
+
+          });
+
+          //Submit Item Data
+          $('#addItemForm').on("submit", function(event){
+            event.preventDefault();
+            $.ajax({
+              url:'/add-stock-data',  
+              method:'POST',  
+              data:$('#addItemForm').serialize(),
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+                  alert('Item Added');   
+                  $('#addItemForm')[0].reset();  
+                  $('#addItemModel').modal('hide'); 
+                  amount = 0;
+                  itemTotalAmount =0;
+                  purchaseStockData = "";
+                  totalAmount = 0;
+                  gstAmount = 0;
+                  finalTotalAmount = 0;
+                  purchaseItem();                  
+                }
+              }
+            });
+          });
+
+
+
+
+          purchaseItem();
+
+          var totalAmount = 0;
+          var gstAmount = 0;
+          var finalTotalAmount = 0;
+
+          //Display Item Name
+          function purchaseItem() {
+            $.ajax({
+              url: '/fetch-purchase-item-name/<%= order[0]._id %>',
+              method: 'get',
+              dataType: 'json',
+              success: function(response) {
+                
+                if(response.msg == 'success') {
+
+                  if (response.purchaseStock.length == 0) {
+
+                    $('#deleteOrderDiv').html('<button class="item" id="deleteOrder" data-toggle="tooltip" data-placement="top" data-id="<%= order[0]._id %>" title="Delete Order"><i class="zmdi zmdi-delete"></i></button>');
+                  } 
+
+                  response.purchaseStock.forEach((data, index) => {
+                    pendingOrder(data, index);
+                  });
+                  $('.itemTable').html(purchaseStockData);
+
+                  totalAmount = itemTotalAmount + parseFloat('<%= order[0].fittingCharge %>') + parseFloat('<%= order[0].packingCharge %>') + parseFloat('<%= order[0].transportCharge %>');
+
+                  gstAmount = parseFloat('<%= order[0].gst %>') * totalAmount;
+
+                  finalTotalAmount = totalAmount + gstAmount - parseFloat('<%= order[0].discount %>')
+
+                  $('#itemTotalAmount').html((itemTotalAmount).toFixed(2));
+                  $('#totalAmount').html((totalAmount).toFixed(2));
+                  $('#gstAmount').html((gstAmount).toFixed(2));
+                  $('#finalTotalAmount').html((finalTotalAmount).toFixed(2));
+
+                  itemTotalAmount = 0;
+                  totalAmount = 0;
+                  gstAmount = 0;
+                  finalTotalAmount = 0;
+
+                }
+              }
+            })
+          }
+
+           //Confirm Receive Purchase
+          $(document).on('click', '#updateOrder', function(){  
+
+                $('#updateOrderModel').modal('show');
+            
+            });
+
+          $('#updateOrderForm').on("submit", function(event){
+            event.preventDefault();
+            $.ajax({
+              url:'/update-order/<%= order[0]._id %>',  
+              method:'POST',  
+              data:$('#updateOrderForm').serialize(),
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+
+                  alert('Order Update');
+                }
+              }
+            });
+          });
+
+          //Get transport vvalue
+          $('#transport').on('change', function() {
+
+            let transport = this.value;
+            if (transport == "Transport") {
+
+              transport = '<div class="form-group"><label for="currentWorking" class=" form-control-label">Transport Name</label><input type="text" id="currentWorking" name="transportName" placeholder="Enter Transport Name" value="<%= order[0].saleParty[0].transportName %>" class="form-control"> </div><div class="form-group"><label for="currentWorking" class=" form-control-label">Transport Number</label><input type="number" id="currentWorking" name="transportNumber" placeholder="Enter Transport Number" value="<%= order[0].saleParty[0].transportNumber %>" class="form-control"> </div>'
+
+              $('#transportDetail').html(transport);
+            }else{
+
+              $('#transportDetail').html(" ");
+            }
+
+          });
+
+          //Get packing value
+          $('#packing').on('change', function() {
+            let packing = this.value;
+            if (packing == "Yes") {
+
+              packing = '<div class="form-group"><label for="enquiryDate" class="control-label mb-1">Choose Packing:- </label><select class="form-control" name="packingDetail"><option value="Plain">Plain</option><option value="Carboard">Carboard</option><option value="Bubble">Bubble</option></select></div>'
+
+              $('#packingDetail').html(packing);
+            }else{
+
+              $('#packingDetail').html(" ");
+            }
+
+          });
+
+          //Get urgent value
+          $('#urgent').on('change', function() {
+            let urgent = this.value;
+            if (urgent == "Yes") {
+
+              urgent = '<div class="form-group"><label for="enquiryDate" class="control-label mb-1">Choose FP:- </label><select class="form-control" name="fp"><option value="1">1</option><option value="2">2</option></select></div>'
+
+              $('#urgentDetail').html(urgent);
+            }else{
+
+              $('#urgentDetail').html(" ");
+            }
+
+          });
+
+          //Get Faricate urgent value
+          $('#fabricateUrgent').on('change', function() {
+            let fabricateUrgent = this.value;
+            if (fabricateUrgent == "Yes") {
+
+              fabricateUrgent = '<div class="form-group"><label for="enquiryDate" class="control-label mb-1">Choose Fabricate Urgent FP:- </label><select class="form-control" name="fpFabricate"><option value="1">1</option><option value="2">2</option></select></div>'
+
+              $('#fabricateUrgentDetail').html(fabricateUrgent);
+            }else{
+
+              $('#fabricateUrgentDetail').html(" ");
+            }
+
+          });
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

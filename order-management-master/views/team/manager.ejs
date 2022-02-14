@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Manger</title>
+    <!-- Required meta tags-->
+    <%- include("../include/headLink")%>
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <%- include("../include/navbar") %>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <%- include("../include/header") %>
+            <!-- END HEADER DESKTOP-->
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- DATA TABLE -->
+                                <h3 class="title-5 m-b-35">manager table</h3>
+                                <div class="table-data__tool">
+                             
+                                  <div class="table-data__tool-right">
+                                    <button class="au-btn-primary" data-toggle="modal" data-target="#addManager">
+                                        <i class="zmdi zmdi-plus-square"></i>Add Manager
+                                    </button>
+                                  </div>
+                                </div>
+                                <div class="table-responsive table-responsive-data2">
+                                    <table class="table table-data3">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No.</th>
+                                                <th>Manager Name</th>
+                                                <th>Department</th>
+                                                <th>Goal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END DATA TABLE -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Add Branch Model -->
+
+    <div id="addManager" class="modal fade">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h1 class="modal-title" style="text-align: center;">Add Manager</h1>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+               </div>
+               <div class="modal-body">
+                  <form id="managerForm">
+                     <div class="form-group">
+                        <label>Manager Name</label>
+                        <select name="empId" class="form-control" id="employee">
+                          
+                        </select>
+                     </div>
+                     <div class="form-group">
+                      <label>Department</label>
+                      <input type="text" name="department" class="form-control" placeholder="Enter Department Name">
+                       
+                     </div>
+                     <div class="form-group">
+                      <label>Goal</label>
+                      <input type="text" name="goal" class="form-control" placeholder="Enter Goal">
+                       
+                     </div>
+                     <input type="hidden" name="teamRole" value="1">
+                     <input type="submit" value="Insert" class="btn btn-success" />  
+                  </form>
+               </div>
+               <div class="modal-footer">    
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+               </div>
+            </div>
+         </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <%- include("../include/jsLink")%>
+
+    <script>
+        $(document).ready(function(){  
+            var managerData = "";
+            
+            function allManager(data, index) {
+
+
+               managerData += '<tr class="tr-shadow">';
+               managerData += '<td>'+(index +1)+'</td>'
+               managerData += '<td><a href="/view-manager/'+data._id+'">'+data.name+'</td>';
+               managerData += '<td>'+data.department+'</td>';
+               managerData += '<td>'+data.goal+'</td>';
+
+               // managerData += '<td><div class="table-data-feature"><button class="item editBranch" data-id="'+data._id+'" data-colourname="'+data.colourName+'"  data-toggle="tooltip" data-placement="top" title="Edit Colour Name"><i class="zmdi zmdi-edit"></i></button></div></td>'
+               managerData += '</tr>';
+
+            }
+
+                var modelData = "";
+                
+                managerList();
+                function managerList() {
+
+                  $.ajax({  
+                    url:'/all-manager',  
+                    method:'get',  
+                    dataType:'json', 
+                    success:function(response){
+                       // console.log(response);  
+                       if(response.msg=='success'){   
+                          
+                          response.manager.forEach((data, index) =>{
+                             allManager(data, index);
+                           });
+                          $('tbody').html(managerData);
+                         }
+                      }
+                  })
+                }
+
+                // Submit Branch Data
+                $('#managerForm').on("submit", function(event){
+                   event.preventDefault();
+                   $.ajax({
+                      url:'/create-teams',  
+                      method:'POST',  
+                      data:$('#managerForm').serialize(),
+                      success:function(response){  
+                         if(response.msg=='success'){
+
+                           managerData = "";
+                           managerList();
+                           $('#managerForm')[0].reset();  
+                           $('#addManager').modal('hide');                   
+                         }else{
+
+                          alert('This employee already link with other Teams.')
+                         }
+                      }
+                   });
+                });
+
+                 var selectEmployee = '<option>Select Manager Name</option>';
+
+                  function user(data, index) {
+
+                    selectEmployee += '<option value="' + data._id + '">' + data.name + '</option>'
+                  }
+
+                  salaryAdvanceList();
+
+                  function salaryAdvanceList() {
+                    var modelData = "";
+                    $.ajax({
+                      url: '/all-user',
+                      method: 'get',
+                      dataType: 'json',
+                      success: function(response) {
+                        console.log(response);
+                        if(response.msg == 'success') {
+                          selectEmployee = "<option value='' >Select Manager</option>";
+                          response.user.forEach((data, index) => {
+                            user(data, index);
+                          });
+                          $('#employee').html(selectEmployee);
+                        }
+                      }
+                    })
+                  }
+
+
+
+        });
+
+    </script>
+
+</body>
+
+</html>
+<!-- end document-->

@@ -1,0 +1,14 @@
+module.exports.Token = require('./token.model');
+module.exports.Transaction = require('./transaction.model');
+module.exports.User = require('./user.model');
+module.exports.Hairstyles=require("./hairstyles.model");
+module.exports.Tutorial=require("./tutorial.model");
+module.exports.Package=require("./package.model");
+module.exports.PurchasedPackage=require("./purchasedPackage.model");
+module.exports.Category=require("./category.model");
+module.exports.Color=require("./colors.model");
+module.exports.Settings=require("./settings.model");
+module.exports.Document=require("./document.model");
+module.exports.Model=require("./model.model");
+module.exports.App=require("./app.model");
+module.exports.Photo=require("./photo.model");

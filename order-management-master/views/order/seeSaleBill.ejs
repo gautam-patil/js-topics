@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>See Sale</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Sale Bill Table</h3>
+
+                  <form id="searchBillForm">
+                      <div class="row mb-0">
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Date :</label>
+                                  <input type="date" class="form-control" name="date">
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                              <button class="btn btn-primary btn-sm submitClassFormData" type="submit" name="search">Search</button>
+                          </div>
+                      </div>    
+                  </form> 
+
+                <div class="table-data__tool">
+                  <div class="table-responsive m-b-40">
+                    <table class="table table-borderless table-data3" id="dataTable">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>Shop Name</th>
+                          <th>Bill No.</th>
+                          <th>Date</th>
+                          <th>User Id</th>
+                          <th>Comment</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- END DATA TABLE -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    var saleBillData = "";
+
+    function allSaleBill(data, index) {
+
+     saleBillData += '<tr class="tr-shadow">';
+     saleBillData += '<td>'+(index + 1)+'</td>';
+     saleBillData += '<td><a href="/view-enquiry-page/'+data.saleParty[0]._id+'">'+data.saleParty[0].shopName+'</td>';
+       saleBillData += '<td><a href="/view-sale-bill/'+data._id+'">'+data.billNo+'</a></td>';
+       saleBillData += '<td>'+data.date+'</td>';
+       saleBillData += '<td>'+data.user[0].name+'</td>';
+       saleBillData += '<td>'+data.comment+'</td>';
+
+
+     
+     saleBillData += '</tr>';
+
+    } 
+    
+
+
+      //Search Enquiry Data
+      $('#searchBillForm').on("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+          url:'/search-sale-bill',  
+          method:'POST',
+          data:$('#searchBillForm').serialize(),
+          success:function(response){  
+            if(response.msg=='success'){
+
+              console.log(response);
+
+              saleBillData = "";
+              response.saleBill.forEach((data, index) =>{
+                allSaleBill(data, index);
+              });
+              $('tbody').html(saleBillData);
+
+            }
+          }
+        });
+      });
+
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

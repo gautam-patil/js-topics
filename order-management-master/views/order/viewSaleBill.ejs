@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title>View Sale Bill</title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-header">View Sale Bill Detail</div>
+                        <div class="card-body">
+                          <div class="card-title">
+                            <h3 class="text-center title-2">View Sale Bill</h3> 
+                            <div class="table-data-feature">
+                              <button class="item" id="updateBill" data-toggle="tooltip" data-placement="top" title="Update Bill"><i class="zmdi zmdi-edit"></i></button>
+                            </div>
+                          </div>
+                          <hr>
+                            <div class="row">
+                              <div class="col-lg-6">
+                                
+                                                       
+                              <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Date</td>
+                                        <td><%= saleBill[0].date %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bill No</td>
+                                        <td><%= saleBill[0].billNo %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Purchase Party</td>
+                                        <td><%= saleBill[0].saleParty[0].shopName %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Id</td>
+                                        <td><%= saleBill[0].user[0].name %></td>
+                                    </tr>
+                                    <tr>
+
+                                      <td>
+                                        <button class="btn btn-primary" id="addItem">Add Order</button>
+                                      </td>
+                                    </tr>
+
+                                      <!-- <td>
+                                        <button class="btn btn-primary" id="addItem">Add Item</button>
+                                      </td> -->
+                                    </tr>
+                                </tbody>
+                              </table>
+                              </div>
+                              
+                            </div>
+                            <br>
+                            <hr>
+                          </div>
+                        </div>
+                            <div class="card">
+                              <div class="card-header">View Order Detail</div>
+                              <div class="card-body">
+                                <div class="card-title">
+                                  <h3 class="text-center title-2">Order Details</h3> 
+                                </div>
+                            <br>
+                            <div class="table-data__tool">
+                              <div class="table-responsive m-b-40">
+                                <table class="table table-borderless table-data3">
+                                  <thead>
+                                    <th>S.No.</th>
+                                    <th>Order No.</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                  </thead>
+                              <tbody class="itemTable">
+                              </tbody>
+                              <tbody>
+                                <tr style=" border-top: 2px dashed #000;">
+                                  <td colspan="2" style="text-align: left; font-size: 15px;"><b>Total Amount</b></td>
+                                  <td id="itemTotalAmount"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left; font-size: 15px;"><b>Packing Charge</b></td>
+                                  <td><%= saleBill[0].packingCharge %></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left; font-size: 15px;"><b>Trasport Charge</b></td>
+                                  <td><%= saleBill[0].transportCharge %></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left; font-size: 15px;"><b>Fitting Charge</b></td>
+                                  <td><%= saleBill[0].fittingCharge %></td>
+                                </tr>
+                                <tr style=" border-top: 2px dashed #000;">
+                                  <td colspan="2" style="text-align: left; font-size: 15px;"><b>Total Amount</b></td>
+                                  <td id="totalAmount"></td>
+                                </tr>
+                                <tr>
+                                  <td style="text-align: left; font-size: 15px;"><b>GST</b></td>
+                                  <% if ( saleBill[0].gst  == 0 ){ %>
+                                    <td>0%</td>
+
+                                  <% }else if ( saleBill[0].gst  == 0.05){%>
+                                    <td>5%</td>
+
+                                  <% }else if ( saleBill[0].gst  == 0.12){%>
+                                    <td>12%</td>
+
+                                  <% }else if ( saleBill[0].gst  == 0.18){%>
+                                    <td>18%</td>
+
+                                  <% }%>
+                                  <td id="gstAmount"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left; font-size: 15px;"><b>Discount</b></td>
+                                  <td><%= saleBill[0].discount %></td>
+                                </tr>
+                                <tr style="border-top: 2px solid #000; border-bottom: 2px solid #000;">
+                                  <td colspan="2" style="text-align: left; font-size: 15px;"><b>Final Total Amount</b></td>
+                                  <td id="finalTotalAmount"></td>
+                                </tr>
+                              </tbody>
+                                </table>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <!-- Add Order -->
+
+      <!-- Add Item -->
+      <div id="addOrderModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" style="text-align: center;">Add Order</h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="addOrderForm">
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Add Order</label>
+                  <select name="orderId" id="selectOrder" class="form-control">
+                    
+                  </select> 
+                </div>  
+
+                <input type="hidden" name="billId" value="<%= saleBill[0]._id %>">
+
+                <input type="submit" id="insert1" value="Insert" class="btn btn-success" />
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirm Book Model -->
+      <div id="updateBillModel" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" style="text-align: center;">Update</h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <form id="updateBillForm">
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Bill No.:- </label>
+                  <input type="text" class="form-control" value="<%= saleBill[0].billNo %>" name="billNo" placeholder="Enter Bill No">
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Packing Charge:- </label>
+                  <input type="number" class="form-control" step=".01" value="<%= saleBill[0].packingCharge %>" name="packingCharge" placeholder="Enter Packing Charge">
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Transport Charge:- </label>
+                  <input type="number" class="form-control" step=".01" value="<%= saleBill[0].transportCharge %>" name="transportCharge" placeholder="Enter Transport Charge">
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Fitting Charge:- </label>
+                  <input type="number" class="form-control" step=".01" value="<%= saleBill[0].fittingCharge %>" name="fittingCharge" placeholder="Enter Fitting Charge">
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">GST:- </label>
+                  <select class="form-control-sm form-control" name="gst" id="gst">   
+                    <option value="<%= saleBill[0].gst %>"><%= saleBill[0].gst%></option>
+                    <option value="0">0</option>
+                    <option value="0.05">5%</option>
+                    <option value="0.12">12%</option>
+                    <option value="0.18">18%</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Discount:- </label>
+                  <input type="number" class="form-control" step=".01" value="<%= saleBill[0].discount %>" name="discount" placeholder="Enter Discount">
+                </div>
+                <div class="form-group">
+                  <label for="enquiryDate" class="control-label mb-1">Comment:- </label>
+                  <input type="text" class="form-control" value="<%= saleBill[0].comment %>" name="comment" placeholder="Enter Comment">
+                </div>
+                <br />  
+                <!-- <p id="utItemId"></p> -->
+                <input type="submit" id="insert" value="Insert" class="btn btn-success" />  
+              </form>
+            </div>
+            <div class="modal-footer">    
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+
+          //Add Order
+          $(document).on('click', '#addOrder', function(){  
+
+            $('#addOrderModel').modal('show');
+
+          });
+
+          //Submit Item Data
+          $('#addOrderForm').on("submit", function(event){
+            event.preventDefault();
+            $.ajax({
+              url:'/update-order',  
+              method:'POST',  
+              data:$('#addOrderForm').serialize(),
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+                  alert(' Added');   
+                  $('#addOrderForm')[0].reset();  
+                  $('#addOrderModel').modal('hide'); 
+                  amount = 0;
+                  itemTotalAmount =0;
+                  purchaseStockData = "";
+                  totalAmount = 0;
+                  gstAmount = 0;
+                  finalTotalAmount = 0;
+                  purchaseItem();                  
+                }
+              }
+            });
+          });
+
+          $(document).on('click', '#updateBill', function(){  
+
+                $('#updateBillModel').modal('show');
+            
+            });
+
+          $('#updateBillForm').on("submit", function(event){
+            event.preventDefault();
+            $.ajax({
+              url:'/update-sale-bill/<%= saleBill[0]._id %>',  
+              method:'POST',  
+              data:$('#updateBillForm').serialize(),
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+
+                  alert('Bill Update');
+                  location.reload();
+                }
+              }
+            });
+          });
+
+          var itemNo = 0;
+          var itemDetail = "";
+
+          var purchaseStockData = "";
+          var amount = 0;
+          var itemTotalAmount =0;
+          var finalItemTotalAmount =0;
+
+          function pendingOrder(data, index) {
+
+           purchaseStockData += '<tr class="tr-shadow">';
+
+            purchaseStockData += '<td>'+(index+1)+'</td>';
+
+           purchaseStockData += '<td><a href="/view-order/'+data._id+'">'+data.orderNo+'</a></td>';
+
+           for (var i = 0; i < data.stock.length; i++) {
+             
+             amount = data.stock[i].totalSqft * data.stock[i].rate;
+             itemTotalAmount += amount
+             amount = 0;
+           }
+
+            purchaseStockData += '<td>'+(itemTotalAmount).toFixed(2)+'</td>'
+            purchaseStockData += '<td><div class="table-data-feature"><button type="button" class="item removeOrder" data-id="'+data._id+'" data-toggle="tooltip" data-placement="top" title="Remove Order"><i class="zmdi zmdi-delete"></i></button></div></td>';
+            purchaseStockData += '</tr>';
+
+            finalItemTotalAmount += itemTotalAmount;
+            itemTotalAmount = 0;
+
+
+          } 
+
+
+
+
+          purchaseItem();
+
+
+          //Display Item Name
+          function purchaseItem() {
+            var totalAmount = 0;
+            var gstAmount = 0;
+            var finalTotalAmount = 0;
+            
+
+            $.ajax({
+              url: '/fetch-bill-order/<%= saleBill[0]._id %>',
+              method: 'get',
+              dataType: 'json',
+              success: function(response) {
+                
+                if(response.msg == 'success') {
+                  
+                  response.order.forEach((data, index) => {
+                    pendingOrder(data, index);
+                  });
+                  $('.itemTable').html(purchaseStockData);
+
+                  totalAmount = finalItemTotalAmount + parseFloat('<%= saleBill[0].fittingCharge %>') + parseFloat('<%= saleBill[0].packingCharge %>') + parseFloat('<%= saleBill[0].transportCharge %>');
+
+                  gstAmount = parseFloat('<%= saleBill[0].gst %>') * totalAmount;
+
+                  finalTotalAmount = totalAmount + gstAmount - parseFloat('<%= saleBill[0].discount %>')
+
+                  $('#itemTotalAmount').html((finalItemTotalAmount).toFixed(2));
+                  $('#totalAmount').html((totalAmount).toFixed(2));
+                  $('#gstAmount').html((gstAmount).toFixed(2));
+                  $('#finalTotalAmount').html((finalTotalAmount).toFixed(2));
+
+                  itemTotalAmount = 0;
+                  totalAmount = 0;
+                  gstAmount = 0;
+                  finalTotalAmount = 0;
+
+                }
+              }
+            })
+          }
+
+            var selectOption = '<option value="">Select Order</option>';
+
+            function confirmOrder(data, index) {
+
+              selectOption += '<option value="' + data._id + '">' + data.orderNo + ' -- '+data.saleParty[0].shopName+ '</option>'
+            }
+            
+            $.ajax({
+              url: '/all-party-confirm-order/<%= saleBill[0].saleParty[0]._id %>',
+              method: 'get',
+              dataType: 'json',
+              success: function(response) {
+
+                selectOption = "";
+                
+                if(response.msg == 'success') {
+
+                  selectOption = '<option value="">Select Order</option>';
+
+                  response.confirmOrder.forEach((data, index) => {
+                    confirmOrder(data, index);
+                  });
+                  $('#selectOrder').html(selectOption);
+
+                }
+              }
+            })
+          
+
+          $(document).on('click', '#addItem', function(){  
+
+            $('#addOrderModel').modal('show');
+
+          });
+
+          //Submit Item Data
+          $('#addOrderForm').on("submit", function(event){
+            event.preventDefault();
+            $.ajax({
+              url:'/add-bill-order',  
+              method:'POST',  
+              data:$('#addOrderForm').serialize(),
+              success:function(followupResponse){  
+                if(followupResponse.msg=='success'){
+                  alert('Order Added');   
+                  $('#addOrderForm')[0].reset();  
+                  $('#addOrderModel').modal('hide');                   
+                }
+              }
+            });
+          });
+
+          $(document).on('click', '.removeOrder', function(){  
+
+            var dItemId = $(this).data("id");  
+            
+            event.preventDefault();
+            $.ajax({
+              url:'/remove-bill-order',  
+              method:'POST',
+              data:{orderId:dItemId},
+              success:function(response){  
+                if(response.msg=='success'){
+
+                  alert('Remove Order');
+                }
+              }
+            });
+
+            dItemId = "";
+
+          });
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

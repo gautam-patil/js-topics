@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title>Request Courier Page</title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                <form action="/create-courier" method="POST">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-header">Request Courier</div>
+                        <div class="card-body">
+                          <div class="card-title">
+                            <h3 class="text-center title-2">Request Courier</h3> </div>
+                          <hr>
+                            <div class="form-group">
+                              <h4 class="title-2"><%= enquiry[0].shopName %></h4>
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Enter Item Details:- </label>
+                              <textarea class="form-control" name="itemDetail" cols="5" rows="5" placeholder="Enter Courier Item Details..."></textarea>
+                            </div>
+                            <div class="form-group">
+                              <label for="enquiryDate" class="control-label mb-1">Comment:- </label>
+                              <input type="text" class="form-control" name="comment" placeholder="Enter Comment">
+                            </div>
+                            <input type="hidden" name="salePartyId" value="<%= enquiry[0]._id %>">
+                            
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="hidden" name="totalItem" id="totalItemNo" value="0">
+                  <button type="submit" class="btn btn-lg btn-info btn-block submitData"> <span id="payment-button-amount">Submit</span> </button>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+
+
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

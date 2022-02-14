@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title>Today Dashboarddd</title>
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <%- include("../include/navbar") %>
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <%- include("../include/header")%>
+            <!-- HEADER DESKTOP-->
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="table-data__tool">
+                            <div class="table-data__tool-left">
+                                <form class="form-header" id="dateSearchForm">
+                                    <select class="au-input form-control" id="marketingPerson" name="marketingPerson">
+                                    </select>
+                                    <input placeholder="Enter here for date search" name="dateSearch" class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" />
+                                    <input placeholder="Enter here for date duration" name="dateDuration" class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" />
+                                    <button class="au-btn--submit submitData" type="submit" style="margin-left: 10px;">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row m-t-25">
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c1">
+                                  <a href="/show-enquiry">
+                                    <div class="overview__inner">
+                                        <div class="overview-box">
+                                            <div class="icon">
+                                                <i class="fas fa-database"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 id="totalEnquiry"></h2>
+                                                <h4>Total Entries</h4>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+                                        </div>
+                                    </div>
+                                  </a>  
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c2">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <i class="fas fa-clipboard-check"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 id="totalFollowup"></h2>
+                                                <h4>Followups Done</h4>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="row m-t-25">
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c1">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix" style="height: 200px">
+                                            <div class="icon">
+                                                <i class="fas fa-clipboard-check"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 id="totalNotConfirm"></h2>
+                                                <h4>Not Confirm</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c2">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix" style="height: 200px">
+                                            <div class="icon">
+                                                <i class="fas fa-clipboard-check"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 id="totalTodayFollowupDone"></h2>
+                                                <h4>Followups Done</h4>
+                                            </div>
+                                            <hr>
+                                            <div class="text">
+                                                <h2 id="totalTodayFollowup"></h2>
+                                                <h4>Today Followups</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="row m-t-25">
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c1">
+                                  <a href="/show-po">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix" style="height: 200px">
+                                            <div class="icon">
+                                                <i class="fas fa-spinner"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 id="totalPendingOrder"></h2>
+                                                <h4>Pending Order</h4>
+                                            </div>
+                                            <hr>
+                                            <div class="text">
+                                                <h2 id="totalPendingOrderAmount"></h2>
+                                                <h4>Pending Order Amount</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </a>  
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c2">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix" style="height: 200px;">
+                                            <div class="icon">
+                                                <i class="zmdi zmdi-check-circle"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 id="totalConfirmOrder"></h2>
+                                                <h4>Confirm Order</h4>
+                                            </div>
+                                            <hr>
+                                            <div class="text">
+                                                <h2 id="totalConfirmOrderAmount"></h2>
+                                                <h4>Confirm Order Amount</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c3">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix" style="height: 200px;">
+                                            <div class="icon">
+                                                <i class="zmdi zmdi-close-circle"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 id="totalCancelOrder"></h2>
+                                                <h4>Cancel Order</h4>
+                                            </div>
+                                            <hr>
+                                            <div class="text">
+                                                <h2 id="totalCancelOrderAmount"></h2>
+                                                <h4>Cancel Order Amount</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+    </div>
+    
+    <%- include("../include/jsLink")%>
+
+</body>
+
+    <script>
+      $(document).ready(function(){  
+
+        $.ajax({
+          url: '/all-user',
+          method: 'get',
+          dataType: 'json',
+          success: function(response) {
+            console.log(response);
+            if(response.msg == 'success') {
+              response.user.forEach((data, index) => {
+                marketingPerson(data, index);
+              });
+              $('#marketingPerson').html(selectOption);
+            }
+          }
+        })
+
+        var selectOption = '<option value=""> Search for MKT Person</option>';
+        function marketingPerson(data, index) {
+            selectOption += '<option value="' + data._id + '">' + data.name + '</option>'
+          }
+
+        $(document).on('click', '.submitData', function() {
+            event.preventDefault();
+            console.log("2");
+            $.ajax({
+              url: '/search-enquiry-by-date',
+              method: 'POST',
+              data: $('#dateSearchForm').serialize(),
+              success: function(responseSubmit) {
+                if(responseSubmit.msg == 'success') {
+
+                    totalPendingOrder = 0;
+                    totalPendingOrderAmount = 0;
+                    totalConfirmOrder = 0;
+                    totalConfirmOrderAmount = 0;
+                    totalCancelOrder = 0;
+                    totalCancelOrderAmount = 0;
+
+                    totalEnquiry = 0;
+                    totalFollowup = 0;
+
+                    console.log(responseSubmit);
+
+                    responseSubmit.enquiry.forEach((data, index) =>{
+                        allEnquiry(data, index);
+                    });
+                    $('#totalEnquiry').html(totalEnquiry);
+
+                    responseSubmit.followups.forEach((data, index) =>{
+                        allFollowups(data, index);
+                    });
+                    $('#totalFollowup').html(totalFollowup);
+
+                    responseSubmit.po.forEach((data, index) =>{
+                        allPO(data, index);
+                    });
+                    $('#totalPendingOrder').html(totalPendingOrder);
+                    $('#totalPendingOrderAmount').html(totalPendingOrderAmount);
+                    $('#totalConfirmOrder').html(totalConfirmOrder);
+                    $('#totalConfirmOrderAmount').html(totalConfirmOrderAmount);
+                    $('#totalCancelOrder').html(totalCancelOrder);
+                    $('#totalCancelOrderAmount').html(totalCancelOrderAmount);
+                }
+              }
+            });
+          });  
+
+        var totalEnquiry = 0;
+        function allEnquiry(data, index) {
+          
+            totalEnquiry = (index + 1);
+
+        }
+
+        var totalFollowup = 0;
+        function allFollowups(data, index) {
+          
+            totalFollowup = (index + 1);
+
+        }
+
+        var totalPendingOrder = 0;
+        var totalPendingOrderAmount = 0;
+        var totalConfirmOrder = 0;
+        var totalConfirmOrderAmount = 0;
+        var totalCancelOrder = 0;
+        var totalCancelOrderAmount = 0;
+
+        function allPO(data, index) {
+          
+            if (data.role == 1) {
+
+                totalPendingOrder = (index + 1);
+
+                for (var i = 0; i < data.order.length; i++) {
+
+                  totalPendingOrderAmount += data.order[i].amount;  
+                }
+
+            }
+
+            if (data.role == 2) {
+
+                totalConfirmOrder = (index + 1);
+
+                for (var i = 0; i < data.order.length; i++) {
+
+                  totalConfirmOrderAmount += data.order[i].amount;  
+                }
+
+            }
+
+            if (data.role == 3) {
+
+                totalCancelOrder = (index + 1);
+
+                for (var i = 0; i < data.order.length; i++) {
+
+                  totalCancelOrderAmount += data.order[i].amount;  
+                }
+
+            }
+
+        }
+
+        // var today = new Date();
+        // var dd = today.getDate();
+
+        // var mm = today.getMonth()+1; 
+        // var yyyy = today.getFullYear();
+        // if(dd<10) 
+        // {
+        //     dd='0'+dd;
+        // } 
+
+        // if(mm<10) 
+        // {
+        //     mm='0'+mm;
+        // } 
+
+        // today = yyyy+'-'+mm+'-'+dd;
+
+        // var totalEnquiry = 0;
+        // var totalEnquiryNo = 1;
+        // var totalLeadNo = 1;
+        // var totalLead = 0;
+        // var totalEnquiryStatusNo = 1;
+        // var totalEnquiryStatus = 0;
+        // var totalDealerNo = 1;
+        // var totalDealer = 0;
+        // var totalNotConfirmNo = 1;
+        // var totalNotConfirm = 0;
+
+        // function allEnquiry(data, index) {
+          
+        //     totalEnquiry = totalEnquiryNo++;
+
+        //     if (data.enquiryStatus == 'Lead') {
+
+        //         totalLead = totalLeadNo++;
+
+        //     }
+        //     if (data.enquiryStatus == 'Enquiry') {
+
+        //         totalEnquiryStatus = totalEnquiryStatusNo++;
+
+        //     }
+
+        //     if (data.enquiryStatus == 'Not Confirm') {
+
+        //         totalNotConfirm = totalNotConfirmNo++;
+
+        //     }
+
+        //     if (data.enquiryStatus == 'New Dealer' || data.enquiryStatus == 'Confirm Dealer') {
+
+        //         totalDealer = totalDealerNo++;
+
+        //     }
+        // }
+
+        // // Pending Order
+        // var totalPendingOrder = 0;
+        // var totalPendingOrderAmount = 0;
+
+        // function allPendingOrder(data, index) {
+          
+        //     totalPendingOrder = index+1
+
+        //     for (var i = 0; i < data.order.length; i++) {
+
+        //       totalPendingOrderAmount += data.order[i].amount;  
+        //     }
+        // }
+
+
+        // var totalConfirmOrder = 0;
+        // var totalConfirmOrderAmount = 0;
+
+        // function allConfirmOrder(data, index) {
+          
+        //     totalConfirmOrder = index+1;
+
+        //     for (var i = 0; i < data.order.length; i++) {
+
+        //       totalConfirmOrderAmount += data.order[i].amount;  
+        //     }
+        // }
+
+        // var totalCancelOrder = 0;
+        // var totalCancelOrderAmount = 0;        
+        
+        // function allCancelOrder(data, index) {
+          
+        //     totalCancelOrder = index+1
+        //     for (var i = 0; i < data.order.length; i++) {
+
+        //       totalCancelOrderAmount += data.order[i].amount;  
+        //     }
+        // }
+
+        // $.ajax({  
+        // url:'/see-enquiry',  
+        // method:'get',  
+        // dataType:'json', 
+        // success:function(response){
+        //      if(response.msg=='success'){   
+
+        //       response.enquiry.forEach((data, index) =>{
+        //         allEnquiry(data, index);
+        //       });
+        //       $('#totalEnquiry').html(totalEnquiry);
+        //       $('#totalLead').html(totalLead);
+        //       $('#totalEnquiryStatus').html(totalEnquiryStatus);
+        //       $('#totalDealer').html(totalDealer);
+        //       $('#totalNotConfirm').html(totalNotConfirm);
+        //     }
+        //   }
+        // })
+
+        // $.ajax({  
+        // url:'/see-po',  
+        // method:'get',  
+        // dataType:'json', 
+        // success:function(response){
+        //      // console.log(response);  
+        //      if(response.msg=='success'){   
+
+        //       response.po.forEach((data, index) =>{
+        //         allPendingOrder(data, index);
+        //       });
+
+        //       $('#totalPendingOrder').html(totalPendingOrder);
+        //       $('#totalPendingOrderAmount').html(totalPendingOrderAmount);
+        //     }
+        //   }
+        // })
+
+        // $.ajax({  
+        //   url:'/see-confirm-order',  
+        //   method:'get',  
+        //   dataType:'json', 
+        //   success:function(response){
+        //        // console.log(response);  
+        //        if(response.msg=='success'){   
+
+        //           response.confirmOrder.forEach((data, index) =>{
+        //             allConfirmOrder(data, index);
+        //           });
+
+        //           $('#totalConfirmOrder').html(totalConfirmOrder);
+        //           $('#totalConfirmOrderAmount').html(totalConfirmOrderAmount);
+        //           }
+        //     }
+        // })
+        
+        // $.ajax({  
+        //   url:'/see-cancel-order',  
+        //   method:'get',  
+        //   dataType:'json', 
+        //   success:function(response){
+        //        // console.log(response);  
+        //        if(response.msg=='success'){   
+
+        //           response.cancelOrder.forEach((data, index) =>{
+        //             allCancelOrder(data, index);
+        //           });
+
+        //           $('#totalCancelOrder').html(totalCancelOrder);
+        //           $('#totalCancelOrderAmount').html(totalCancelOrderAmount);
+
+        //       }
+        //     }
+        //   })
+
+
+        // var enquiryData = "";
+        // var fl = 0;
+        // var totalTodayFollowup = 0;
+        // var totalTodayFollowupDone = 0;
+        // var SNo = 1;
+
+        // function allTodayEnquiry(data, index) {
+
+        //   // console.log(data); 
+        //   totalTodayFollowup = (index + 1);
+
+        //   if (data.followups) {
+
+        //     fl = data.followups.length;
+
+        //     var followupDate = data.followups[fl-1].followupDate;                    
+        //     var comment = data.followups[fl-1].comment;
+        //     var nextFollowupDate = data.followups[fl-1].nextFollowupDate;
+        //   } else {
+        //     var followupDate = "--------";
+        //     var comment = "--------";
+        //     var nextFollowupDate = "--------";
+        //   }
+        //   var marketingPerson = data.marketingPersonName[0].name;
+
+        //   if (followupDate == today) {
+
+        //      totalTodayFollowupDone++;
+        //   }
+
+        //   if (followupDate != today) { 
+
+        //      enquiryData += '<tr class="tr-shadow">';
+        //      enquiryData += '<td>'+(SNo++)+'</td>';
+        //      enquiryData += '<td><a href="/view-enquiry-page/'+data._id+'" target="_blank">'+data.shopName+'</a></td>';
+        //      enquiryData += '<td>'+data.city+'</td>';
+        //      enquiryData += '<td>'+data.mobile+'</td>';
+        //      enquiryData += '<td>'+marketingPerson+'</td>';
+
+        //      enquiryData += '<td><butoon class="updateEnquiryStatus" data-id="'+data._id+'" data-shopname="'+data.shopName+'" data-enquirystatus="'+data.enquiryStatus+'">'+data.enquiryStatus+'</button></td>';
+
+        //      enquiryData += '<td><butoon class="addFollowup" data-id="'+data._id+'" data-shopname="'+data.shopName+'">'+followupDate+'</button></td>';
+
+        //      enquiryData += '<td>'+comment+'</td>';
+        //      enquiryData += '<td>'+nextFollowupDate+'</td>';
+        //      enquiryData += '<td><div class="table-data-feature"><a href="/view-enquiry-page/'+data._id+'" target="_blank"><button class="item" data-toggle="tooltip" data-placement="top" title="See Enquiry"><i class="zmdi zmdi-eye"></i></button></a><a href="/edit-enquiry-page/'+data._id+'" target="_blank"><button class="item" data-toggle="tooltip" data-placement="top" title="Edit Enquiry"><i class="zmdi zmdi-edit"></i></button></a><button class="item addFollowup" data-id="'+data._id+'" data-shopname="'+data.shopName+'" data-toggle="tooltip" data-placement="top" title="Add Followup"><i class="zmdi zmdi-collection-plus"></i></button><button class="item updateEnquiryStatus" data-id="'+data._id+'" data-shopname="'+data.shopName+'" data-enquirystatus="'+data.enquiryStatus+'" data-toggle="tooltip" data-placement="top" title="Update Lead"><i class="zmdi zmdi-comment-edit"></i></button></div></td>'
+        //      enquiryData += '</tr>';
+
+        //   }
+        // } 
+        
+
+        //   var modelData = "";
+
+        //   // if ('<%= role%> == 1') {}
+        //     $.ajax({  
+        //     url:'/see-today-followup-enquiry',  
+        //     method:'get',  
+        //     dataType:'json', 
+        //     success:function(response){
+        //          // console.log(response);  
+        //          if(response.msg=='success'){   
+
+        //           response.enquiry.forEach((data, index) =>{
+        //             allTodayEnquiry(data, index);
+        //           });
+        //           $('tbody').html(enquiryData);
+        //           $('#totalTodayFollowup').html(totalTodayFollowup);
+        //           $('#totalTodayFollowupDone').html(totalTodayFollowupDone);
+        //         }
+        //       }
+        //     })
+
+        //   //Model for Followup Data
+        //   $(document).on('click', '.addFollowup', function(){  
+        //     var fdEnquiryId = $(this).data("id");  
+        //     var fdShopName = $(this).data("shopname");
+        //     $('#addFollowupModal').modal('show');
+        //     $('#fdShopName').html(fdShopName);
+        //     $('#fdEnquiryId').val(fdEnquiryId);
+
+        //   });
+
+        //   //Submit Followup Data
+        //   $('#followupData').on("submit", function(event){
+        //     event.preventDefault();
+        //     $.ajax({
+        //       url:'/update-followup',  
+        //       method:'POST',  
+        //       data:$('#followupData').serialize(),
+        //       success:function(followupResponse){  
+        //         if(followupResponse.msg=='success'){
+        //           alert('Followup Updated');   
+        //           $('#followupData')[0].reset();  
+        //           $('#addFollowupModal').modal('hide');                   
+        //         }
+        //       }
+        //     });
+        //   });
+
+        //   //Search Enquiry Data
+        //   $('#searchEnquiryForm').on("submit", function(event){
+        //     event.preventDefault();
+        //     $.ajax({
+        //       url:'/search-enquiry',  
+        //       method:'POST',
+        //       data:$('#searchEnquiryForm').serialize(),
+        //       success:function(response){  
+        //         if(response.msg=='success'){
+
+        //           enquiryData = "";
+        //           response.enquiry.forEach((data, index) =>{
+        //             allEnquiry(data, index);
+        //           });
+        //           $('tbody').html(enquiryData);
+
+        //         }
+        //       }
+        //     });
+        //   });
+
+        //   //Model For Update Enquiry Status
+        //   $(document).on('click', '.updateEnquiryStatus', function(){  
+        //     var esEnquiryId = $(this).data("id");  
+        //     var esShopName = $(this).data("shopname");
+        //     var esEnquiryStatus = $(this).data("enquirystatus");
+        //     $('#updateEnquiryStatus').modal('show');
+        //     $('#esShopName').html(esShopName);
+        //     $('#esEnquiryStatus').val(esEnquiryStatus);
+
+
+        //     //Edit Enuiry Status Data
+        //     $('#updateEnquiryStatusForm').on("submit", function(event){
+        //       event.preventDefault();
+        //       $.ajax({
+        //         url:'/update-enquiry/'+esEnquiryId,  
+        //         method:'POST',  
+        //         data:$('#updateEnquiryStatusForm').serialize(),
+        //         success:function(statusResponse){  
+        //           if(statusResponse.msg=='success'){
+        //             alert('Status Updated');   
+        //             $('#updateEnquiryStatusForm')[0].reset();  
+        //             $('#updateEnquiryStatus').modal('hide');                   
+        //           }
+        //         }
+        //       });
+        //     });
+        //   });     
+
+      });
+
+    </script>
+
+</html>
+<!-- end document-->

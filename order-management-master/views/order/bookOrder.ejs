@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+  <!-- Title Page-->
+  <title>All Book Order</title>
+
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+
+    <!-- PAGE CONTAINER-->
+    <div class="page-container">
+      <!-- HEADER DESKTOP-->
+      <%- include("../include/header")%>
+
+      <!-- MAIN CONTENT-->
+      <div class="main-content">
+        <div class="section__content section__content--p30">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- DATA TABLE -->
+                <h3 class="title-5 m-b-35">Book Order Table</h3>
+                  <form id="searchEnquiryForm">
+                      <div class="row mb-0">
+                          <div class="col-md-4 col-sm-4">
+                              <div class="form-group">
+                                  <label>Search....:</label>
+                                  <input type="text" class="form-control" placeholder="Enter Shop Name/MobileNo." name="searchTerm">
+                               </div>
+                          </div>
+                      </div>
+                      <div class="row mb-0">
+                          <div class="col-md-12 col-sm-12" style="margin-bottom: 5px;">
+                              <button class="btn btn-primary btn-sm submitClassFormData" type="submit" name="search">Search</button>
+                          </div>
+                      </div>    
+                  </form> 
+
+                <div class="table-data__tool">
+                  <div class="table-responsive table--no-card m-b-40">
+                    <table class="table table-borderless table-striped table-earning" id="dataTable">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <th>Sale Party</th>
+                          <th>Book Date</th>
+                          <th>Book User</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- END DATA TABLE -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- Jquery JS-->
+<%- include("../include/jsLink")%>
+
+
+<script>
+  $(document).ready(function(){  
+
+    $.ajax({  
+        url:'/all-book-order',  
+        method:'get',  
+        dataType:'json', 
+        success:function(response){ 
+             if(response.msg=='success'){   
+
+              response.bookOrder.forEach((data, index) =>{
+                allBookOrder(data, index);
+              });
+              $('tbody').html(bookData);
+            }
+          }
+        })
+
+    var bookData = "";
+    var fl = 0
+
+    function allBookOrder(data, index) {
+
+
+     // var followupDate = data.followups[0].followupDate;
+     // var comment = data.followups[0].comment;
+     // var nextFollowupDate = data.followups[0].nextFollowupDate;
+
+
+     bookData += '<tr class="tr-shadow">';
+     bookData += '<td>'+(index + 1)+'</td>';
+     bookData += '<td>'+data.saleParty[0].shopName+'</td>';
+     bookData += '<td>'+data.bookDate+'</td>';
+     bookData += '<td>'+data.user[0].name+'</td>';
+     bookData += '<td><div class="table-data-feature"><a href="/book-pending-entry/'+data._id+'" target="_blank"><button class="item" data-toggle="tooltip" data-placement="top" title="Confirm Pending Order"><i class="zmdi zmdi-check-circle"></i></button></a></div></td>'
+     bookData += '</tr>';
+
+    } 
+    
+
+      var modelData = "";
+
+      // if ('<%= role%> == 1') {}
+        
+
+
+
+
+
+  });
+
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

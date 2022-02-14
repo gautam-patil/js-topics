@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../include/headLink")%>
+    <!-- Title Page-->
+    <title>View Courier Page</title>
+</head>
+
+<body class="animsition">
+  <div class="page-wrapper">
+    <!-- HEADER MOBILE-->
+    <%- include("../include/navbar") %>
+      <!-- PAGE CONTAINER-->
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <%- include("../include/header")%>
+          <!-- MAIN CONTENT-->
+          <div class="main-content">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-header">Courier Info</div>
+                      <div class="card-body">
+                        <div class="card-title">
+                          <h3 class="text-center title-2">Courier Info</h3> </div>
+                        <hr>
+
+                        <table class="table table-bordered table-striped">
+                          <tbody>
+                              <tr>
+                                  <td>Request Date</td>
+                                  <td><%= courier[0].requestDate %></td>
+                              </tr>
+                              <tr>
+                                  <td>Sale Party</td>
+                                  <td><%= courier[0].saleParty[0].shopName %></td>
+                              </tr>
+                              <tr>
+                                  <td>Request User Id-:</td>
+                                  <td><%= courier[0].user[0].name %></td>
+                              </tr>
+                              <tr>
+                                  <td>Item Detail</td>
+                                  <td><%= courier[0].itemDetail %></td>
+                              </tr>
+                              <tr>
+                                  <td>Request Comment</td>
+                                  <td><%= courier[0].requestComment %></td>
+                              </tr>
+                              <tr>
+                                  <td>Confirm Date</td>
+                                  <td><%= courier[0].confirmDate %></td>
+                              </tr>
+                              <tr>
+                                  <td>Confirm User Id</td>
+                                  <td><%= courier[0].confirmUser[0].name %></td>
+                              </tr>
+                              <tr>
+                                  <td>Confirm Comment</td>
+                                  <td><%= courier[0].confirmComment %></td>
+                              </tr>
+                              <tr>
+                                  <td>Send Date</td>
+                                  <td><%= courier[0].sendDate %></td>
+                              </tr>
+                              <tr>
+                                  <td>Send User Id</td>
+                                  <td><%= courier[0].sendUser[0].name %></td>
+                              </tr>
+                              <tr>
+                                  <td>Courier Name</td>
+                                  <td><%= courier[0].courierName %></td>
+                              </tr>
+                              <tr>
+                                  <td>Doc No.</td>
+                                  <td><%= courier[0].docNo %></td>
+                              </tr>
+                              <tr>
+                                  <td>Unit</td>
+                                  <td><%= courier[0].unit %></td>
+                              </tr>
+                              <tr>
+                                  <td>Weight/Quantity</td>
+                                  <td><%= courier[0].weightQuantity %></td>
+                              </tr>
+                              <tr>
+                                  <td>Amount</td>
+                                  <td><%= courier[0].amount %></td>
+                              </tr>
+                              <tr>
+                                  <td>Send Comment</td>
+                                  <td><%= courier[0].sendComment %></td>
+                              </tr>
+                              <tr>
+                                  <td>Recieve Date</td>
+                                  <td><%= courier[0].recieveDate %></td>
+                              </tr>
+                              <tr>
+                                  <td>Recieve User</td>
+                                  <td><%= courier[0].recieveUser[0].name %></td>
+                              </tr>
+                              <tr>
+                                  <td>Recieve Comment</td>
+                                  <td><%= courier[0].recieveComment %></td>
+                              </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <!-- Jquery JS-->
+      <%- include("../include/jsLink") %>
+        <script>
+        $(document).ready(function() {
+
+
+        });
+        </script>
+</body>
+
+</html>
+<!-- end document-->

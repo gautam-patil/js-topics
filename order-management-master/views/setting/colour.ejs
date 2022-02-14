@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Colour</title>
+    <!-- Required meta tags-->
+    <%- include("../include/headLink")%>
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <%- include("../include/navbar") %>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <%- include("../include/header") %>
+            <!-- END HEADER DESKTOP-->
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- DATA TABLE -->
+                                <h3 class="title-5 m-b-35">data table</h3>
+                                <div class="table-data__tool">
+                             
+                                  <div class="table-data__tool-right">
+                                    <button class="au-btn-primary" data-toggle="modal" data-target="#addColour">
+                                        <i class="zmdi zmdi-plus-square"></i>Add Colour
+                                    </button>
+                                  </div>
+                                </div>
+                                <div class="table-responsive table-responsive-data2">
+                                    <table class="table table-data3">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No.</th>
+                                                <th>Id</th>
+                                                <th>Colour Name</th>
+                                                <th>Edit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END DATA TABLE -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Add Branch Model -->
+
+    <div id="addColour" class="modal fade">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h1 class="modal-title" style="text-align: center;">Add Colour</h1>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+               </div>
+               <div class="modal-body">
+                  <form id="colourForm">
+                     <div class="form-group">
+                        <label>Colour Name</label>
+                        <input type="text" class="form-control" name="colourName" placeholder="Enter Colour Name">
+                     </div>
+                     <input type="submit" value="Insert" class="btn btn-success" />  
+                  </form>
+               </div>
+               <div class="modal-footer">    
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+               </div>
+            </div>
+         </div>
+    </div>
+
+    <div id="editBranch" class="modal fade">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h1 class="modal-title" style="text-align: center;">Edit Branch</h1>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+               </div>
+               <div class="modal-body">
+                  <form id="editBranchForm">
+                     <div class="form-group">
+                        <label>Branch Name</label>
+                        <input type="text" class="form-control" id="edBranch" name="branch" placeholder="Enter Branch Name">
+                     </div>
+                     <div class="form-group">
+                        <label>Branch Description</label>
+                        <input type="text" class="form-control" name="branchDescription" id="edBranchDescription" placeholder="Enter Branch Description">
+                     </div>
+                     <input type="submit" value="Insert" class="btn btn-success" />  
+                  </form>
+               </div>
+               <div class="modal-footer">    
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+               </div>
+            </div>
+         </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <%- include("../include/jsLink")%>
+
+    <script>
+        $(document).ready(function(){  
+            var colourData = "";
+            
+            function allColour(data, index) {
+
+
+               colourData += '<tr class="tr-shadow">';
+               colourData += '<td>'+(index +1)+'</td>'
+               colourData += '<td>'+data._id+'</td>';
+               colourData += '<td>'+data.colourName+'</td>';
+
+               // colourData += '<td><div class="table-data-feature"><button class="item editBranch" data-id="'+data._id+'" data-colourname="'+data.colourName+'"  data-toggle="tooltip" data-placement="top" title="Edit Colour Name"><i class="zmdi zmdi-edit"></i></button></div></td>'
+               colourData += '</tr>';
+
+            }
+
+                var modelData = "";
+
+                colourList();
+                
+                function colourList() {
+
+                  $.ajax({  
+                    url:'/all-colour',  
+                    method:'get',  
+                    dataType:'json', 
+                    success:function(response){
+                       // console.log(response);  
+                       if(response.msg=='success'){   
+                          
+                          response.colour.forEach((data, index) =>{
+                             allColour(data, index);
+                           });
+                          $('tbody').html(colourData);
+                         }
+                      }
+                  })
+                }
+
+                // Submit Branch Data
+                $('#colourForm').on("submit", function(event){
+                   event.preventDefault();
+                   $.ajax({
+                      url:'/create-colour',  
+                      method:'POST',  
+                      data:$('#colourForm').serialize(),
+                      success:function(response){  
+                         if(response.msg=='success'){
+
+                           colourData = "";
+                           colourList();
+                           $('#colourForm')[0].reset();  
+                           $('#addColour').modal('hide');                   
+                         }
+                      }
+                   });
+                });
+
+                //Model for Edit Data
+          $(document).on('click', '.editBranch', function(){  
+            var edBranchId = $(this).data("id");  
+            var edBranch = $(this).data("branch");  
+            var edBranchDescription = $(this).data("branchdescription");
+            $('#editBranch').modal('show');
+            
+            $('#edBranch').val(edBranch);
+            $('#edBranchDescription').val(edBranchDescription);
+
+              $('#editBranchForm').on("submit", function(event){
+                event.preventDefault();
+                $.ajax({
+                  url:'/update-branch-data/'+edBranchId,  
+                  method:'POST',  
+                  data:$('#editBranchForm').serialize(),
+                  success:function(editResponse){  
+                    if(editResponse.msg=='success'){
+                      alert('Data Update');   
+                      $('#editBranchForm')[0].reset();  
+                      $('#editBranch').modal('hide');                   
+                    }
+                  }
+                });
+              });
+          });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
+<!-- end document-->
